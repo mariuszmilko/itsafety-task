@@ -1,0 +1,14 @@
+{
+    "require": {
+        "php-di/php-di" : "^6.0.0-beta3",
+        "guzzlehttp/guzzle": "~5.3",
+        "react/stream":"^0.7.7",
+        "react/promise-stream": "^1.1.1",
+        "react/child-process":"^0.5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\ItSafety\\": "src/"
+        }
+    }
+}

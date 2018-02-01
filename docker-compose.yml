@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  php:
+    container_name: php_itsafety
+    build: ./docker/images/php
+    command: php-fpm
+    volumes:
+      - ./app:/var/www/app/
+      - ./docker/images/mysql/tmp/mysql/filmy_db.sql:/home/filmy_db.sql
+      - ./docker/images/mysql/tmp/temp_10GB_file.sql:/home/temp_10GB_file.sql
+    working_dir: /var/www/
+    ports:
+      - "9000:9000"
+    links:
+      - mysql
+    networks:
+     net:
+      ipv4_address: 172.30.0.3
+  mysql:
+    container_name: mysql_itsafety
+    build: ./docker/images/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=p@ssw0rd
+      - MYSQL_DATABASE=itsafety
+    networks:
+     net:
+      ipv4_address: 172.30.0.2
+    expose:
+      - "3306"
+    volumes:
+      - ./docker/images/mysql/tmp/mysql/data/db:/var/lib/mysql
+      - ./docker/images/mysql/tmp/mysql/filmy_db.sql:/home/filmy_db.sql
+networks:
+  net:
+    driver: bridge
+    ipam:
+        driver: default
+        config:
+           - subnet: 172.30.0.0/16
