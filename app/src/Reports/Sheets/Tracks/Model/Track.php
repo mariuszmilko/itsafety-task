@@ -43,4 +43,11 @@ class Track
        return $this->parameters;
    }
 
+//    private function map(callable $cb, $collection) {
+//     foreach ($collection as $key => $item) {
+//         yield $item => $cb($item);
+//     }
+
+   }
+
 }
