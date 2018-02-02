@@ -6,10 +6,11 @@ public class TypeTrack implements IParameterFilter
 {
    protected $sum = 0;
    protected $maxCount = 0;
+   const TRACK = 2;
 
     public function compare($parameters)
     {
-        return $parameters['value'] > 2;
+        return $parameters['value'] > self::TRACK;
     }
 
 }
