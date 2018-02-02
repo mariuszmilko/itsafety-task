@@ -21,9 +21,14 @@ class Track
         return $this->parameters[$name];
    }
 
+   public function getParameters() 
+   {
+        return $this->parameters;
+   }
+
    public function processPoint($point)
    {
-      $config->generate($point, $this->parameters);
+      return $config->generate($point, $this->parameters);
    }
 
 }

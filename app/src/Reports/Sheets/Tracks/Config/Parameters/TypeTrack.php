@@ -2,15 +2,21 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-class TypeTrack implements IParameterFilter
-{
-   protected $sum = 0;
-   protected $maxCount = 0;
-   const TRACK = 2;
+use App\Reports\Library\Parameters\Generic\IParameterAgg;
 
-    public function filter($parameters)
+class TypeTrack implements IParameterAgg
+{
+   protected $type;
+   const TRACK = 'TRACK';
+
+    public function calculate($parameters)
     {
-        return $parameters['value'] > self::TRACK;
+        $this->type = $parameters['value'];
+    }
+
+    public function getCalculatedValue()
+    {  
+        return self::TRACK;
     }
 
 }
