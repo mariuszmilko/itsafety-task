@@ -1,7 +1,11 @@
 <?php
 
 
-return  [ 'parameters' => 
+return  ['filters' =>
+             [
+
+             ],
+         'aggregates' => 
              ['name' => 'StartDate', 
               'rowName' => 'record_timestamp', 
               'values' => [ ], 

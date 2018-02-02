@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Reports\Library\Parameters\Generic;
+
+
+interface IParameterFilter
+{
+    public function filter($parameters);
+}

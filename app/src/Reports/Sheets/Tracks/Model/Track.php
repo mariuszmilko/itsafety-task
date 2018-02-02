@@ -25,7 +25,8 @@ class Track
 
    public function getDataByDate($device_id, $dateFrom, $dateTo)
    {
-        $generator = $repository->findTracksByDate($device_id, $dateFrom, $dateTo);  
+        $generator = $repository->findTracksByDate($device_id, $dateFrom, $dateTo);
+      //  $config->generate($generator, $this->parameters);  
         foreach ($generator as $row ) {
              $config->generate($row, $this->parameters);
         }
