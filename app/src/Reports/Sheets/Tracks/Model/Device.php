@@ -2,27 +2,28 @@
 
 namespace App\Reports\Sheets\Tracks\Model;
 
-
+//Device config
 class Device
 {
    protected  $deviceId;
-   protected  $track;
+   protected  $tracks;
+   protected  $xData;
+   protected  $trackGen;
 
-   public function __construct($deviceId, Track $track)
+
+   public function __construct($deviceId, $xData, $trackGen)
    {
        $this->deviceId = $deviceId;
-       $this->track = $track;
+       $this->xData = $xData;
+       $this->trackGen = $trackGen;
    }
-    
-   public  function getDataByDate($dateFrom, $dateTo)
+   
+   public function generateTracks($config)
    {
-       return $this->track->getDataByDate($this->device_id, $dateFrom, $dateTo);
+       foreach ($this->xData as $point) {        
+          $trackGen->process($point);
+       }
+       $this->tracks = $trackGen->addTracks();
    }
-
-   public function getDataByDay($dateDay)
-   {
-       return $this->track->getDataByDay($this->device_id, $dateDay);
-   }
-
-
+ 
 }

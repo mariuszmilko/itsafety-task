@@ -4,7 +4,7 @@ namespace App\Reports\Library\Classes\Repository;
 
 use App\Reports\Library\Classes\Repository\Track\ITrackRepository;
 
-class Track extends ITrackRepository
+class Device extends ITrackRepository
 {
     public function __construct($db)
     {
