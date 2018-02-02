@@ -3,7 +3,7 @@
 namespace App\Reposrts\Sheets\Tracks\Config\Schema;
 
 
-class Config implements ISchema
+class Config extends AbstarctConfig
 {
     protected $map;
     protected $filterDictionary;
