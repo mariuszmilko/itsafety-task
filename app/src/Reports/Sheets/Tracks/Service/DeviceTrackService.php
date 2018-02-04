@@ -3,32 +3,27 @@
 namespace App\Reports\Library\Classes\Repository;
 
 
-//TO Service
-//    public function getDataByDate($device_id, $dateFrom, $dateTo)
-//    {
-//         $generator = $repository->findTracksByDate($device_id, $dateFrom, $dateTo);
-//       //  $config->generate($generator, $this->parameters);  
-//         foreach ($generator as $row ) {
-//              $config->generate($row, $this->parameters);
-//         }
+class DeviceTrackService
+{
+   protected $device;
 
-//        return $this->parameters;
-//    }
+   public function __construct($device, $repository, $trackGenerator)
+   {
+       $this->device = $device;
+       $this->repository = $repository;
+       $this->trackGenerator = $trackGenerator;
+   }
 
-//    public function getDataByDay($dateDay)
-//    {
-//         $generator = $repository->findTracksByDay($device_id, $dateDay);  
-//         foreach ($generator as $row ) {
-//              $config->generate($row, $this->parameters);
-//         }
-        
-//        return $this->parameters;
-//    }
-  
+    public function getDataByDate($device_id, $dateFrom, $dateTo)
+    {
+       $xData = $device->xFindDeviceTracksByDate($deviceId = 40285, $datefrom = '2018-01-19', $dateTo='2018-01-25');
+ 
+       $deviceModel =  new DeviceModel($deviceId = 40285, $xData, $this->trackGenerator);
+    }
+ 
+    public function getDataByDay($dateDay)
+    {
+ 
+    }
 
-//    private function map(callable $cb, $collection) {
-//     foreach ($collection as $key => $item) {
-//         yield $item => $cb($item);
-//     }
-
-//}
+}

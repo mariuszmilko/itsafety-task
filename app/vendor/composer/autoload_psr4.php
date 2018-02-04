@@ -22,5 +22,5 @@ return array(
     'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
-    'App\\ItSafety\\' => array($baseDir . '/src'),
+    'App\\' => array($baseDir . '/src'),
 );

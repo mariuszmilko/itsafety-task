@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Reposrts\Sheets\Tracks\Config\Schema;
+namespace App\Reports\Library\Classes\Config;
+
+use App\Reports\Library\Classes\Config\ISchema;
 
 
 class AbstarctConfig implements ISchema

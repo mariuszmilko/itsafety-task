@@ -2,20 +2,25 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
+use App\Reports\Library\Parameters\Generic\IParameterAgg;
+
+
 class StartFuel implements IParameterAgg
 {
-   protected $sum = 0;
-   protected $maxCount = 0;
+   protected $value;
+   protected $first = false;
 
     public function calculate($parameters)
     {
-        $this->sum += $parameters['value'];
-        $this->index += $parameters['index'];
+        if ($this->first == false) {
+         $this->value = $parameters['value'];
+         $this->first = true;
+        }
     }
 
     public function getCalculatedValue()
     {  
-        return ($this->sum/$this->index);
+        return $this->value;
     }
 
 }

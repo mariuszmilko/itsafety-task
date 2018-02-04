@@ -6,11 +6,11 @@ namespace App\Reports\Sheets\Tracks\Model;
 class Track 
 {
    protected $parameters = [];
-   protected $config;
+   //TrackContext
 
-   public function __construct($config)
+   public function __construct()
    {
-       $this->config = $config;
+       $this->parameters = [];
    }
    
    public function getParameter($name) 
@@ -28,7 +28,7 @@ class Track
 
    public function processPoint($point)
    {
-      return $config->generate($point, $this->parameters);
+       return $point->filtering($this->parameters)->getData();
    }
 
 }

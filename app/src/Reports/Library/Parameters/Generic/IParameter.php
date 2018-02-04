@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Parameters\Generic;
 
 
-interface IParameterAgg extends IParameter
+interface IParameter
 {
-    public function calculate($parameters);
+
 }

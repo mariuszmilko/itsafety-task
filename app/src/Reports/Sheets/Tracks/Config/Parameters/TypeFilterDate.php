@@ -4,13 +4,15 @@ namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
 use  App\Reports\Library\Parameters\Generic\IParameterFilter;
 
-class TypeFilterTrack implements IParameterFilter
-{
 
+class TypeFilterDate implements IParameterFilter
+{
+   protected $value = null;
 
     public function filter($parameters)
     {
-        return $parameters['value'] > 2;
+        //isdate format
+        return true;
     }
-
+    
 }

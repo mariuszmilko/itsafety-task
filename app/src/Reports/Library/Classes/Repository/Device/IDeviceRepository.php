@@ -6,6 +6,6 @@ use App\Reports\Library\Classes\Repository\IRepository;
 
 interface IDeviceRepository extends IRepository
 {
-    public function xFindDeviceTracksByDate($dateFrom, $dateTo, $type);
-    public function xFindDeviceByDay($date, $type);
+    public function xFindDeviceTracksByDate($deviceId, $dateFrom, $dateTo);
+    public function xFindDeviceByDay($deviceId, $day);
 }

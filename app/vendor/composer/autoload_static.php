@@ -50,7 +50,7 @@ class ComposerStaticInit12825fcf5a51e63b0af78db842d185f6
         ),
         'A' => 
         array (
-            'App\\ItSafety\\' => 13,
+            'App\\' => 4,
         ),
     );
 
@@ -119,7 +119,7 @@ class ComposerStaticInit12825fcf5a51e63b0af78db842d185f6
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
         ),
-        'App\\ItSafety\\' => 
+        'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

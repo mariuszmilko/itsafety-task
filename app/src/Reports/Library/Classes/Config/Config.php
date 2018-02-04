@@ -1,42 +1,63 @@
 <?php
 
-namespace App\Reposrts\Sheets\Tracks\Config\Schema;
+namespace App\Reports\Library\Classes\Config;
+
+use App\Reports\Library\Classes\Config\AbstractConfig;
 
 
 class Config extends AbstarctConfig
 {
-    protected $map;
+    protected $oMap;
     protected $filterDictionary;
     protected $aggDictionary;
+    protected $filters;
+    protected $aggreagtes;
 
-    public function __construct($map, $filterDictionary, $aggDictionary)
+    public function __construct($oMap, $filterDictionary, $aggDictionary)
     {
-        $this->map = $map;
+        $this->oMap = $oMap;
         $this->filterDictionary = $filterDictionary;
         $this->aggDictionary = $aggDictionary;
+        $this->filters = $this->oMap->filters;
+        $this->aggreagtes = $this->oMap->aggregates;
     }
 
 //THIS
     public function generate($point, $parameters)
     {
-        $filters = $this->map['filters'];
-        $aggreagtes = $this->map['aggregates'];
-
-        if ($this->filtering($filters, $point) == false) {
-            return false;
-        }
-
-        $parameters[$aggregates['name'][$point[RECORD]]] =  $aggregates['name'][$point[RECORD]]; //inject form container
+        $this->filtering($point, $parameters);
         return true;
     }
 
-    private function filtering($filters, $point)
+    public function filtering($point, $parameters)
     {
-        foreach ($filers as $filter){
-            //$filter['expression'] 
-          return true;
-      } 
-      return false;
+        foreach ($this->filters as $fMap){
+             $filter = $this->filterDictionary->get($fMap->class);
+      
+             if (isset($point[$fMap->rowname]) && 
+                 isset($filter) && 
+                 $filter->filter(['value' => $point[$fMap->rowname]])) {
+ 
+               foreach ($this->aggregates  as $gMap) {  
+                    if ($gMap->type == $fMap->type) {
+                        $type = $fMap->type;
+                    } else {
+                      continue;
+                    }
+
+                    if (isset($parameters[$type][$gMap->class])) {
+                        $agg = $parameters[$type][$gMap->class];
+                    } else {
+                        $agg = $this->aggDictionary->get($gMap->class);  
+                        $parameters[$type][$gMap->class] = $agg;
+                    }
+         
+                    $agg->calculate(['value' => $point[$gMap->rowname], 'index' => 1]); // $point->value 
+                }
+             }
+         }
+
+        return null;
     }
      //in DI
     // private function extractFromMap($fileName) 

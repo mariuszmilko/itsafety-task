@@ -2,7 +2,6 @@
 
 namespace App\Reports\Sheets\Tracks\Model;
 
-//Device config
 class Device
 {
    protected  $deviceId;
@@ -18,12 +17,31 @@ class Device
        $this->trackGen = $trackGen;
    }
    
-   public function generateTracks($config)
+   public function generateTracks()
    {
-       foreach ($this->xData as $point) {        
-          $trackGen->process($point);
+       $i = 0;
+       $bufer = [];
+       foreach ($this->xData as $data) {    
+          $i++;   
+          if ($i < 4)
+          {
+            $bufer[] = $data;       
+          } 
+          else
+          {
+            $this->trackGen->process($bufer);  
+            var_dump($bufer);
+            $bufer = [];
+            $i = 0;
+          }         
+          //$this->trackGen->process($data);
        }
-       $this->tracks = $trackGen->addTracks();
+       $this->tracks = $this->trackGen->getTracks();
+   }
+
+   public function getTracks()
+   {
+       return $this->tracks;
    }
  
 }

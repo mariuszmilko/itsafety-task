@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Reports\Library\Classes\Repository;
+namespace App\Reports\Sheets\Tracks\Repository;
 
-use App\Reports\Library\Classes\Repository\Track\ITrackRepository;
+use App\Reports\Library\Classes\Repository\Device\IDeviceRepository;
 
-class Device extends IDeviceRepository
+class Device implements IDeviceRepository
 {
     protected $db;
 
@@ -13,39 +13,42 @@ class Device extends IDeviceRepository
         $this->db = $db;
     }
     
-    public function xFindDeviceTracksByDate($dateFrom, $dateTo, $type) 
+    public function xFindDeviceTracksByDate($deviceId, $dateFrom, $dateTo) 
     {
-        $device = 1;
-        $timesatmp = '2017';
-        $stmt = $this->db->prepare('//select device_id, record_timestamp,record_device_state, record_can_speed  from record WHERE device_id =   40285; AND record_device_state = 3 
-            FROM fruit
-            WHERE device < :device AND timestamp = :timestamp');
-        $stmt->bindParam(':device', $device, PDO::PARAM_INT);
-        $stmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR, 12);
+        $query = 'SELECT device_id, record_timestamp as start_date, record_timestamp as end_date, 
+                         record_device_state, record_can_speed, record_calc_distance, 
+                         record_analog_fuel_recalc, record_can_fuel_recalc 
+                  FROM record 
+                  WHERE device_id = :device AND DATE(record_timestamp) BETWEEN :dateFrom AND :dateTo 
+                  ORDER BY record_timestamp';
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':device', $deviceId, \PDO::PARAM_INT);
+        $stmt->bindParam(':dateFrom', $dateFrom, \PDO::PARAM_STR, 19);
+        $stmt->bindParam(':dateTo', $dateTo, \PDO::PARAM_STR, 19);
         $stmt->execute();
          
-            while($record = $stmt->fetch(PDO::FETCH_ASSOC)) {
-         
-                yield $record;//$this->mapToObject($record);
-         
-            }
+        while ($record = $stmt->fetch(\PDO::FETCH_ASSOC)){        
+            yield $record;//$this->mapToObject($record);  
+        }
     }
 
-    public function xFindDeviceByDay($date, $type) 
+    public function xFindDeviceByDay($deviceId, $day)
     {
-        $device = 1;
-        $timestamp = '2017';
-        $stmt = $this->db->prepare('//select device_id, record_timestamp,record_device_state, record_can_speed  from record WHERE device_id =   40285; AND record_device_state = 3 
-            FROM fruit
-            WHERE device < :device AND timestamp = :timestamp');
-        $stmt->bindParam(':device', $device, PDO::PARAM_INT);
-        $stmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR, 12);
+        $query = 'SELECT device_id, record_timestamp as start_date, record_timestamp as end_date, 
+                         record_device_state, record_can_speed, record_calc_distance, 
+                         record_analog_fuel_recalc, record_can_fuel_recalc    
+                  FROM record 
+                  WHERE device_id = :device AND DATE(record_timestamp) = :day
+                  ORDER BY record_timestamp';
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':device', $deviceId, PDO::PARAM_INT);
+        $stmt->bindParam(':timestamp', $day, PDO::PARAM_STR, 12);
         $stmt->execute();
          
-            while($record = $stmt->fetch(PDO::FETCH_ASSOC)) {
-         
-                yield $record;//$this->mapToObject($record);
-         
-            }
+        while($record = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            yield $record;//$this->mapToObject($record);     
+        }
     }
 }
