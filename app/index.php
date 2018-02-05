@@ -43,8 +43,10 @@ $parameters = [];
 $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new TrackBuilder());
 $device = new DeviceModel($deviceId, $xRecords, $trackGen);
 $device->generateTracks();
-var_dump($device->getTracks());
 
+print_r($device->getTracks());
+echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
+  echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 
 // foreach ($xRecords as $row)
 // {

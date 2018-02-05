@@ -19,6 +19,8 @@ class DeviceTrackService
        $xData = $device->xFindDeviceTracksByDate($deviceId = 40285, $datefrom = '2018-01-19', $dateTo='2018-01-25');
  
        $deviceModel =  new DeviceModel($deviceId = 40285, $xData, $this->trackGenerator);
+       $deviceModel->generateTracks();
+       $deviceModel->getTracks();
     }
  
     public function getDataByDay($dateDay)

@@ -2,7 +2,7 @@
 
 namespace App\Reports\Sheets\Tracks\Model;
 
-class Device
+class Device implements \IteratorAggregate
 {
    protected  $deviceId;
    protected  $tracks;
@@ -19,29 +19,17 @@ class Device
    
    public function generateTracks()
    {
-       $i = 0;
-       $bufer = [];
-       foreach ($this->xData as $data) {    
-          $i++;   
-          if ($i < 4)
-          {
-            $bufer[] = $data;       
-          } 
-          else
-          {
-            $this->trackGen->process($bufer);  
-            var_dump($bufer);
-            $bufer = [];
-            $i = 0;
-          }         
-          //$this->trackGen->process($data);
-       }
+       $this->trackGen->process($this->xData);  
        $this->tracks = $this->trackGen->getTracks();
    }
 
    public function getTracks()
    {
        return $this->tracks;
+   }
+
+   public function getIterator() {
+	  return new ArrayIterator($this->tracks);
    }
  
 }

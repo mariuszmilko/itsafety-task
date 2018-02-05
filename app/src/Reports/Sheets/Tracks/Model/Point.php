@@ -2,7 +2,7 @@
 
 namespace App\Reports\Sheets\Tracks\Model;
 
-class Point
+class Point //interface IPoint
 { 
     protected $oMap;
     protected $filterDictionary;
@@ -10,7 +10,7 @@ class Point
     protected $filters;
     protected $aggregates;
     protected $data;
-
+    
     public function __construct($data, $oMap, $filterDictionary, $aggDictionary)
     {
         $this->oMap = $oMap;
@@ -36,11 +36,12 @@ class Point
         throw new \Exception('Brak delimitera w mapie');
    }
    
-   public function filtering(&$parameters) //$context  ->get
+   public function filtering(&$parameters) //$context  ->get callable
    {    //to Ireator
         foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
     
+        //TODO:extract aggrgeates on type filter conditional
             if (isset($this->data[$fMap->rowname]) && 
                 isset($filter) && 
                 $filter->filter(['value' => $this->data[$fMap->rowname]])) {
@@ -51,7 +52,7 @@ class Point
                     } else {
                         continue;
                     }
-
+            //TODO://method aggPrametersValues(&$parameters, $aggDictionary, $type, $clazz)
                     if (isset($parameters[$type][$gMap->class])) {
                         $agg = $parameters[$type][$gMap->class];// = $this->data[$gMap->rowname];
                     //    $agg->calculate(['value' => $this->data[$gMap->rowname], 'index' => 1]); 
@@ -69,6 +70,11 @@ class Point
         }
 
        return $this;
+   }
+
+   public function extractDate()
+   {
+       return $this->data['start_date'];
    }
    
    public function getData()
