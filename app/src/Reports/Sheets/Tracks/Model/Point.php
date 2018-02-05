@@ -11,6 +11,9 @@ class Point //interface IPoint
     protected $aggregates;
     protected $data;
     
+
+
+
     public function __construct($data, $oMap, $filterDictionary, $aggDictionary)
     {
         $this->oMap = $oMap;
@@ -21,8 +24,11 @@ class Point //interface IPoint
         $this->data = $data;
     }
 
-   public function delimiter()
-   {   //to Ireator
+
+
+
+    public function delimiter()
+    {   //to Ireator
        foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
      
@@ -34,10 +40,13 @@ class Point //interface IPoint
             }
         }
         throw new \Exception('Brak delimitera w mapie');
-   }
+    }
    
-   public function filtering(&$parameters) //$context  ->get callable
-   {    //to Ireator
+
+
+
+    public function filtering(&$parameters) //$context  ->get callable
+    {    //to Ireator
         foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
     
@@ -52,28 +61,34 @@ class Point //interface IPoint
                     } else {
                         continue;
                     }
-            //TODO://method aggPrametersValues(&$parameters, $aggDictionary, $type, $clazz)
-                    if (isset($parameters[$type][$gMap->class])) {
-                        $agg = $parameters[$type][$gMap->class];// = $this->data[$gMap->rowname];
-                    //    $agg->calculate(['value' => $this->data[$gMap->rowname], 'index' => 1]); 
-                    } else {
-                        $agg = $this->aggDictionary->get($gMap->class);  
-
-                        $parameters[$type][$gMap->class] = $agg;
-                      //  $agg->calculate(['value' => $this->data[$gMap->rowname], 'index' => 1]); 
-                        //$parameters[$type][$gMap->class]->calculate(['value' => $this->data[$gMap->rowname], 'index' => 1]);
-                    }
-            
-                    $agg->calculate(['value' => $this->data[$gMap->rowname], 'index' => 1]); // $point->value 
+                    $this->aggPrametersValues($parameters, $type, $gMap->rowname, $gMap->class);
                 }
             }
         }
 
        return $this;
-   }
+    }
 
-   public function getDateAggData(&$trackParameters)
-   {
+
+
+
+    private function aggPrametersValues(&$parameters, $type, $rowname, $clazz)
+    {
+        if (isset($parameters[$type][$clazz])) {
+            $agg = $parameters[$type][$clazz];
+        } else {
+            $agg = $this->aggDictionary->get($clazz);  
+            $parameters[$type][$clazz] = $agg;
+        }
+
+        $agg->calculate(['value' => $this->data[$rowname], 'index' => 1]);   
+    }
+
+
+
+
+    public function getDateAggData(&$trackParameters)
+    {
         foreach ($this->aggregates as $agg)
         {
             if ($agg->type && $agg->lastaware) {
@@ -83,31 +98,5 @@ class Point //interface IPoint
             }
         }
         return false;
-   }
-
-   public function extractDate($track)
-   {
-//        //  ["end"]=>
-//   array(1) {
-//     ["App\Reports\Sheets\Tracks\Config\Parameters\EndDate"]=>
-//     object(App\Reports\Sheets\Tracks\Config\Parameters\EndDate)#31 (2) {
-//       ["endDate":protected]=>
-//       string(19) "2018-01-19 05:48:59"
-//       ["last":protected]=>
-//       bool(false)
-//     }
- // }
-     //  $track->updateOnEnd()
-       return $this->data['start_date'];
-   }
-   
-   public function getData()
-   {
-       return $this->data;
-   }
-
-   public function resetOnDelimiter()
-   {
-
-   }
+    }
 }

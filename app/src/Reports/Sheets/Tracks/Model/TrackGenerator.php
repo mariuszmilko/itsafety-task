@@ -77,15 +77,15 @@ class TrackGenerator   //implements IProcess
            $this->setCurrentPoint($point);//filtering($point);
            $this->beginTrack();
            if (!$this->isEndTrack($point)) {
-              $data = $this->track->processPoint($point);
-            } else {
-               $this->completeTrack($point, false);
-            }
-            $this->setPreviousPoint();
-            $xData->next();
-            if (!$xData->valid()) {
+             $this->track->processPoint($point);
+           } else {
+             $this->completeTrack($point, false);
+           }
+           $this->setPreviousPoint();
+           $xData->next();
+           if (!$xData->valid()) {
                 $this->completeTrack($point, true);
-            }
+           }
       }
     //    exit('uuu');
     //   foreach ($xData as $data) {       //$buffer->add()
