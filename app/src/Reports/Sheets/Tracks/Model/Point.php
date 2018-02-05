@@ -49,14 +49,9 @@ class Point //interface IPoint
     {    //to Ireator
         foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
-    
-        //TODO:extract aggrgeates on type filter conditional
-            if (isset($this->data[$fMap->rowname]) && 
-                isset($filter) && 
-                $filter->filter(['value' => $this->data[$fMap->rowname]])) {
-
+            if ($this->isToFiltering($filter, $fMap->rowname)) {  //zamist warunk dołoyć filtr do foreach callable
                 foreach ($this->aggregates  as $gMap) {  
-                    if ($gMap->type == $fMap->type) {
+                    if ($this->isCorrectAggTypeInFilter($gMap, $fMap) ) {
                         $type = $fMap->type;
                     } else {
                         continue;
@@ -69,8 +64,17 @@ class Point //interface IPoint
        return $this;
     }
 
+    private function isToFiltering($filter, $rowname)
+    {
+       return  (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
+    }
 
-
+    
+    private function isCorrectAggTypeInFilter($gMap, $fMap) 
+    {
+       return $gMap->type == $fMap->type;
+    } 
+    
 
     private function aggPrametersValues(&$parameters, $type, $rowname, $clazz)
     {
