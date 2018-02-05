@@ -25,7 +25,6 @@ class TrackGenerator   //implements IProcess
         //  $this->track->processPoint($this->previousPoint);
           $this->tracks[] = $this->track;
           $this->track = $this->trackBuilder->newInstance();
-          echo 'end track';
       }    
    }
 
@@ -43,7 +42,6 @@ class TrackGenerator   //implements IProcess
    {
       if ($this->isFirstTrack()) {
         $this->track = $this->trackBuilder->newInstance();
-        echo 'start track';
         return true;
       }
       return false;
