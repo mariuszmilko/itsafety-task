@@ -12,6 +12,7 @@ use App\Reports\Library\Classes\Factory\AggregateDictionary;
 use App\Reports\Sheets\Tracks\Model\Point;
 use App\Reports\Library\Classes\Factory\Point as FactoryPoint;
 use App\Reports\Library\Classes\Factory\TrackBuilder;
+
 // Manualy
 // 1. Query
 // 2. namespaces
@@ -93,30 +94,7 @@ echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
 
 //var_dump($oa->filters);
 //var_dump($oa->aggregates);
-var_dump($parameters);
 exit('xxx');
-
-$config = new TrackConfig($oa, $filterDictionary, $aggDictionary);
-$trackGenerator = new TrackGenerator($config);
-$repository = new DeviceRepository($conn);
-$records = $repository->xFindDeviceTracksByDate($deviceId = 40285, $datefrom = '2018-01-19', $dateTo='2018-01-25');
-
-
-$deviceModel =  new DeviceModel($deviceId = 40285, $xData, $this->trackGenerator);
-$deviceModel->generateTracks();
-$deviceModel->getTracks();
-
-
-
-// foreach ($records as $rec)
-// {
-//   echo $rec['device_id'], $rec['record_timestamp'], $rec['record_device_state'], $rec['record_can_speed'];
-//   echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
-//   echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
-// }
-
-echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
-  echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 
 //TODO
 //$builder = new DI\ContainerBuilder();
