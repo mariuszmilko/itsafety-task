@@ -22,7 +22,8 @@ class TrackGenerator   //implements IProcess
    public function completeTrack($point, $end)
    {
       if ($end || $this->isEndTrack($point)) { //count
-          $this->tracks[] = $this->track; //track container //get last track
+          $this->track->updateOnEnd($point);
+          $this->tracks[] = $this->track; //track container 
           $this->track = $this->trackBuilder->newInstance();
           $this->track->processPoint($point);
       }    

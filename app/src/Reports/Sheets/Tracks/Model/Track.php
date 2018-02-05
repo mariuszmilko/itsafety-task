@@ -3,7 +3,7 @@
 namespace App\Reports\Sheets\Tracks\Model;
 
 
-class Track 
+class Track implements \IteratorAggregate
 {
    protected $parameters = [];
    //TrackContext
@@ -29,6 +29,15 @@ class Track
    public function processPoint($point)
    {
        return $point->filtering($this->parameters)->getData();
+   }
+
+   public function updateOnEnd($point)
+   {
+       $point->getDateAggData($this->parameters);
+   }
+
+   public function getIterator() {
+    return new ArrayIterator($this->parameters);
    }
 
 }

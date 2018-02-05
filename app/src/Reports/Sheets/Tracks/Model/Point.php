@@ -72,8 +72,32 @@ class Point //interface IPoint
        return $this;
    }
 
-   public function extractDate()
+   public function getDateAggData(&$trackParameters)
    {
+        foreach ($this->aggregates as $agg)
+        {
+            if ($agg->type && $agg->lastaware) {
+                $p = &$trackParameters['end'][$agg->class];
+                $p->calculate(['value' => $this->data['end_date']]); //const in map
+                return true;
+            }
+        }
+        return false;
+   }
+
+   public function extractDate($track)
+   {
+//        //  ["end"]=>
+//   array(1) {
+//     ["App\Reports\Sheets\Tracks\Config\Parameters\EndDate"]=>
+//     object(App\Reports\Sheets\Tracks\Config\Parameters\EndDate)#31 (2) {
+//       ["endDate":protected]=>
+//       string(19) "2018-01-19 05:48:59"
+//       ["last":protected]=>
+//       bool(false)
+//     }
+ // }
+     //  $track->updateOnEnd()
        return $this->data['start_date'];
    }
    
