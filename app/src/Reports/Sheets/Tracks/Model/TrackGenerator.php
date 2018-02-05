@@ -22,9 +22,9 @@ class TrackGenerator   //implements IProcess
    public function completeTrack($point, $end)
    {
       if ($end || $this->isEndTrack($point)) { //count
-        //  $this->track->processPoint($this->previousPoint);
-          $this->tracks[] = $this->track;
+          $this->tracks[] = $this->track; //track container //get last track
           $this->track = $this->trackBuilder->newInstance();
+          $this->track->processPoint($point);
       }    
    }
 
@@ -70,22 +70,22 @@ class TrackGenerator   //implements IProcess
    public function process($xData, $buffer = null)
    {
       while ($xData->valid()) {
-        $data =  $xData->current();
-        
-        $point = $this->factoryPoint->factory($data);
-        $this->setCurrentPoint($point);//filtering($point);
-        $this->beginTrack();
-        if (!$this->isEndTrack($point)) {
-          $data = $this->track->processPoint($point);
-        } else {
-          $this->completeTrack($point, false);
-        }
-        $this->setPreviousPoint();
-        $xData->next();
-        if (!$xData->valid()) {
-            $this->completeTrack($point, true);
-        }
-     }
+           $data =  $xData->current();
+            
+           $point = $this->factoryPoint->factory($data);
+           $this->setCurrentPoint($point);//filtering($point);
+           $this->beginTrack();
+           if (!$this->isEndTrack($point)) {
+              $data = $this->track->processPoint($point);
+            } else {
+               $this->completeTrack($point, false);
+            }
+            $this->setPreviousPoint();
+            $xData->next();
+            if (!$xData->valid()) {
+                $this->completeTrack($point, true);
+            }
+      }
     //    exit('uuu');
     //   foreach ($xData as $data) {       //$buffer->add()
     //     //  $i++;   

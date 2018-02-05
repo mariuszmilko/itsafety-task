@@ -13,11 +13,9 @@ use App\Reports\Sheets\Tracks\Model\Point;
 use App\Reports\Library\Classes\Factory\Point as FactoryPoint;
 use App\Reports\Library\Classes\Factory\TrackBuilder;
 
-// Manualy
-// 1. Query
-// 2. namespaces
-// 3. aggregator i filtrowanie
-// 4. 
+// Manualy bez DI
+
+
 
 
 $conn = new PDO('mysql:host=172.31.0.2;dbname=itsafety;port=3306','root','p@ssw0rd');
@@ -47,53 +45,8 @@ $device->generateTracks();
 
 print_r($device->getTracks());
 echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
-  echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
+echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 
-// foreach ($xRecords as $row)
-// {
-
-//     $device = new DeviceModel($deviceId, $xData, $trackGen);
-//          $point = new Point($row, $oa, $filterDictionary, $aggDictionary);
-//          print_r($point->filtering($parameters)
-//                     ->delimiter());
-//     //   foreach ($filters as $fMap){
-
-//     //    //  print_r($fMap);
-     
-//     //     $filter = $filterDictionary->get($fMap->class);
-
-
-//     //     if (isset($point[$fMap->rowname]) && 
-//     //         isset($filter) && 
-//     //         $filter->filter(['value' => $point[$fMap->rowname]])) {
-
-//     //       foreach ($aggregates  as $gMap) {  
-//     //         if ($gMap->type == $fMap->type) {
-//     //             $type = $fMap->type;
-//     //         } else {
-//     //             continue;
-//     //         }
-           
-//     //         if (isset($parameters[$type][$gMap->class])) {
-//     //             $agg = $parameters[$type][$gMap->class];
-//     //         } else {
-//     //             $agg = $aggDictionary->get($gMap->class);  
-//     //             $parameters[$type][$gMap->class] = $agg;
-//     //         }
-
-//     //         $agg->calculate(['value' => $point[$gMap->rowname], 'index' => 1]); // $point->value 
-//     //        }
-//     //     }
-        
-//     // }
-
-
-
-
-// }
-
-//var_dump($oa->filters);
-//var_dump($oa->aggregates);
 exit('xxx');
 
 //TODO
