@@ -5,6 +5,10 @@ namespace App\Reports\Library\Classes\Helpers\Mappers;
 
 class Mapper 
 {
+
+
+
+    
     public function __construct($map, $aggIterator, $filterIterator)
     {
 

@@ -29,7 +29,7 @@ class Point //interface IPoint
 
     public function delimiter()
     {   //to Ireator
-       foreach ($this->filters as $fMap){
+       foreach ($this->filters as $fMap){ //iterator or calbale filter
             $filter = $this->filterDictionary->get($fMap->class);
      
             if (isset($this->data[$fMap->rowname]) && 
@@ -64,17 +64,24 @@ class Point //interface IPoint
        return $this;
     }
 
+
+
+
     private function isToFiltering($filter, $rowname)
     {
        return  (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
     }
 
     
+
+
     private function isCorrectAggTypeInFilter($gMap, $fMap) 
     {
        return $gMap->type == $fMap->type;
     } 
     
+
+
 
     private function aggPrametersValues(&$parameters, $type, $rowname, $clazz)
     {
@@ -91,7 +98,7 @@ class Point //interface IPoint
 
 
 
-    public function getDateAggData(&$trackParameters)
+    public function getDateAggData(&$trackParameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     {
         foreach ($this->aggregates as $agg)
         {

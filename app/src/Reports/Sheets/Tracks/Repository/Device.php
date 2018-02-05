@@ -6,13 +6,22 @@ use App\Reports\Library\Classes\Repository\Device\IDeviceRepository;
 
 class Device implements IDeviceRepository
 {
+
+
+    
     protected $db;
+
+
+
 
     public function __construct($db)
     {
         $this->db = $db;
     }
     
+
+
+
     public function xFindDeviceTracksByDate($deviceId, $dateFrom, $dateTo) 
     {
         $query = 'SELECT device_id, record_timestamp as start_date, record_timestamp as end_date, 
@@ -32,6 +41,9 @@ class Device implements IDeviceRepository
             yield $record;//$this->mapToObject($record);  
         }
     }
+
+
+
 
     public function xFindDeviceByDay($deviceId, $day)
     {

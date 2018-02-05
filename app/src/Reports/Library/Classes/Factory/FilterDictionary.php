@@ -5,12 +5,19 @@ namespace App\Reports\Library\Classes\Factory;
 
 class FilterDictionary
 {
+
    protected $filtersDictionary = [];  
+
+
+
 
   public function __construct($filters)
   {
      $this->fillDictionary($filters);
   }
+
+
+
 
   private function fillDictionary($filters)
   {
@@ -19,6 +26,9 @@ class FilterDictionary
        }
   }
 
+
+
+  
   public function get($key)
   {
       return $this->filtersDictionary[$key];
