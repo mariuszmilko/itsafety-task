@@ -1,6 +1,6 @@
 # itsafety-task
 TODO:
-1. Algorytm agregująco-filtrujący w oparciu o generatory ()   TODO: refactor, ddoać  metodętrack length  rozwayć assoc track <-> do
+1. Algorytm agregująco-filtrujący w oparciu o generatory ()   TODO: refactor, ddoać  validator track length  rozwayć assoc track <-> dom rozwazyc przeniesienie do validatorow innych warunkow z trackGenenerator
 2. Konfigurator filtrów i aggregatów     //TODO: Tree struktura dla mapy??
 3. Konfiguracja kontenera DI //TODO  next
 3a. Model, Repository do pakietu library Domain
