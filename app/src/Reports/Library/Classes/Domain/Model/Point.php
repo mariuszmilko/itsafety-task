@@ -4,26 +4,30 @@ namespace App\Reports\Library\Classes\Domain\Model;
 
 use stdClass;
 use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterFilter};
 
+/**
+*  Elementary part of track
+*/
 class Point //interface IPoint if vrtual
 { 
 
     /** @var string|null Should contain a description if available */
     protected $oMap;
 
-    /** @var string|null Should contain a description if available */
+    /** @var FilterDictionary Should contain a description if available */
     protected $filterDictionary;
 
-    /** @var string|null Should contain a description if available */
+    /** @var AggregateDictionary Should contain a description if available */
     protected $aggDictionary;
 
-    /** @var string|null Should contain a description if available */
+    /** @var array Should contain a description if available */
     protected $filters;
 
-    /** @var string|null Should contain a description if available */
+    /** @var array Should contain a description if available */
     protected $aggregates;
 
-    /** @var string|null Should contain a description if available */
+    /** @var array Should contain a description if available */
     protected $data;
     
     /**
@@ -31,10 +35,10 @@ class Point //interface IPoint if vrtual
     *
     * @param array $description A text with a maximum of 80 characters.
     * @param stdClass $description A text with a maximum of 80 characters.
-    * @param  $description A text with a maximum of 80 characters.
-    * @param string $description A text with a maximum of 80 characters.
+    * @param FilterDictionary  $description A text with a maximum of 80 characters.
+    * @param AggregateDictionary $description A text with a maximum of 80 characters.
     *
-    * @return void
+    * @constructor
     */
     public function __construct(array $data, stdClass $oMap, FilterDictionary $filterDictionary, AggregateDictionary $aggDictionary)
     {
@@ -50,7 +54,8 @@ class Point //interface IPoint if vrtual
     *
     * @param string $description A text with a maximum of 80 characters.
     *
-    * @return void
+    * @throws Exception
+    * @return string
     */
     public function delimiter()
     {   //to Ireator
@@ -69,11 +74,11 @@ class Point //interface IPoint if vrtual
     /**
      * This method sets a description.
     *
-    * @param string $description A text with a maximum of 80 characters.
+    * @param array $description A text with a maximum of 80 characters.
     *
-    * @return void
+    * @return Point
     */
-    public function filtering(&$parameters) //$context  ->get callable
+    public function filtering(array &$parameters) //$context  ->get callable
     {    //to Ireator
         foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
@@ -94,11 +99,12 @@ class Point //interface IPoint if vrtual
     /**
      * This method sets a description.
     *
+    * @param IParameterFilter $description A text with a maximum of 80 characters.
     * @param string $description A text with a maximum of 80 characters.
     *
-    * @return void
+    * @return bool
     */
-    private function isToFiltering($filter, $rowname)
+    private function isToFiltering(IParameterFilter $filter, string $rowname)
     {
        return  (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
     }
@@ -109,18 +115,21 @@ class Point //interface IPoint if vrtual
     *
     * @return void
     */
-    private function isCorrectAggTypeInFilter($gMap, $fMap) 
+    private function isCorrectAggTypeInFilter(stdClass $gMap, stdClass $fMap) 
     {
        return $gMap->type == $fMap->type;
     } 
     /**
      * This method sets a description.
     *
-    * @param string $description A text with a maximum of 80 characters.
+    * @param array $description A text with a maximum of 80 characters.
+    * @param string
+    * @param string
+    * @param string
     *
     * @return void
     */
-    private function aggPrametersValues(&$parameters, $type, $rowname, $clazz)
+    private function aggPrametersValues(array &$parameters, string $type, string $rowname, string $clazz)
     {
         if (isset($parameters[$type][$clazz])) {
             $agg = $parameters[$type][$clazz];
@@ -134,9 +143,9 @@ class Point //interface IPoint if vrtual
     /**
      * This method sets a description.
     *
-    * @param string $description A text with a maximum of 80 characters.
+    * @param array $description A text with a maximum of 80 characters.
     *
-    * @return void
+    * @return bool
     */
     public function getDateAggData(&$trackParameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     {
