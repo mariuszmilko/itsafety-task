@@ -19,7 +19,7 @@ class Track implements \IteratorAggregate
    
 
 
-   public function getParameter($name) 
+   public function getParameter(string $name) 
    {
        if (!isset($this->parameters[$name])) 
           throw new Exception('Błędna nazwa parametru');

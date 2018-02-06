@@ -2,23 +2,41 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-
-
-
+use stdClass;
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
 
 class Point //interface IPoint if vrtual
 { 
+
+    /** @var string|null Should contain a description if available */
     protected $oMap;
+
+    /** @var string|null Should contain a description if available */
     protected $filterDictionary;
+
+    /** @var string|null Should contain a description if available */
     protected $aggDictionary;
+
+    /** @var string|null Should contain a description if available */
     protected $filters;
+
+    /** @var string|null Should contain a description if available */
     protected $aggregates;
+
+    /** @var string|null Should contain a description if available */
     protected $data;
     
-
-
-
-    public function __construct($data, $oMap, $filterDictionary, $aggDictionary)
+    /**
+     * This method sets a description.
+    *
+    * @param array $description A text with a maximum of 80 characters.
+    * @param stdClass $description A text with a maximum of 80 characters.
+    * @param  $description A text with a maximum of 80 characters.
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
+    public function __construct(array $data, stdClass $oMap, FilterDictionary $filterDictionary, AggregateDictionary $aggDictionary)
     {
         $this->oMap = $oMap;
         $this->filterDictionary = $filterDictionary;
@@ -27,10 +45,13 @@ class Point //interface IPoint if vrtual
         $this->aggregates = $this->oMap->aggregates;
         $this->data = $data;
     }
-
-
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     public function delimiter()
     {   //to Ireator
        foreach ($this->filters as $fMap){ //iterator or calbale filter
@@ -45,10 +66,13 @@ class Point //interface IPoint if vrtual
         }
         throw new \Exception('Brak delimitera w mapie');
     }
-   
-
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     public function filtering(&$parameters) //$context  ->get callable
     {    //to Ireator
         foreach ($this->filters as $fMap){
@@ -67,26 +91,35 @@ class Point //interface IPoint if vrtual
 
        return $this;
     }
-
-
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     private function isToFiltering($filter, $rowname)
     {
        return  (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
     }
-
-    
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     private function isCorrectAggTypeInFilter($gMap, $fMap) 
     {
        return $gMap->type == $fMap->type;
     } 
-    
-
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     private function aggPrametersValues(&$parameters, $type, $rowname, $clazz)
     {
         if (isset($parameters[$type][$clazz])) {
@@ -98,10 +131,13 @@ class Point //interface IPoint if vrtual
 
         $agg->calculate(['value' => $this->data[$rowname], 'index' => 1]);   
     }
-
-
-
-
+    /**
+     * This method sets a description.
+    *
+    * @param string $description A text with a maximum of 80 characters.
+    *
+    * @return void
+    */
     public function getDateAggData(&$trackParameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     {
         foreach ($this->aggregates as $agg)

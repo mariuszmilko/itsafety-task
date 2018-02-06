@@ -8,6 +8,9 @@ use App\Reports\Library\Classes\Config\ISchema;
 class AbstarctConfig implements ISchema
 {
 
+
+
+    
     protected function filter(Traversable $filter, Callable $callback = null, $flag = 0) {
         if ($callback === null) {
             $callback = 'notEmpty';

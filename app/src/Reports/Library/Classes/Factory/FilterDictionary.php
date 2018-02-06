@@ -2,16 +2,21 @@
 
 namespace App\Reports\Library\Classes\Factory;
 
+use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 
-class FilterDictionary
+use stdClass;
+
+
+class FilterDictionary implements IDictionary
 {
+
 
    protected $filtersDictionary = [];  
 
 
 
 
-  public function __construct($filters)
+  public function __construct(stdClass $filters)
   {
      $this->fillDictionary($filters);
   }
@@ -19,17 +24,17 @@ class FilterDictionary
 
 
 
-  private function fillDictionary($filters)
+  public function fillDictionary(stdClass $data)
   {
-       foreach ($filters  as $key => $filter) {
+       foreach ($data  as $key => $filter) {
            $this->filtersDictionary[$filter->class] =  new $filter->class;
        }
   }
 
 
 
-  
-  public function get($key)
+
+  public function get(string $key)
   {
       return $this->filtersDictionary[$key];
   }

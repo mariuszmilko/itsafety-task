@@ -8,7 +8,7 @@ class Mapper
 
 
 
-    
+
     public function __construct($map, $aggIterator, $filterIterator)
     {
 
@@ -23,7 +23,7 @@ class Mapper
     public function getIterator()
     {
         return new \ArrayIterator(
-            $this->buffer,
+            $this->map,
             $this->getLeastRecentPosition(),
             $this->size
         );

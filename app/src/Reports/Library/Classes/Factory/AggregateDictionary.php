@@ -2,8 +2,12 @@
 
 namespace App\Reports\Library\Classes\Factory;
 
+use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 
-class AggregateDictionary
+use stdClass;
+
+
+class AggregateDictionary implements IDictionary
 {
 
 
@@ -12,7 +16,7 @@ class AggregateDictionary
 
 
 
-  public function __construct($aggs)
+  public function __construct(stdClass $aggs)
   {
      $this->fillDictionary($aggs);
   }
@@ -20,17 +24,17 @@ class AggregateDictionary
 
 
 
-  private function fillDictionary($aggs)
+  public function fillDictionary(stdClass $data)
   {
-       foreach ($aggs  as $key => $agg) {
+       foreach ($data  as $key => $agg) {
            $this->aggregatesDictionary[$agg->class] = $agg->class;
        }
   }
 
 
 
-  
-  public function get($key)
+
+  public function get(string $key)
   {
       return new $this->aggregatesDictionary[$key];
   }

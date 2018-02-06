@@ -3,15 +3,11 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
-use App\Reports\Library\Classes\Domain\Model\Device as DeviceModel;
-use App\Reports\Library\Classes\Domain\Model\Point;
-use App\Reports\Library\Classes\Domain\Model\TrackGenerator;
+use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};
 use App\Reports\Library\Classes\Config\Config as TrackConfig;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
-use App\Reports\Library\Classes\Factory\FilterDictionary;
-use App\Reports\Library\Classes\Factory\AggregateDictionary;
-use App\Reports\Library\Classes\Factory\Point as FactoryPoint;
-use App\Reports\Library\Classes\Factory\TrackBuilder;
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, TrackBuilder};
+
 
 // Manualy bez DI
 

@@ -4,6 +4,9 @@ namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
 use App\Reports\Library\Parameters\Generic\IParameterAgg;
 
+
+
+
 class AvgSpeed implements IParameterAgg
 {
    protected $sum = 0;

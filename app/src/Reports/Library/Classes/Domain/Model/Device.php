@@ -2,7 +2,7 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-
+use Generator;
 
 
 
@@ -17,7 +17,7 @@ class Device implements \IteratorAggregate
 
 
 
-   public function __construct($deviceId, $xData, $trackGen)
+   public function __construct(int $deviceId, Generator $xData, TrackGenerator $trackGen)
    {
        $this->deviceId = $deviceId;
        $this->xData = $xData;
