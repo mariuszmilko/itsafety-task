@@ -36,7 +36,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
    public function isEndTrack($point)
-   {
+   { //track validator
        return (isset($this->previous) && $this->current->delimiter() != $this->previous->delimiter());
    }
 
@@ -44,7 +44,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
    public function isFirstTrack()
-   {
+   { //track validator
        return (!isset($this->previous));
    }
 
