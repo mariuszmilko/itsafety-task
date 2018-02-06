@@ -17,7 +17,7 @@ class Device implements IDeviceRepository
 
 
 
-    public function __construct($db)
+    public function __construct(\PDO $db)
     {
         $this->db = $db;
     }
@@ -25,7 +25,7 @@ class Device implements IDeviceRepository
 
 
 
-    public function xFindDeviceTracksByDate($deviceId, $dateFrom, $dateTo) 
+    public function xFindDeviceTracksByDate(int $deviceId, string $dateFrom,  string $dateTo) 
     {
         $query = 'SELECT device_id, record_timestamp as start_date, record_timestamp as end_date, 
                          record_device_state, record_can_speed, record_calc_distance, 
@@ -48,7 +48,7 @@ class Device implements IDeviceRepository
 
 
 
-    public function xFindDeviceByDay($deviceId, $day)
+    public function xFindDeviceByDay(int $deviceId, string $day)
     {
         $query = 'SELECT device_id, record_timestamp as start_date, record_timestamp as end_date, 
                          record_device_state, record_can_speed, record_calc_distance, 

@@ -12,10 +12,10 @@ interface IDeviceRepository extends IRepository
 
 
 
-    public function xFindDeviceTracksByDate($deviceId, $dateFrom, $dateTo);
+    public function xFindDeviceTracksByDate(int $deviceId, string $dateFrom, string $dateTo);
 
 
 
 
-    public function xFindDeviceByDay($deviceId, $day);
+    public function xFindDeviceByDay(int $deviceId, string $day);
 }

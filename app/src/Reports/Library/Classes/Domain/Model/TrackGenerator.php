@@ -3,36 +3,38 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
+use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack};
 use Generator;
 
 
 
-class TrackGenerator  implements \IteratorAggregate //implements IProcess
+final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 {
    private $current;
    private $previous;
    private $track;
    private $tracks = [];
    private $factoryPoint;
+   private $factoryTrack; 
    private $lastPointFromBuffer;
    const MINLEGTH = 2; //to env  track config or validator
 
    
-   public function __construct($factoryPoint, $trackBuilder)//$config
+   public function __construct(FactoryPoint $factoryPoint, FactoryTrack $factoryTrack)//$config
    {
       $this->factoryPoint = $factoryPoint;
-      $this->trackBuilder = $trackBuilder;
+      $this->factoryTrack = $factoryTrack;
    }
      
 
 
 
-   public function completeTrack(IPoint $point, $end)
+   public function completeTrack(IPoint $point, bool $end)
    {
       if ($this->isCompleteTrack($point, $end)) { //count
           $this->track->updateOnEnd($point);
           $this->addTrack();
-          $this->track = $this->trackBuilder->newInstance();
+          $this->track = $this->factoryTrack->factory();
           $this->track->processPoint($point);
       }    
    }
@@ -46,7 +48,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
    }
 
 
-   public function isCompleteTrack(IPoint $point, $end)
+   public function isCompleteTrack(IPoint $point, bool $end)
    {   //track validator
        return ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength());
    }
@@ -82,7 +84,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function beginTrack()
    {
       if ($this->isFirstTrack()) {
-        $this->track = $this->trackBuilder->newInstance();
+        $this->track = $this->factoryTrack->factory();
         return true;
       }
       return false;
@@ -91,9 +93,9 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   private function setCurrentPoint($delimiter) 
+   private function setCurrentPoint(IPoint $point) 
    {
-      $this->current = $delimiter; //record_device_state
+      $this->current = $point; //record_device_state
    }
 
 

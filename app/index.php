@@ -6,7 +6,7 @@ use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
 use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};
 use App\Reports\Library\Classes\Config\Config as TrackConfig;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
-use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, TrackBuilder};
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
 
 
 // Manualy bez DI
@@ -35,7 +35,7 @@ $repository = new DeviceRepository($conn);
 $xRecords = $repository->xFindDeviceTracksByDate($deviceId, $datefrom, $dateTo);
 $parameters = [];
 
-$trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new TrackBuilder());
+$trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
 $device = new DeviceModel($deviceId, $xRecords, $trackGen);
 $device->generateTracks();
 
