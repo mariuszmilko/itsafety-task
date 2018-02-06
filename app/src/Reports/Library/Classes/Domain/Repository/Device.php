@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Reports\Sheets\Tracks\Repository;
+namespace App\Reports\Library\Classes\Domain\Repository;
 
 use App\Reports\Library\Classes\Repository\Device\IDeviceRepository;
+
+
+
 
 class Device implements IDeviceRepository
 {

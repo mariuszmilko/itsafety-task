@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Reports\Library\Classes\Repository;
+namespace App\Reports\Library\Classes\Domain\Repository;
 
 use App\Reports\Library\Classes\Repository\Track\ITrackRepository;
+
+
+
 
 class Track extends ITrackRepository
 {

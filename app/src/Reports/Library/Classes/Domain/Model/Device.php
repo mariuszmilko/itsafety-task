@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Reports\Sheets\Tracks\Model;
+namespace App\Reports\Library\Classes\Domain\Model;
+
+
+
+
 
 class Device implements \IteratorAggregate
 {

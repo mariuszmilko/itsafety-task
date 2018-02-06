@@ -2,7 +2,7 @@
 
 namespace App\Reports\Library\Classes\Factory;
 
-use App\Reports\Sheets\Tracks\Model\Track;
+use App\Reports\Library\Classes\Domain\Model\Track;
 
 
 

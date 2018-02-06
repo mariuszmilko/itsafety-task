@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Reports\Sheets\Tracks\Model;
+namespace App\Reports\Library\Classes\Domain\Model;
 
-class Point //interface IPoint
+
+
+
+
+class Point //interface IPoint if vrtual
 { 
     protected $oMap;
     protected $filterDictionary;

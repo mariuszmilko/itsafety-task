@@ -2,12 +2,12 @@
 
 namespace App\Reports\Library\Classes\Factory;
 
-use App\Reports\Sheets\Tracks\Model\Point as PointModel;
+use App\Reports\Library\Classes\Domain\Model\Point as PointModel;
 
 final class Point 
 {
 
-    
+
    private $oMap;
    private $filterDictionary;
    private $aggDictionary;
