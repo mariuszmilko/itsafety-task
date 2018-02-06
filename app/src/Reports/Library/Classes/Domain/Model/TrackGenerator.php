@@ -2,7 +2,7 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-
+use Generator;
 
 
 
@@ -114,23 +114,20 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function process($xData, $buffer = null)
+   public function process(Generator $xData, $buffer = null)
    {
       while ($xData->valid()) {
-           $data =  $xData->current();
-            
+           $data =  $xData->current();         
            $point = $this->factoryPoint->factory($data);
-           $this->setCurrentPoint($point);//filtering($point);
+           $this->setCurrentPoint($point);
            $this->beginTrack();
-           if (!$this->isEndTrack($point)) {
-             $this->track->processPoint($point);
-           } else {
-             $this->completeTrack($point, false);
-           }
+           (!$this->isEndTrack($point)) ? 
+                $this->track->processPoint($point) : 
+                $this->completeTrack($point, false); 
            $this->setPreviousPoint();
            $xData->next();
            if (!$xData->valid()) {
-                $this->completeTrack($point, true);
+             $this->completeTrack($point, true);
            }
       }
    }
