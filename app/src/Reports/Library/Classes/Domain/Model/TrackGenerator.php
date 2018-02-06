@@ -2,6 +2,7 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
 use Generator;
 
 
@@ -26,7 +27,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function completeTrack($point, $end)
+   public function completeTrack(IPoint $point, $end)
    {
       if ($this->isCompleteTrack($point, $end)) { //count
           $this->track->updateOnEnd($point);
@@ -45,7 +46,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
    }
 
 
-   public function isCompleteTrack($point, $end)
+   public function isCompleteTrack(IPoint $point, $end)
    {   //track validator
        return ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength());
    }
@@ -53,7 +54,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function isEndTrack($point)
+   public function isEndTrack(IPoint $point)
    { //track validator
        return (isset($this->previous) && $this->current->delimiter() != $this->previous->delimiter());
    }

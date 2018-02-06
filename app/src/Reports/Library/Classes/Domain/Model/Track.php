@@ -2,7 +2,7 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
 
 
 
@@ -38,7 +38,7 @@ class Track implements \IteratorAggregate
 
 
 
-   public function processPoint($point)
+   public function processPoint(IPointProcess $point)
    {
        return $point->filtering($this->parameters);
    }
@@ -46,7 +46,7 @@ class Track implements \IteratorAggregate
 
 
 
-   public function updateOnEnd($point)
+   public function updateOnEnd(IPointUpdate $point)
    {
        $point->getDateAggData($this->parameters);
    }

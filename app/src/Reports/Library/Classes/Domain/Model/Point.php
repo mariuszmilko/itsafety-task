@@ -5,11 +5,12 @@ namespace App\Reports\Library\Classes\Domain\Model;
 use stdClass;
 use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
 use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterFilter};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
 
 /**
 *  Elementary part of track
 */
-class Point //interface IPoint if vrtual
+class Point implements IPointProcess, IPointUpdate
 { 
 
     /** @var string|null Should contain a description if available */
@@ -147,12 +148,12 @@ class Point //interface IPoint if vrtual
     *
     * @return bool
     */
-    public function getDateAggData(&$trackParameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
+    public function getDateAggData(array &$parameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     {
         foreach ($this->aggregates as $agg)
         {
             if ($agg->type && $agg->lastaware) {
-                $p = &$trackParameters['end'][$agg->class];
+                $p = &$parameters['end'][$agg->class];
                 $p->calculate(['value' => $this->data['end_date']]); //const in map
                 return true;
             }
