@@ -24,12 +24,26 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function completeTrack($point, $end)
    {
-      if ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength()) { //count
+      if ($this->isCompleteTrack($point, $end)) { //count
           $this->track->updateOnEnd($point);
-          $this->tracks[] = $this->track; //track container 
+          $this->addTrack();
           $this->track = $this->trackBuilder->newInstance();
           $this->track->processPoint($point);
       }    
+   }
+
+
+
+
+   public function addTrack()
+   {
+       $this->tracks[] = $this->track;
+   }
+
+
+   public function isCompleteTrack($point, $end)
+   {   //track validator
+       return ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength());
    }
 
 
