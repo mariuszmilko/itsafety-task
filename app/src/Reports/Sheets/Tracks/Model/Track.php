@@ -2,7 +2,6 @@
 
 namespace App\Reports\Sheets\Tracks\Model;
 
-
 class Track implements \IteratorAggregate
 {
    protected $parameters = [];

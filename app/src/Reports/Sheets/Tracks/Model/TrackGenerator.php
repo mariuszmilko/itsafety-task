@@ -10,6 +10,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private $tracks = [];
    private $factoryPoint;
    private $lastPointFromBuffer;
+   const MINLEGTH = 2; //to env  track config or validator
 
    
    public function __construct($factoryPoint, $trackBuilder)//$config
@@ -23,7 +24,7 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function completeTrack($point, $end)
    {
-      if ($end || $this->isEndTrack($point)) { //count
+      if ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength()) { //count
           $this->track->updateOnEnd($point);
           $this->tracks[] = $this->track; //track container 
           $this->track = $this->trackBuilder->newInstance();
@@ -45,6 +46,15 @@ class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function isFirstTrack()
    {
        return (!isset($this->previous));
+   }
+
+
+
+
+   public function isMinLength()
+   {
+       //track validator
+       return true;
    }
 
 
