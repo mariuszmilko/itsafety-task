@@ -119,7 +119,6 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function process(Generator $xData, $buffer = null)
    {
-      while ($xData->valid()) {
            $data =  $xData->current();         
            $point = $this->factoryPoint->factory($data);
            $this->setCurrentPoint($point);
@@ -132,11 +131,15 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
            if (!$xData->valid()) {
              $this->completeTrack($point, true);
            }
-      }
    }
 
 
+  public function pipe (\Closure $next)
+  {
 
+       $next($result);
+      return $this;
+  }
 
    public function getTracks()
    {

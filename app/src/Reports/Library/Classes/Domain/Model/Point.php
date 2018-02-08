@@ -5,12 +5,12 @@ namespace App\Reports\Library\Classes\Domain\Model;
 use stdClass;
 use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
 use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterFilter};
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointChain};
 
 /**
 *  Elementary part of track
 */
-class Point implements IPointProcess, IPointUpdate
+class Point implements IPointChain
 { 
 
     /** @var string|null Should contain a description if available */
@@ -84,12 +84,13 @@ class Point implements IPointProcess, IPointUpdate
         foreach ($this->filters as $fMap){
             $filter = $this->filterDictionary->get($fMap->class);
             if ($this->isToFiltering($filter, $fMap->rowname)) {  //zamist warunk dołoyć filtr do foreach callable
-                foreach ($this->aggregates  as $gMap) {  
+                foreach ($this->aggregates  as $gMap) {  //chain of renspobility i chain 
                     if ($this->isCorrectAggTypeInFilter($gMap, $fMap) ) {
                         $type = $fMap->type;
                     } else {
                         continue;
                     }
+                    //$process
                     $this->aggPrametersValues($parameters, $type, $gMap->rowname, $gMap->class);
                 }
             }
@@ -130,7 +131,7 @@ class Point implements IPointProcess, IPointUpdate
     *
     * @return void
     */
-    private function aggPrametersValues(array &$parameters, string $type, string $rowname, string $clazz)
+    public function aggPrametersValues(array &$parameters, string $type, string $rowname, string $clazz)
     {
         if (isset($parameters[$type][$clazz])) {
             $agg = $parameters[$type][$clazz];
@@ -140,6 +141,37 @@ class Point implements IPointProcess, IPointUpdate
         }
 
         $agg->calculate(['value' => $this->data[$rowname], 'index' => 1]);   
+    }
+    /**
+     * This method sets a description.
+    *
+    * @param array $description A text with a maximum of 80 characters.
+    * @param string
+    * @param string
+    * @param string
+    *
+    * @return void
+    */               
+    public function chainParametersValues(array &$parameters) //process
+    {
+        // if (isset($parameters[$type][$clazz])) {
+        //     $agg = $parameters[$type][$clazz];
+        // } else {
+        //     $agg = $this->aggDictionary->get($clazz);  
+        //     $parameters[$type][$clazz] = $agg;
+        // }
+        foreach ($this->aggregates as $agg)
+        {
+            if ($agg->type && $agg->lastaware) {
+                $p = &$parameters['end'][$agg->class];
+               // $p->setSuccesor($this->aggregates[$agg['chain']])  //recursive for parent->children
+               // $p->handle(['value' => $this->data[$rowname], 'index' => 1]);   
+                $p->calculate(['value' => $this->data['end_date']]); //const in map
+                return true;
+            }
+        }
+        return false;
+    
     }
     /**
      * This method sets a description.
