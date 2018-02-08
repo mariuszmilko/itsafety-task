@@ -7,5 +7,6 @@ use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPoin
 
 interface IPointChain extends IPointUpdate, IPointProcess
 {
-    public function chainParametersValues(array &$parameters);
+    public function chainParametersOnEnd(array &$parameters);
+    public function chainParametersOnProcees(array &$parameters, $type, $rowname, $class);
 }

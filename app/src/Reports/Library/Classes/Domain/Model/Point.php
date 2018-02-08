@@ -152,7 +152,7 @@ class Point implements IPointChain
     *
     * @return void
     */               
-    public function chainParametersValues(array &$parameters) //process
+    public function chainParametersOnEnd(array &$parameters) //process
     {
         // if (isset($parameters[$type][$clazz])) {
         //     $agg = $parameters[$type][$clazz];
@@ -173,6 +173,39 @@ class Point implements IPointChain
         return false;
     
     }
+    /**
+     * This method sets a description.
+    *
+    * @param array $description A text with a maximum of 80 characters.
+    * @param string
+    * @param string
+    * @param string
+    *
+    * @return void
+    */               
+    public function chainParametersOnProcess(array &$parameters, $type, $rowname, $class) //process
+    {
+        // if (isset($parameters[$type][$clazz])) {
+        //     $agg = $parameters[$type][$clazz];
+        // } else {
+        //     $agg = $this->aggDictionary->get($clazz);  
+        //     $parameters[$type][$clazz] = $agg;
+        // }
+        foreach ($this->aggregates as $agg)
+        {
+            if ($agg->type && $agg->lastaware) {
+                $p = &$parameters['end'][$agg->class];
+               // $p->setSuccesor($this->aggregates[$agg['chain']])  //recursive for parent->children
+               // $p->handle(['value' => $this->data[$rowname], 'index' => 1]);   
+                $p->calculate(['value' => $this->data['end_date']]); //const in map
+                return true;
+            }
+        }
+        return false;
+    
+    }
+
+
     /**
      * This method sets a description.
     *
