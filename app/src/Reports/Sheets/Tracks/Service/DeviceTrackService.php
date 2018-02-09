@@ -48,7 +48,7 @@ class DeviceTrackService implements IService
         $device->processTracks();
         $device->generateTracks();
 
-         return $device->getTracks();
+         return $device;
     }
  
     public function getDataByDay($device_id, $dateDay, $map)
@@ -74,7 +74,7 @@ class DeviceTrackService implements IService
         $device->processTracks();
         $device->generateTracks(); 
 
-        return $device->getTracks();
+        return $device;
     }
 
 }

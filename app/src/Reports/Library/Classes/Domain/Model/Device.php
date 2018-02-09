@@ -57,6 +57,6 @@ class Device implements \IteratorAggregate
 
 
    public function getIterator() {
-	  return new ArrayIterator($this->tracks);
+	  return new \ArrayIterator($this->tracks);
    }
 }
