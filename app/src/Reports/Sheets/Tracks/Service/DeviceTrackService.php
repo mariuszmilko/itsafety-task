@@ -7,10 +7,10 @@ use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, Trac
 use App\Reports\Library\Classes\Config\Config as TrackConfig;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
 use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
+use App\Reports\Library\Classes\Service\IService;
 
 
-
-class DeviceTrackService
+class DeviceTrackService implements IService
 {
    protected $device;
    protected $conn;
@@ -33,7 +33,7 @@ class DeviceTrackService
         $filters = $oa->filters;
         $aggregates = $oa->aggregates;
        
-        $deviceId = 36580;
+        $deviceId = $device_id;
         $datefrom = $dateFrom;//'2018-01-19';
         $dateTo = $dateTo;//'2018-01-25';
      
@@ -63,7 +63,7 @@ class DeviceTrackService
         $filters = $oa->filters;
         $aggregates = $oa->aggregates;
         
-        $deviceId = 36580;
+        $deviceId = $device_id;
         $day = $dateDay;//'2018-01-25';
         
         $repository = new DeviceRepository($this->conn);
