@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\IParameterAgg;
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain};
 
 
 
 
-class StopFuel implements IParameterAgg
+class StopFuel implements IParameterAgg, IParameterChain
 {
    protected $value;
    protected $first = false;
@@ -20,6 +20,18 @@ class StopFuel implements IParameterAgg
     public function getCalculatedValue()
     {  
         return $this->value;
+    }
+
+    public function handleOperation($value)
+    {
+        print_r('stop_fuel');
+         exit('chainOnEnd');
+    } 
+    
+    public function setSuccessor($nextParam)
+    {
+        print_r('stop_fuel');
+        exit('chainOnEnd');
     }
 
 }

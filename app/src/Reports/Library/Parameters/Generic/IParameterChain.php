@@ -2,9 +2,9 @@
 
 namespace App\Reports\Library\Parameters\Generic;
 
+use App\Reports\Library\Parameters\Generic\IParameter;
 
-
-interface IParameterChain 
+interface IParameterChain  extends IParameter
 {
 
 

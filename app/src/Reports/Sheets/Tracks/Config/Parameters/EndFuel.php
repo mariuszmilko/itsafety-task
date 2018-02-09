@@ -2,6 +2,8 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
+use App\Reports\Library\Parameters\Generic\IParameterAgg;
+
 class EndFuel implements IParameterAgg
 {
    protected $sum = 0;

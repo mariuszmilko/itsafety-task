@@ -7,21 +7,27 @@ use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain};
 
 
 
-class SumDistance implements IParameterAgg, IParameterChain
+class SumOdoDistance implements IParameterAgg, IParameterChain 
 {
-   protected $sum = 0;
-   protected $maxCount = 0;
-   protected $index = 0;
+   protected $start = 0;
+   protected $end = 0;
+   protected $first = false;
 
     public function calculate($parameters)
     {
-        $this->sum += $parameters['value'];
-        $this->index += $parameters['index'];
+        if ($parameters['value'] > 0) {
+            if ($this->first == false) {
+                $this->start = $parameters['value'];
+                $this->first = true;
+            } else {
+                $this->end = $parameters['value'];
+            }
+        }
     }
 
     public function getCalculatedValue()
     {  
-        return $this->sum;
+        return $this->end - $this->first;
     }
 
     public function handleOperation($value)

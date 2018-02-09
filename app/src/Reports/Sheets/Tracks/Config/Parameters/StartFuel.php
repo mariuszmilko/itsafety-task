@@ -9,8 +9,9 @@ use App\Reports\Library\Parameters\Generic\IParameterAgg;
 
 class StartFuel implements IParameterAgg
 {
-   protected $value;
+   protected $last;
    protected $first = false;
+   protected $next;
 
     public function calculate($parameters)
     {
@@ -24,5 +25,4 @@ class StartFuel implements IParameterAgg
     {  
         return $this->value;
     }
-
 }
