@@ -27,12 +27,20 @@ class Device implements \IteratorAggregate
 
 
 
+   public function processTracks()
+   {
+      while ($this->xData->valid()) {   
+         $this->trackGen->process($this->xData);  
+      }
+   }
+
+
+
+
+
    public function generateTracks()
    {
-    while ($this->xData->valid()) {   
-       $this->trackGen->process($this->xData);  
-    }
-    $this->tracks = $this->trackGen->getTracks();
+      $this->tracks = $this->trackGen->getTracks();
    }
 
 

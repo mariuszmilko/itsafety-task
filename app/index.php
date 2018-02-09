@@ -49,6 +49,7 @@ $resolverDateRange = function (callable $resolve, callable $reject) use ($contai
   
   $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
   $device = new DeviceModel($deviceId, $xRecords, $trackGen);
+  $device->processTracks();
   $device->generateTracks();
   $resolve($device->getTracks());
 };
@@ -77,6 +78,7 @@ $resolverDay = function (callable $resolve, callable $reject) use ($container, $
     
     $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
     $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
+    $device->processTracks();
     $device->generateTracks();
     $resolve($device->getTracks());
   };
