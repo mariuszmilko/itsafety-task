@@ -10,10 +10,19 @@ use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, 
 use App\Reports\Library\Classes\Service\IService;
 
 
+
+
 class DeviceTrackService implements IService
 {
+
+
    protected $device;
+
+
    protected $conn;
+
+
+
 
    public function __construct($device, $repository, $trackGenerator, $conn)
    {
@@ -22,6 +31,9 @@ class DeviceTrackService implements IService
        $this->trackGenerator = $trackGenerator;
        $this->conn = $conn;
    }
+
+
+
 
     public function getDataByDate($device_id, $dateFrom, $dateTo, $map)
     {   
@@ -51,6 +63,9 @@ class DeviceTrackService implements IService
          return $device;
     }
  
+
+
+
     public function getDataByDay($device_id, $dateDay, $map)
     { 
         $oa = new ArrayToObject();
@@ -76,5 +91,4 @@ class DeviceTrackService implements IService
 
         return $device;
     }
-
 }

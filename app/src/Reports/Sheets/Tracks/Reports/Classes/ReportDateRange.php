@@ -6,12 +6,26 @@ use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
 use App\Reports\Library\Classes\Service\IService;
 use App\Reports\Library\Classes\Report\IReport;
 
+
+
+
 class ReportDateRange  implements IReport
 {
+
+
    protected $service;
+
+
    protected $template;
+
+
    protected $map;
+
+
    protected $parameters = [];
+
+
+
 
    public function __construct(IService $service, $template, $map, $parameters = [])
    {
@@ -21,13 +35,16 @@ class ReportDateRange  implements IReport
       $this->map = $map;
    }
 
+
+
+
    public function generate()
    {
-     $device = $this->service->getDataByDate(
-       $this->parameters['deviceId'], 
-       $this->parameters['dateFrom'], 
-       $this->parameters['dateTo'], 
-       $this->map
+      $device = $this->service->getDataByDate(
+        $this->parameters['deviceId'], 
+        $this->parameters['dateFrom'], 
+        $this->parameters['dateTo'], 
+        $this->map
       );
 
       $deviceId = $this->parameters['deviceId'];
@@ -35,13 +52,12 @@ class ReportDateRange  implements IReport
       $dateTo = $this->parameters['dateTo'];
 
 
-     return $this->template->render(
-       'daterange.report', 
-       array('deviceId' => $deviceId,  
+      return $this->template->render(
+        'daterange.report', 
+        array('deviceId' => $deviceId,  
              'dateFrom' => $dateFrom,
              'dateTo' =>  $dateTo,
              'device' => $device)
-     );      
+      );      
    }
-
 }
