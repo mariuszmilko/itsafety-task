@@ -34,8 +34,8 @@ class DeviceTrackService implements IService
         $aggregates = $oa->aggregates;
        
         $deviceId = $device_id;
-        $datefrom = $dateFrom;//'2018-01-19';
-        $dateTo = $dateTo;//'2018-01-25';
+        $datefrom = $dateFrom;
+        $dateTo = $dateTo;
      
 
         $repository = new DeviceRepository($this->conn);
@@ -47,14 +47,12 @@ class DeviceTrackService implements IService
         $device = new DeviceModel($deviceId, $xRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks();
-        return $device;
+
+         return $device->getTracks();
     }
  
     public function getDataByDay($device_id, $dateDay, $map)
     { 
-        $path = getcwd();
-        $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
-        
         $oa = new ArrayToObject();
         $oa = $oa->arrayToObject($map);
         
@@ -64,7 +62,7 @@ class DeviceTrackService implements IService
         $aggregates = $oa->aggregates;
         
         $deviceId = $device_id;
-        $day = $dateDay;//'2018-01-25';
+        $day = $dateDay;
         
         $repository = new DeviceRepository($this->conn);
         $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
@@ -75,7 +73,8 @@ class DeviceTrackService implements IService
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks(); 
-        return $device;
+
+        return $device->getTracks();
     }
 
 }

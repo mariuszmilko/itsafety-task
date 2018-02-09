@@ -23,18 +23,25 @@ class ReportDateRange  implements IReport
 
    public function generate()
    {
-     $device = $this->service->getDataByDate(
+     $tracks = $this->service->getDataByDate(
        $this->parameters['deviceId'], 
        $this->parameters['dateFrom'], 
        $this->parameters['dateTo'], 
        $this->map
       );
 
-     $values = $device->getTracks();
-    // var_dump($values);
-   // ($this->parameters[REPORT_DATERANGE_DF], $this->parameters[REPORT_DATERANGE_DT]);
-           
-     return $values; //$template->view($values);
+      $deviceId = $this->parameters['deviceId'];
+      $dateFrom = $this->parameters['dateFrom'];
+      $dateTo = $this->parameters['dateTo'];
+
+
+     return $this->template->render(
+       'daterange.report', 
+       array('deviceId' => $deviceId,  
+             'dateFrom' => $dateFrom,
+             'dateTo' =>  $dateTo,
+             'tracks' => $tracks)
+     );      
    }
 
 }

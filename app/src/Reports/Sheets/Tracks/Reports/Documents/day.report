@@ -1,0 +1,8 @@
+Raport Track  dla Device: {{ deviceId }}   dzień: {{ day }}
+
+{% for key, value in tracks %}
+    Type : {{ key }}
+{% endfor %}
+
+{{dump(tracks)}}
+Raport Track  dla Device: {{ deviceId }}   dzień: {{ day }}

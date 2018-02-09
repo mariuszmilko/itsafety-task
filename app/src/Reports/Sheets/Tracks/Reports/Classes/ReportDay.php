@@ -23,16 +23,21 @@ class ReportDay  implements IReport
 
    public function generate()
    {
-     $device = $this->service->getDataByDay(
+     $tracks = $this->service->getDataByDay(
        $this->parameters['deviceId'], 
        $this->parameters['day'], 
        $this->map
       );
 
-     $values = $device->getTracks();
-   // ($this->parameters[REPORT_DATERANGE_DF], $this->parameters[REPORT_DATERANGE_DT]);
-           
-     return $values; //$template->view($values);
+      $deviceId = $this->parameters['deviceId'];
+      $day = $this->parameters['day'];
+
+    return $this->template->render(
+        'day.report', 
+        array('deviceId' => $deviceId,
+            'day' => $day,
+            'tracks' => $tracks)
+    );    
    }
 
 }

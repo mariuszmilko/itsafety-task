@@ -22,7 +22,9 @@ $path = getcwd();
 $loader = new Twig_Loader_Filesystem($path.'/app/src/Reports/Sheets/Tracks/Reports/Documents');
 $template = new Twig_Environment($loader, array(
     'cache' => $path.'/app/Cache',
+    'debug' => true,
 ));
+$template->addExtension(new Twig_Extension_Debug());
 
 
 $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
@@ -66,7 +68,7 @@ $pending = [
  ];
 
 $promise = \React\Promise\all($pending)->done(function($resolved){
-    print_r($resolved); 
+     print_r($resolved); 
     echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
     echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 });
