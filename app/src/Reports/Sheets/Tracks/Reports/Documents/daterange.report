@@ -1,0 +1,8 @@
+Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
+
+{% for key, value in tracks %}
+    Type : {{ key }}
+{% endfor %}
+
+Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
+

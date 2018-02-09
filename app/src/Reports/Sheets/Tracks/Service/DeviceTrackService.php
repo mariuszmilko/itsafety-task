@@ -7,10 +7,10 @@ use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, Trac
 use App\Reports\Library\Classes\Config\Config as TrackConfig;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
 use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
+use App\Reports\Library\Classes\Service\IService;
 
 
-
-class DeviceTrackService
+class DeviceTrackService implements IService
 {
    protected $device;
    protected $conn;
@@ -33,9 +33,9 @@ class DeviceTrackService
         $filters = $oa->filters;
         $aggregates = $oa->aggregates;
        
-        $deviceId = 36580;
-        $datefrom = $dateFrom;//'2018-01-19';
-        $dateTo = $dateTo;//'2018-01-25';
+        $deviceId = $device_id;
+        $datefrom = $dateFrom;
+        $dateTo = $dateTo;
      
 
         $repository = new DeviceRepository($this->conn);
@@ -47,14 +47,12 @@ class DeviceTrackService
         $device = new DeviceModel($deviceId, $xRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks();
-        return $device;
+
+         return $device->getTracks();
     }
  
     public function getDataByDay($device_id, $dateDay, $map)
     { 
-        $path = getcwd();
-        $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
-        
         $oa = new ArrayToObject();
         $oa = $oa->arrayToObject($map);
         
@@ -63,8 +61,8 @@ class DeviceTrackService
         $filters = $oa->filters;
         $aggregates = $oa->aggregates;
         
-        $deviceId = 36580;
-        $day = $dateDay;//'2018-01-25';
+        $deviceId = $device_id;
+        $day = $dateDay;
         
         $repository = new DeviceRepository($this->conn);
         $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
@@ -75,7 +73,8 @@ class DeviceTrackService
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks(); 
-        return $device;
+
+        return $device->getTracks();
     }
 
 }

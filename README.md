@@ -11,6 +11,7 @@ TODO:
 5. Testy PoC środowiska  //zrobione
 6. Uzupełnienie i aktualizacja nazw, typowania, php_doc //TODO: w trakcie
 7. Aktualizacja dokumentacji (UML)  
+8. Templates   //zrobione versja raw
 
 Czas zakończenia: Wersja DEMO :)
 ![img](https://github.com/mariuszmilko/itsafety-task/blob/master/itsafety.png)
