@@ -22,6 +22,11 @@ class StopFuel implements IParameterAgg, IParameterChain
         return $this->value;
     }
 
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
+
     public function handleOperation($value)
     {
         print_r('stop_fuel');

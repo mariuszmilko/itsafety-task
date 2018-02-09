@@ -25,4 +25,9 @@ class DiffFuel implements IParameterAgg
     {  
         return $this->firstValue - $this->lastValue;
     }
+
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
 }

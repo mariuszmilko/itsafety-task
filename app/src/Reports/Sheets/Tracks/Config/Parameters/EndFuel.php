@@ -20,4 +20,9 @@ class EndFuel implements IParameterAgg
         return ($this->sum/$this->index);
     }
 
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
+
 }

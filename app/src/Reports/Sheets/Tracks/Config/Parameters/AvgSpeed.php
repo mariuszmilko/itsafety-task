@@ -24,14 +24,8 @@ class AvgSpeed implements  IParameterAgg
         return ($this->sum/$this->index);
     }
 
-    public function handleOperation($value)
+    public function  __toString()
     {
-
-    } 
-
-    public function setSuccessor($nextParam)
-    {
-
+        return (string)$this->getCalculatedValue();
     }
-
 }

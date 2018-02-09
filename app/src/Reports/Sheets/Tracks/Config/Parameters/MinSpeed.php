@@ -20,4 +20,9 @@ class MinSpeed implements IParameterAgg
     {  
         return $this->min;
     }
+
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
 }

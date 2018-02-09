@@ -20,4 +20,9 @@ class MaxSpeed implements IParameterAgg
     {  
         return $this->max;
     }
+
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
 }

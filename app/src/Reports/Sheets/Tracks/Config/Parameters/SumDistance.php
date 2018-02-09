@@ -24,6 +24,11 @@ class SumDistance implements IParameterAgg, IParameterChain
         return $this->sum;
     }
 
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
+
     public function handleOperation($value)
     {
         print_r('sum_distance');

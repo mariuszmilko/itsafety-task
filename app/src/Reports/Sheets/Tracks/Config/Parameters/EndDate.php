@@ -24,4 +24,9 @@ class EndDate implements IParameterAgg
         return $this->endDate;
     }
 
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
+
 }

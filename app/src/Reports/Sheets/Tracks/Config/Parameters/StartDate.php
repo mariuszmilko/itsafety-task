@@ -25,4 +25,9 @@ class StartDate implements IParameterAgg
         return $this->startDate;
     }
 
+    public function  __toString()
+    {
+        return (string)$this->getCalculatedValue();
+    }
+
 }
