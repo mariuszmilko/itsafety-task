@@ -1,6 +1,13 @@
 <?php
 
-namespace App\Reports\Library\Classes\Repository;
+namespace App\Reports\Sheets\Tracks\Service;
+
+use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
+use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};
+use App\Reports\Library\Classes\Config\Config as TrackConfig;
+use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
+
 
 
 class DeviceTrackService
@@ -43,7 +50,7 @@ class DeviceTrackService
         return $device;
     }
  
-    public function getDataByDay($dateDay)
+    public function getDataByDay($device_id, $dateDay, $map)
     { 
         $path = getcwd();
         $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
@@ -57,7 +64,7 @@ class DeviceTrackService
         $aggregates = $oa->aggregates;
         
         $deviceId = 36580;
-        $day = '2018-01-25';
+        $day = $dateDay;//'2018-01-25';
         
         $repository = new DeviceRepository($this->conn);
         $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
@@ -67,7 +74,8 @@ class DeviceTrackService
         $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
-    $device->generateTracks(); 
+        $device->generateTracks(); 
+        return $device;
     }
 
 }

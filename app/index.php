@@ -2,12 +2,8 @@
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
-use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};
-use App\Reports\Library\Classes\Config\Config as TrackConfig;
-use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
-use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
 
+use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
 
 // Manualy bez DI
 //TODO
@@ -22,64 +18,37 @@ use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, 
 
 $conn = new PDO('mysql:host=172.31.0.2;dbname=itsafety;port=3306','root','p@ssw0rd');
 
-$resolverDateRange = function (callable $resolve, callable $reject) use ($container, $conn) {
+$path = getcwd();
+$map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
+$service = new DeviceTrackService(null, null, null, $conn);
+
+
+$resolverDateRange = function (callable $resolve, callable $reject) use ($service) {
   // $report = $container->get(ReportDateRange::class);
+
+  $deviceId = 36580;
+  $dateFrom = '2018-01-19';
+  $dateTo = '2018-01-25';
 
   $path = getcwd();
   $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
-  
-  $oa = new ArrayToObject();
-  $oa = $oa->arrayToObject($map);
-  
-  $filterDictionary = new FilterDictionary($oa->filters);
-  $aggDictionary = new AggregateDictionary($oa->aggregates);
-  $filters = $oa->filters;
-  $aggregates = $oa->aggregates;
-  
-  $deviceId = 36580;
-  $datefrom = '2018-01-19';
-  $dateTo = '2018-01-25';
 
-  $day = '2018-01-25';
-  
-  $repository = new DeviceRepository($conn);
-  $xRecords = $repository->xFindDeviceTracksByDate($deviceId, $datefrom, $dateTo);
-  $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
-  $parameters = [];
-  
-  $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
-  $device = new DeviceModel($deviceId, $xRecords, $trackGen);
-  $device->processTracks();
-  $device->generateTracks();
-  $resolve($device->getTracks());
+  $device = $service->getDataByDate($deviceId, $dateFrom, $dateTo, $map);
+
+   $resolve($device->getTracks());
 };
 
-$resolverDay = function (callable $resolve, callable $reject) use ($container, $conn) {
+$resolverDay = function (callable $resolve, callable $reject) use ($service) {
     // $report = $container->get(ReportDateRange::class);
+
+    $deviceId = 36580;
+    $dateDay = '2018-01-25';
 
     $path = getcwd();
     $map = include $path.'/app/src/Reports/Sheets/Tracks/Config/Schema/Map.php';
-    
-    $oa = new ArrayToObject();
-    $oa = $oa->arrayToObject($map);
-    
-    $filterDictionary = new FilterDictionary($oa->filters);
-    $aggDictionary = new AggregateDictionary($oa->aggregates);
-    $filters = $oa->filters;
-    $aggregates = $oa->aggregates;
-    
-    $deviceId = 36580;
-    $day = '2018-01-25';
-    
-    $repository = new DeviceRepository($conn);
-    $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
 
-    $parameters = [];
-    
-    $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
-    $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
-    $device->processTracks();
-    $device->generateTracks();
+    $device = $service->getDataByDay($deviceId, $dateDay, $map);
+
     $resolve($device->getTracks());
   };
 
