@@ -2,7 +2,7 @@
 
 namespace App\Reports\Sheets\Tracks;
 
-
+use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
 
 class ReportDay implements IReport
 {
