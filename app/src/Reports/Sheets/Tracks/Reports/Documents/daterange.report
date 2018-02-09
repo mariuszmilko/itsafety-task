@@ -1,8 +1,22 @@
 Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
 
-{% for key, value in tracks %}
-    Type : {{ key }}
+=========================================================================== 
+{% for key, tracks in device %}
+     No.: {{ key }}
+
+  {% for key, track in tracks %}
+ Typ: {{ key }}
+      {% for key, parameter in track %}
+Parametr: {{ key }}
+            {{dump(parameter)}}
+--------------------------------------------------------------------------
+      {% endfor %}
+
+--------------------------------------------------------------------------      
+  {% endfor %}
+========================================================================== 
 {% endfor %}
+
 
 Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
 

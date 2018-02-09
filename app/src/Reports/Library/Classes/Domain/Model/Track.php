@@ -56,7 +56,7 @@ class Track implements \IteratorAggregate
 
 
    public function getIterator() {
-       return new ArrayIterator($this->parameters);
+       return new \ArrayIterator($this->parameters);
    }
 
 }

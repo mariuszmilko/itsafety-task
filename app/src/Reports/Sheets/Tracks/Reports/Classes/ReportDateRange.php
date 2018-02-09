@@ -23,7 +23,7 @@ class ReportDateRange  implements IReport
 
    public function generate()
    {
-     $tracks = $this->service->getDataByDate(
+     $device = $this->service->getDataByDate(
        $this->parameters['deviceId'], 
        $this->parameters['dateFrom'], 
        $this->parameters['dateTo'], 
@@ -40,7 +40,7 @@ class ReportDateRange  implements IReport
        array('deviceId' => $deviceId,  
              'dateFrom' => $dateFrom,
              'dateTo' =>  $dateTo,
-             'tracks' => $tracks)
+             'device' => $device)
      );      
    }
 

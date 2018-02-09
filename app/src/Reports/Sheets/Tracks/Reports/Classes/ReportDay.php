@@ -23,7 +23,7 @@ class ReportDay  implements IReport
 
    public function generate()
    {
-     $tracks = $this->service->getDataByDay(
+     $device = $this->service->getDataByDay(
        $this->parameters['deviceId'], 
        $this->parameters['day'], 
        $this->map
@@ -36,7 +36,7 @@ class ReportDay  implements IReport
         'day.report', 
         array('deviceId' => $deviceId,
             'day' => $day,
-            'tracks' => $tracks)
+            'device' => $device)
     );    
    }
 
