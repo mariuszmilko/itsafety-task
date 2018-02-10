@@ -19,7 +19,15 @@ class Mapper  implements IMapper
     protected $delimiter;
     protected $parameters = [];
 
-    public function __construct(array $data, stdClass $oMap, FilterDictionary $filterDictionary, AggregateDictionary $aggDictionary)
+
+
+
+    public function __construct(
+        array $data, 
+        stdClass $oMap, 
+        FilterDictionary $filterDictionary, 
+        AggregateDictionary $aggDictionary
+    )
     {
         $this->oMap = $oMap;
         $this->filterDictionary = $filterDictionary;
@@ -28,6 +36,8 @@ class Mapper  implements IMapper
         $this->aggregates = $this->oMap->aggregates;
         $this->data = $data;
     }
+
+
 
 
     public function delimiter(callable $response = null)
@@ -54,6 +64,7 @@ class Mapper  implements IMapper
 
 
 
+
     public function isValidDelimiter($filter, $v)
     {
         return (isset($this->data[$v->rowname]) && 
@@ -64,6 +75,7 @@ class Mapper  implements IMapper
 
 
 
+
     public function isCorrectTrackType($aggType, $filters)
     {
        return isset($filters[$aggType]);
@@ -71,10 +83,12 @@ class Mapper  implements IMapper
 
 
 
+
     public function isCorrectFilter($filter, $rowname)
     {
         return (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
     }
+
 
 
 
@@ -88,6 +102,7 @@ class Mapper  implements IMapper
 
        return [$filters, $filterDictionary, $data, $aggregates, $parameters];
     }
+
 
 
 
@@ -106,9 +121,10 @@ class Mapper  implements IMapper
 
 
 
+
     public function extractFilters()
     {  
-        $filters = get_object_vars($this->filters);
+        list($filters) = $this->listDataToFilter();
         $filtersToAgg = [];
         foreach (
             array_filter($filters, 
@@ -124,6 +140,7 @@ class Mapper  implements IMapper
 
         return $filtersToAgg;  
     }
+
 
 
 
@@ -147,6 +164,7 @@ class Mapper  implements IMapper
                         
         return $parameters;
     }
+
 
 
 

@@ -36,5 +36,3 @@ class Track extends ITrackRepository
             yield;
     }
 }
-
-//select device_id, record_timestamp,record_device_state, record_can_speed  from record WHERE device_id =   40285; AND record_device_state = 3 

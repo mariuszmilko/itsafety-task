@@ -73,26 +73,4 @@ $promise = \React\Promise\all($pending)->done(function($resolved){
     echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 });
 
-
-//  $firstResolver = new \React\Promise\Deferred($resolverDay);
-//  $secondResolver = new \React\Promise\Deferred($resolverDateRange);
-
-// $pending = [
-//     $firstResolver->promise($resolverDay, $cancellerDay),
-//     $secondResolver->promise($resolverDateRange, $cancellerDateRange)
-// ];
-
-// $promise = new React\Promise\Promise($resolverDateRange, $cancellerDateRange);
-
-// $promise->then(function ($x) {
-
-//             return $x;
-//         })
-//         ->done(function($data){
-//             print_r($data);
-//             echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
-//             echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
-//         });
-
-
 $loop->run();

@@ -8,7 +8,10 @@ use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPoin
 
 class Track implements \IteratorAggregate
 {
+
+
    protected $parameters = [];
+
 
 
 
@@ -17,6 +20,7 @@ class Track implements \IteratorAggregate
        $this->parameters = $parameters;
    }
    
+
 
 
    public function getParameter(string $name) 
@@ -57,5 +61,4 @@ class Track implements \IteratorAggregate
    public function getIterator() {
        return new \ArrayIterator($this->parameters);
    }
-
 }

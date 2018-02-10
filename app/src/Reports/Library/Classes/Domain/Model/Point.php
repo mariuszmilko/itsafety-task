@@ -11,7 +11,7 @@ use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPoin
 */
 class Point implements IPointProcess, IPointUpdate
 { 
-    /** @var FilterDictionary Should contain a description if available */
+    /** @var int Should contain a description if available */
     protected $delimiter;
 
     /** @var array Should contain a description if available */
@@ -21,9 +21,7 @@ class Point implements IPointProcess, IPointUpdate
      * This method sets a description.
     *
     * @param array $description A text with a maximum of 80 characters.
-    * @param stdClass $description A text with a maximum of 80 characters.
-    * @param FilterDictionary  $description A text with a maximum of 80 characters.
-    * @param AggregateDictionary $description A text with a maximum of 80 characters.
+    * @param int $description A text with a maximum of 80 characters.
     *
     * @constructor
     */

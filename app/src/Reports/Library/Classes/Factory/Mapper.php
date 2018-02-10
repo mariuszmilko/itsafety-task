@@ -22,7 +22,7 @@ final class Mapper
       $this->aggDictionary = $aggDictionary;
    }
 
-    public function factory($data)  //$mapperfactory(data) 
+    public function factory($data)
     {
         return new MapperHelper($data, $this->oMap, $this->filterDictionary, $this->aggDictionary);
     }
