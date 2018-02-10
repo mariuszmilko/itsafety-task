@@ -1,7 +1,7 @@
 # itsafety-task
 TODO:
-1. Algorytm agregująco-filtrujący w oparciu o generatory ()   
-TODO: refactor, ddoać  validator track length obsługa błedów krytycznych
+1. Algorytm agregująco-filtrujący w oparciu o generatory   
+TODO: refactor, dodać  validator track length obsługa błedów krytycznych
 2. Konfigurator filtrów i aggregatów   w trakcie:  Chaining   //TODO: Tree struktura dla mapy??
 3. Konfiguracja kontenera DI //TODO  next
 3a. Model, Repository do pakietu library Domain  zrobione
@@ -24,7 +24,7 @@ Opis podstawowych klas domeny:
 - device - informacje o device, uruchamia proces generowania tras
 - mapper - zarzadza elementami konfiguracji - parametry, typy tras, delimetery, wartości
 
--repozytoria - warstwa dostpeu do dancyh (db+generatory)
+-repozytoria - warstwa dostepu do dancyh (db+generatory)
 -servisy - fasada usługi
 
 Klasy pomocnicze:
