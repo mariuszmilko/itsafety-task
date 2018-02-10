@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
-use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack};
+use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack, Mapper as FactoryMap};
 use Generator;
 
 
@@ -20,22 +20,23 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    const MINLEGTH = 2; //to env  track config or validator
 
    
-   public function __construct(FactoryPoint $factoryPoint, FactoryTrack $factoryTrack)//$config
+   public function __construct(FactoryPoint $factoryPoint, FactoryTrack $factoryTrack, FactoryMap $factoryMap)
    {
       $this->factoryPoint = $factoryPoint;
       $this->factoryTrack = $factoryTrack;
+      $this->factoryMap = $factoryMap;
    }
      
 
 
 
-   public function completeTrack(IPoint $point, bool $end)
+   public function completeTrack(bool $end)
    {
-      if ($this->isCompleteTrack($point, $end)) { //count
-          $this->track->updateOnEnd($point);
+      if ($this->isCompleteTrack($end)) {
+          $this->track->updateOnEnd($this->current);
           $this->addTrack();
-          $this->track = $this->factoryTrack->factory();
-          $this->track->processPoint($point);
+          $this->track = $this->factoryTrack->factory($this->factoryMap, $this->current);
+          $this->track->processPoint($this->current);
       }    
    }
 
@@ -48,15 +49,15 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    }
 
 
-   public function isCompleteTrack(IPoint $point, bool $end)
+   public function isCompleteTrack(bool $end)
    {   //track validator
-       return ($end && $this->isMinLength() || $this->isEndTrack($point) && $this->isMinLength());
+       return ($end && $this->isMinLength() || $this->isEndTrack() && $this->isMinLength());
    }
 
 
 
 
-   public function isEndTrack(IPoint $point)
+   public function isEndTrack()
    { //track validator
        return (isset($this->previous) && $this->current->delimiter() != $this->previous->delimiter());
    }
@@ -84,7 +85,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function beginTrack()
    {
       if ($this->isFirstTrack()) {
-        $this->track = $this->factoryTrack->factory();
+        $this->track = $this->factoryTrack->factory($this->current);
         return true;
       }
       return false;
@@ -118,19 +119,18 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
    public function process(Generator $xData, $buffer = null)
-   {
-           $data =  $xData->current();         
-           $point = $this->factoryPoint->factory($data);
-           $this->setCurrentPoint($point);
-           $this->beginTrack();
-           (!$this->isEndTrack($point)) ? 
-                $this->track->processPoint($point) : 
-                $this->completeTrack($point, false); 
-           $this->setPreviousPoint();
-           $xData->next();
-           if (!$xData->valid()) {
-             $this->completeTrack($point, true);
-           }
+   {       
+        $data = $xData->current();         
+        $this->setCurrentPoint($this->factoryPoint->factory($data));   
+        $this->beginTrack();
+        (!$this->isEndTrack()) ? 
+            $this->track->processPoint() : 
+            $this->completeTrack(false); 
+        $this->setPreviousPoint();
+        $xData->next();
+        if (!$xData->valid()) {
+            $this->completeTrack(true);
+        }
    }
 
 

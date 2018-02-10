@@ -30,6 +30,7 @@ class Device implements \IteratorAggregate
    public function processTracks()
    {
       while ($this->xData->valid()) {   
+          exit('xxxx');
          $this->trackGen->process($this->xData);  
       }
    }

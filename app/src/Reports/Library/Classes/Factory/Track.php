@@ -12,8 +12,15 @@ final class Track
 
 
 
-    public function factory()
+    public function factory($factoryMapper, $point) 
     {
-        return new TrackModel();
+        $parameters = $factoryMapper->factory($point)
+            ->delimiter()
+            ->extractParameters()
+            ->inject()
+            ->getParameters();
+
+
+        return new TrackModel($parameters);
     }
 }
