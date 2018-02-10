@@ -29,18 +29,18 @@ zmienione:
 Opis podstawowych klas domeny:
 
 - track  - trasa agreguje parametry dane z Point
-- point -  pomiar
+- point -  pomiar, przetwarza dane na podstawie wstrzykniętych parametrów trasy
 - trackgenerator  - zarzadza elementami trasy, poczetek, koniec, 
 - device - informacje o device, uruchamia proces generowania tras
-- mapper - zarzadza elementami konfiguracji - parametry, typy tras, delimetery, warto
+- mapper - zarzadza elementami konfiguracji - parametry, typy tras, delimetery, wartości
 
 -repozytoria
 -servisy
 
 Klasy pomocnicze:
-Fabryki
+Fabryki - twotzenie nowych instacji, budowanie złoonych obiektów
 
-Interfejsy
+Interfejsy, abstrakcje - wymiana implementacji bez zmiany kodu, w miejscu zastosowania danej abstrakcji
 
 
 Czas zakończenia: Wersja DEMO :)
