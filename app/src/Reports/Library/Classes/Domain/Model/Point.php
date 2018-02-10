@@ -41,7 +41,7 @@ class Point implements IPointProcess, IPointUpdate
     public function delimiter()
     {
         if (!isset($this->delimiter)) {
-            throw new Exception('Brak delimitera Point');
+            throw new Exception('Brak delimitera Point'); //dla ułatwienia później słownik
         }
         
         return $this->delimiter;
@@ -63,7 +63,6 @@ class Point implements IPointProcess, IPointUpdate
           }
        }
     }
-
     /**
      * This method sets a description.
     *
@@ -74,7 +73,7 @@ class Point implements IPointProcess, IPointUpdate
     public function getDateAggData(array &$parameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     { 
         $p = current($parameters);
-        $p->calculate(['value' => $this->data[$p->getRowname()]]); //const in map
+        $p->calculate(['value' => $this->data[$p->getRowname()]]); //dla ułatwienia później słownik
         return true;
     }
 

@@ -1,6 +1,7 @@
 # itsafety-task
 TODO:
-1. Algorytm agregująco-filtrujący w oparciu o generatory ()   TODO: refactor, ddoać  validator track length 
+1. Algorytm agregująco-filtrujący w oparciu o generatory ()   
+TODO: refactor, ddoać  validator track length obsługa błedów krytycznych
 2. Konfigurator filtrów i aggregatów   w trakcie:  Chaining   //TODO: Tree struktura dla mapy??
 3. Konfiguracja kontenera DI //TODO  next
 3a. Model, Repository do pakietu library Domain  zrobione
@@ -24,6 +25,22 @@ Katalog Sheets jest dla uzytkownika (programisty), tutaj definiowane są raporty
 zmienione:
 -  service -  podłaczenie danych ( przenisione do domeny)
 
+
+Opis podstawowych klas domeny:
+
+- track  - trasa agreguje parametry dane z Point
+- point -  pomiar
+- trackgenerator  - zarzadza elementami trasy, poczetek, koniec, 
+- device - informacje o device, uruchamia proces generowania tras
+- mapper - zarzadza elementami konfiguracji - parametry, typy tras, delimetery, warto
+
+-repozytoria
+-servisy
+
+Klasy pomocnicze:
+Fabryki
+
+Interfejsy
 
 
 Czas zakończenia: Wersja DEMO :)

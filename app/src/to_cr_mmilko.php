@@ -70,7 +70,7 @@ views/device.php
 
 class DeviceModel
 {
-    public static $devices = [];
+    public static $devices = [];  //statyczne pole klasy współdzielone ??
 
     //sttyczna metoda, 
     //łączenie odpowiedzialności(dostęp do db, wywołanie zapytania, logika(to tylko powinno być)) w metodzie 

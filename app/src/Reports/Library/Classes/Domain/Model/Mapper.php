@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Reports\Library\Classes\Helpers\Mappers;
+namespace App\Reports\Library\Classes\Domain\Model;
 
 use stdClass;
-use App\Reports\Library\Classes\Helpers\Generic\IMapper;
+use App\Reports\Library\Classes\Domain\Model\Generic\Mapper\IMapper;
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
-use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
+use App\Reports\Library\Classes\Factory\Generic\{IDictionary};
+
+
 
 
 class Mapper  implements IMapper
@@ -25,8 +27,8 @@ class Mapper  implements IMapper
     public function __construct(
         array $data, 
         stdClass $oMap, 
-        FilterDictionary $filterDictionary, 
-        AggregateDictionary $aggDictionary
+        IDictionary $filterDictionary, 
+        IDictionary $aggDictionary
     )
     {
         $this->oMap = $oMap;

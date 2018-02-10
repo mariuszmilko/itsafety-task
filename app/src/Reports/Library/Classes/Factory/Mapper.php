@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Classes\Factory;
 
 use stdClass;
-use App\Reports\Library\Classes\Helpers\Mappers\Mapper as MapperHelper;
+use App\Reports\Library\Classes\Domain\Model\Mapper as MapperModel;
 use App\Reports\Library\Classes\Factory\Generic\{IDictionary, IFactoryData};
 
 
@@ -24,6 +24,6 @@ final class Mapper implements IFactoryData
 
     public function factory($data)
     {
-        return new MapperHelper($data, $this->oMap, $this->filterDictionary, $this->aggDictionary);
+        return new MapperModel($data, $this->oMap, $this->filterDictionary, $this->aggDictionary);
     }
 }
