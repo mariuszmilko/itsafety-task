@@ -30,6 +30,11 @@ class SumOdoDistance extends AbstractParameter implements IParameterAgg, IParame
         return $this->end - $this->first;
     }
 
+    public function __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
     public function handleOperation($value)
     {
         print_r('sum_distance');

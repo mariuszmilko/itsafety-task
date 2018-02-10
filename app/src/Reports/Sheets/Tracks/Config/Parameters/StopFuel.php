@@ -22,6 +22,11 @@ class StopFuel extends AbstractParameter implements IParameterAgg, IParameterCha
         return $this->value;
     }
 
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
     public function handleOperation($value)
     {
         print_r('stop_fuel');

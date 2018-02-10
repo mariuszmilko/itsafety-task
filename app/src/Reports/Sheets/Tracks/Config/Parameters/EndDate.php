@@ -24,4 +24,9 @@ class EndDate extends AbstractParameter implements IParameterAgg
         return $this->endDate;
     }
 
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
 }

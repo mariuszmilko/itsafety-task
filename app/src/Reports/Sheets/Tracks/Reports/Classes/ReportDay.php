@@ -6,12 +6,26 @@ use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
 use App\Reports\Library\Classes\Service\IService;
 use App\Reports\Library\Classes\Report\IReport;
 
+
+
+
 class ReportDay  implements IReport
 {
+
+
    protected $service;
+
+
    protected $template;
+
+
    protected $map;
+
+
    protected $parameters = [];
+
+
+
 
    public function __construct(IService $service, $template, $map, $parameters = [])
    {
@@ -21,9 +35,12 @@ class ReportDay  implements IReport
       $this->map = $map;
    }
 
+
+
+
    public function generate()
    {
-     $device = $this->service->getDataByDay(
+      $device = $this->service->getDataByDay(
        $this->parameters['deviceId'], 
        $this->parameters['day'], 
        $this->map
@@ -32,12 +49,11 @@ class ReportDay  implements IReport
       $deviceId = $this->parameters['deviceId'];
       $day = $this->parameters['day'];
 
-    return $this->template->render(
+      return $this->template->render(
         'day.report', 
         array('deviceId' => $deviceId,
             'day' => $day,
             'device' => $device)
-    );    
+      );    
    }
-
 }

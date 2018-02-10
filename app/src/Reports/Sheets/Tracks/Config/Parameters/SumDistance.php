@@ -24,6 +24,11 @@ class SumDistance extends AbstractParameter implements IParameterAgg, IParameter
         return $this->sum;
     }
 
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
     public function handleOperation($value)
     {
         print_r('sum_distance');

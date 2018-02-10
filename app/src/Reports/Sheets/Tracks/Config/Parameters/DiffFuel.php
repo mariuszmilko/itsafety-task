@@ -25,4 +25,9 @@ class DiffFuel extends AbstractParameter implements IParameterAgg
     {  
         return $this->firstValue - $this->lastValue;
     }
+
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
 }

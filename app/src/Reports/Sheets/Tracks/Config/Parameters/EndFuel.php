@@ -20,4 +20,9 @@ class EndFuel extends AbstractParameter implements IParameterAgg
         return ($this->sum/$this->index);
     }
 
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
 }

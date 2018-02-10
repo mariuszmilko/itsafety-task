@@ -12,6 +12,7 @@ class StartFuel extends AbstractParameter implements IParameterAgg
    protected $last;
    protected $first = false;
    protected $next;
+   protected $value = 0;
 
     public function calculate($parameters)
     {
@@ -24,5 +25,10 @@ class StartFuel extends AbstractParameter implements IParameterAgg
     public function getCalculatedValue()
     {  
         return $this->value;
+    }
+
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
     }
 }

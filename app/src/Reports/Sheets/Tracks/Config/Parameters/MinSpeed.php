@@ -18,6 +18,11 @@ class MinSpeed extends AbstractParameter implements IParameterAgg
 
     public function getCalculatedValue()
     {  
-        return $this->min;
+        return ($this->min == 1000000) ? 0 : $this->min;
+    }
+
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
     }
 }

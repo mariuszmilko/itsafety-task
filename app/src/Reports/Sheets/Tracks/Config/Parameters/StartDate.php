@@ -25,4 +25,9 @@ class StartDate extends AbstractParameter implements IParameterAgg
         return $this->startDate;
     }
 
+    public function  __toString()
+    {
+        return "Parametr: ".(string)$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
+
 }

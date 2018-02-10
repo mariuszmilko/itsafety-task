@@ -13,4 +13,5 @@ interface IParameterAgg extends IParameter
 
 
     public function calculate($parameters);
+    public function getCalculatedValue();
 }

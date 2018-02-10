@@ -141,7 +141,7 @@ class Mapper  implements IMapper
         ) {
             $agg = $this->aggDictionary->get($gMap->class);   
             $agg->setRowname($gMap->rowname);
-
+            $agg->setName($gMap->name);
             $parameters[$gMap->type][] = $agg;
         }
                         

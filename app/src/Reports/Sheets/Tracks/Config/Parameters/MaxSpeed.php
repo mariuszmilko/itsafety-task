@@ -20,4 +20,9 @@ class MaxSpeed extends AbstractParameter implements IParameterAgg
     {  
         return $this->max;
     }
+
+    public function  __toString()
+    {
+        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+    }
 }
