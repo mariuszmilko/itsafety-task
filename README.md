@@ -47,6 +47,8 @@ zmienione:
 
 Wyniki zagregowane, dzienne i z zakresu (dwa raporty): wyniki.raw  (jeden pod drugim)
 
+Czas pracy:  w sumie ~40h
+
 Czas zakończenia: Wersja DEMO :)
 ![img](https://github.com/mariuszmilko/itsafety-task/blob/master/itsafety.png)
 
