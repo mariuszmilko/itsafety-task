@@ -6,7 +6,7 @@ use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
 use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};
 use App\Reports\Library\Classes\Config\Config as TrackConfig;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayToObject;
-use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack};
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary, Point as FactoryPoint, Track as FactoryTrack, Mapper as FactoryMapper};
 use App\Reports\Library\Classes\Service\IService;
 
 
@@ -43,7 +43,7 @@ class DeviceTrackService implements IService
 
         $parameters = [];
        
-        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
+        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack(), new FactoryMapper($oa, $filterDictionary, $aggDictionary));
         $device = new DeviceModel($deviceId, $xRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks();
@@ -69,7 +69,7 @@ class DeviceTrackService implements IService
 
         $parameters = [];
         
-        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack());
+        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack(), new FactoryMapper($oa, $filterDictionary, $aggDictionary));
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks(); 

@@ -2,10 +2,10 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\IParameterAgg;
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
 
 
-class DiffFuel implements IParameterAgg
+class DiffFuel extends AbstractParameter implements IParameterAgg
 {
    protected $first = 0;
    protected $lastValue = 0;

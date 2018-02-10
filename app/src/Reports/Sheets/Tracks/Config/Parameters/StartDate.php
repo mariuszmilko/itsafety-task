@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\IParameterAgg;
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
 
 
 
 
-class StartDate implements IParameterAgg
+class StartDate extends AbstractParameter implements IParameterAgg
 {
     protected  $startDate;
     protected  $first = false;

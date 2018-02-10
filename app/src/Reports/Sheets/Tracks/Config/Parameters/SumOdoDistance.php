@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain};
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain, Parameter as AbstractParameter};
 
 
 
 
-class SumOdoDistance implements IParameterAgg, IParameterChain 
+class SumOdoDistance extends AbstractParameter implements IParameterAgg, IParameterChain 
 {
    protected $start = 0;
    protected $end = 0;

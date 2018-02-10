@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
-use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack, Mapper as FactoryMap};
+use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack, Mapper as FactoryMapper};
 use Generator;
 
 
@@ -16,15 +16,20 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private $tracks = [];
    private $factoryPoint;
    private $factoryTrack; 
+   private $factoryMapper; 
    private $lastPointFromBuffer;
    const MINLEGTH = 2; //to env  track config or validator
 
    
-   public function __construct(FactoryPoint $factoryPoint, FactoryTrack $factoryTrack, FactoryMap $factoryMap)
+   public function __construct(
+        FactoryPoint $factoryPoint, 
+        FactoryTrack $factoryTrack, 
+        FactoryMapper $factoryMapper
+   )
    {
       $this->factoryPoint = $factoryPoint;
       $this->factoryTrack = $factoryTrack;
-      $this->factoryMap = $factoryMap;
+      $this->factoryMapper = $factoryMapper;
    }
      
 
@@ -35,7 +40,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
       if ($this->isCompleteTrack($end)) {
           $this->track->updateOnEnd($this->current);
           $this->addTrack();
-          $this->track = $this->factoryTrack->factory($this->factoryMap, $this->current);
+          $this->track = $this->factoryTrack->factory($this->current, $this->factoryMapper);
           $this->track->processPoint($this->current);
       }    
    }
@@ -85,7 +90,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function beginTrack()
    {
       if ($this->isFirstTrack()) {
-        $this->track = $this->factoryTrack->factory($this->current);
+        $this->track = $this->factoryTrack->factory($this->current, $this->factoryMapper);
         return true;
       }
       return false;
@@ -121,10 +126,10 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function process(Generator $xData, $buffer = null)
    {       
         $data = $xData->current();         
-        $this->setCurrentPoint($this->factoryPoint->factory($data));   
+        $this->setCurrentPoint($this->factoryPoint->factory($data, $this->factoryMapper));   
         $this->beginTrack();
         (!$this->isEndTrack()) ? 
-            $this->track->processPoint() : 
+            $this->track->processPoint($this->current) : 
             $this->completeTrack(false); 
         $this->setPreviousPoint();
         $xData->next();

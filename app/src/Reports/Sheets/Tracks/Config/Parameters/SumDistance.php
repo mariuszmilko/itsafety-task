@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain};
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain, Parameter as AbstractParameter};
 
 
 
 
-class SumDistance implements IParameterAgg, IParameterChain
+class SumDistance extends AbstractParameter implements IParameterAgg, IParameterChain
 {
    protected $sum = 0;
    protected $maxCount = 0;
@@ -16,7 +16,7 @@ class SumDistance implements IParameterAgg, IParameterChain
     public function calculate($parameters)
     {
         $this->sum += $parameters['value'];
-        $this->index += $parameters['index'];
+        $this->index += 1;
     }
 
     public function getCalculatedValue()

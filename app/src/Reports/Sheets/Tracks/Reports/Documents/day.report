@@ -7,7 +7,7 @@ Raport Track  dla Device: {{ deviceId }}   dzień: {{ day }}
   {% for key, track in tracks %}
  Typ: {{ key }}
       {% for key, parameter in track %}
-Parametr: {{ key }}
+Parametr:
             {{dump(parameter)}}
 --------------------------------------------------------------------------
       {% endfor %}

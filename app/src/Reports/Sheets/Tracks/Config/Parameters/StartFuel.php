@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\IParameterAgg;
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
 
 
 
 
-class StartFuel implements IParameterAgg
+class StartFuel extends AbstractParameter implements IParameterAgg
 {
    protected $last;
    protected $first = false;

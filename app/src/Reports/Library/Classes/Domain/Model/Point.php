@@ -4,7 +4,7 @@ namespace App\Reports\Library\Classes\Domain\Model;
 
 use stdClass;
 use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterFilter};
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
 
 /**
 *  Elementary part of track
@@ -13,9 +13,6 @@ class Point implements IPointProcess, IPointUpdate
 { 
     /** @var FilterDictionary Should contain a description if available */
     protected $delimiter;
-
-    /** @var AggregateDictionary Should contain a description if available */
-    protected $parameters
 
     /** @var array Should contain a description if available */
     protected $data;
@@ -30,9 +27,10 @@ class Point implements IPointProcess, IPointUpdate
     *
     * @constructor
     */
-    public function __construct(array $data)
+    public function __construct(array $data, $delimiter)
     {
         $this->data = $data;
+        $this->delimiter = $delimiter;
     }
     /**
      * This method sets a description.
@@ -44,7 +42,11 @@ class Point implements IPointProcess, IPointUpdate
     */
     public function delimiter()
     {
-       return $this->delimiter;
+        if (!isset($this->delimiter)) {
+            throw new Exception('Brak delimitera Point');
+        }
+        
+        return $this->delimiter;
     }
     /**
      * This method sets a description.
@@ -53,13 +55,13 @@ class Point implements IPointProcess, IPointUpdate
     *
     * @return Point
     */
-    public function processing(&$parameters) //$context  ->get callable
-    {    //to Ireator
+    public function processing(array &$parameters) //$context  ->get callable
+    {   
        foreach ($parameters as $key => $parameter)
        {
-          $parameter->calculate(['value' => $data[$parameter->rowname] ]);
+          $p = current($parameter);
+          $p->calculate([ 'value' => $this->data[$p->getRowname()] ]);
        }
-
       // return $this->parameters;
     }
 
@@ -72,19 +74,13 @@ class Point implements IPointProcess, IPointUpdate
     */
     public function getDateAggData(array &$parameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
     { 
-            $p = &$parameters['end'][$agg->class];
-            $p->calculate(['value' => $this->data['end_date']]); //const in map
-            return true;
+        $p = current($parameters);
+        $p->calculate(['value' => $this->data[$p->getRowname()]]); //const in map
+        return true;
     }
 
     public function getData()
     {
         return $this->data;
-    }
-
-
-    public function injectDelimiter($this->delimiter)
-    {
-       $this->delimiter = $delimiter;
     }
 }

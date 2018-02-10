@@ -14,8 +14,14 @@ final class Point
 
 
 
-   public function factory($data)
+   public function factory($data, $factoryMapper)
    {
-        return new PointModel($data);
+       $delimiter = '';
+        $factoryMapper->factory($data)
+            ->delimiter(function($d) use (&$delimiter){
+              $delimiter = $d;
+        });
+     
+        return new PointModel($data, $delimiter);
    }
 }

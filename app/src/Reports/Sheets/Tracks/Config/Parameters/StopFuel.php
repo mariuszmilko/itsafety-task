@@ -2,12 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain};
+use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain, Parameter as AbstractParameter};
 
 
 
 
-class StopFuel implements IParameterAgg, IParameterChain
+class StopFuel extends AbstractParameter implements IParameterAgg, IParameterChain
 {
    protected $value;
    protected $first = false;

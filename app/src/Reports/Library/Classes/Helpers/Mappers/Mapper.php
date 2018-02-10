@@ -2,7 +2,10 @@
 
 namespace App\Reports\Library\Classes\Helpers\Mappers;
 
-use App\Reports\Library\Classes\Helpers\Generic\Mappers\IMapper;
+use stdClass;
+use App\Reports\Library\Classes\Helpers\Generic\IMapper;
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
+use App\Reports\Library\Classes\Factory\{FilterDictionary, AggregateDictionary};
 
 
 class Mapper  implements IMapper
@@ -16,31 +19,33 @@ class Mapper  implements IMapper
     protected $delimiter;
     protected $parameters = [];
 
-    public function __construct(IPoint $data, stdClass $oMap, FilterDictionary $filterDictionary, AggregateDictionary $aggDictionary)
+    public function __construct(array $data, stdClass $oMap, FilterDictionary $filterDictionary, AggregateDictionary $aggDictionary)
     {
         $this->oMap = $oMap;
         $this->filterDictionary = $filterDictionary;
         $this->aggDictionary = $aggDictionary;
         $this->filters = $this->oMap->filters;
         $this->aggregates = $this->oMap->aggregates;
-        $this->data = $data->getData();
-        $this->delimiter = $delimiter;
+        $this->data = $data;
     }
 
 
-    public function delimiter()
+    public function delimiter(callable $response = null)
     {
         list($filters, $filterDictionary, $data) = $this->listDataToFilter();
-        //array_map
+
         foreach (
             array_filter($filters, 
                 function($v, $k) use ($filterDictionary, $data) { 
-                    $filter = $filterDictionary->get($v->type);
+                    $filter = $filterDictionary->get($v->class);
 
-                    return $this->isDelimiter($filter, $v->rowname, $v->delimiter);
+                    return $this->isValidDelimiter($filter, $v);
                 },
                 ARRAY_FILTER_USE_BOTH) as $key => $fMap
         ) {
+            $this->delimiter = $fMap->delimiter;
+            !is_callable($response) ?: $response($this->delimiter);
+
             return $this;
         }
 
@@ -49,32 +54,31 @@ class Mapper  implements IMapper
 
 
 
-    public function isDelimiter($filter, $rowname, $delimiter)
+    public function isValidDelimiter($filter, $v)
     {
-        return (isset($this->data[$rowname]) && 
+        return (isset($this->data[$v->rowname]) && 
                         isset($filter) && 
-                        $filter->filter(['value' => $this->data[$rowname]]) &&
-                        isset($delimiter));
-
+                        $filter->filter(['value' => $this->data[$v->rowname]]) &&
+                        isset($v->delimiter));
     }
 
 
 
     public function isCorrectTrackType($aggType, $filters)
     {
-        return isset($filters[$aggType]);
+       return isset($filters[$aggType]);
     }
 
 
 
     public function isCorrectFilter($filter, $rowname)
     {
-        return (isset($filter) && $filter->filter(['value' => $data[$v->rowname]])); 
+        return (isset($filter) && $filter->filter(['value' => $this->data[$rowname]])); 
     }
 
 
 
-    public function  listDataToFilter()
+    public function listDataToFilter()
     {
        $filters = get_object_vars($this->filters);
        $filterDictionary = $this->filterDictionary;
@@ -82,18 +86,18 @@ class Mapper  implements IMapper
        $data = $this->data;
        $parameters = [];
 
-      return [$filters, $filterDictionary, $data, $aggregates, $parameters];
+       return [$filters, $filterDictionary, $data, $aggregates, $parameters];
     }
 
 
 
    public function extractParameters()
    {
-        list($filters, $filterDictionary, $data, $aggregates, $parameters) = $this->listDataToFilter();
+        list($filters, $filterDictionary, $data, $aggregates, $parameters) 
+            = $this->listDataToFilter();
 
         $f = $this->extractFilters();
         $p = $this->extractAggregates($f);
-
 
         $this->parameters = $p;
 
@@ -104,20 +108,21 @@ class Mapper  implements IMapper
 
     public function extractFilters()
     {  
+        $filters = get_object_vars($this->filters);
         $filtersToAgg = [];
-        array_map(function($fMap) use ($aggregates) {
-            
-            $filtersToAgg[$fMap->class] = $fmap;
+        foreach (
+            array_filter($filters, 
+                function($v, $k) { 
+                    $filter = $this->filterDictionary->get($v->class);
 
-        }, array_filter($filters, 
-                function($v, $k) use ($parameters,  $filterDictionary, $data) { 
-                    $filter = $filterDictionary->get($v->class);
+                    return $this->isCorrectFilter($filter, $v->rowname);
+                },
+                ARRAY_FILTER_USE_BOTH) as $key => $fMap
+        ) {
+            $filtersToAgg[$fMap->type] = $fMap;
+        }
 
-                    return $this->isCorrectFilter($filter, $data[$v->rowname]);
-        }, ARRAY_FILTER_USE_BOTH));
-
-        return $filtersToAgg;
-  
+        return $filtersToAgg;  
     }
 
 
@@ -125,57 +130,28 @@ class Mapper  implements IMapper
     public function extractAggregates($filters)
     {
         $parameters = [];
-        array_map(function($gMap) use ($aggregates, $filters) { 
-                              
+        $aggregates = get_object_vars($this->aggregates);
 
-                $agg = $this->aggDictionary->get($clazz);  
-                $parameters[$type][$clazz] = $agg;
-
-
-        }, array_filter($aggregates,
+        foreach (
+            array_filter($aggregates,
                 function($v, $k) use ($filters) {
 
-                  return  $this->isCorrectTrackType($v->type, $v->class, $filters);
-                }, ARRAY_FILTER_USE_BOTH));
+                  return  $this->isCorrectTrackType($v->type, $filters);
+                }, ARRAY_FILTER_USE_BOTH) as $key => $gMap
+        ) {
+            $agg = $this->aggDictionary->get($gMap->class);   
+            $agg->setRowname($gMap->rowname);
 
+            $parameters[$gMap->type][] = $agg;
+        }
+                        
         return $parameters;
     }
 
 
-
-    public function inject()
-    {
-       $point->injectDelimiter($this->delimiter);
-
-       return $this;
-    }
 
     public function getParameters()
     {
         return $this->parameters;
     }
 }
-
-
-
-
-//     public function __construct($map, $aggIterator, $filterIterator)
-//     {
-
-//     }
-//      /**
-//      * Returns an iterator over the elements in the buffer.
-//      *
-//      * The order is the order of insertion (FIFO)
-//      *
-//      * @return MapperIterator Iterator over the buffer elements
-//      */
-//     public function getIterator()
-//     {
-//         return new \ArrayIterator(
-//             $this->map,
-//             $this->getLeastRecentPosition(),
-//             $this->size
-//         );
-//     }
-// }
