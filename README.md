@@ -13,6 +13,8 @@ TODO:
 7. Aktualizacja dokumentacji (UML)  
 8. Templates   //zrobione versja raw
 
+Wyniki zagregowane, dzienne i z zakresu (dwa raporty): wyniki.raw
+
 Czas zakończenia: Wersja DEMO :)
 ![img](https://github.com/mariuszmilko/itsafety-task/blob/master/itsafety.png)
 

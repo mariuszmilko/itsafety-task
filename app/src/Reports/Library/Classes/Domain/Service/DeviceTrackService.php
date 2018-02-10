@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Reports\Sheets\Tracks\Service;
+namespace App\Reports\Library\Classes\Domain\Service;
 
 use App\Reports\Library\Classes\Domain\Repository\Device as DeviceRepository;
 use App\Reports\Library\Classes\Domain\Model\{Device as DeviceModel, Point, TrackGenerator};

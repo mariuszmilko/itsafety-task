@@ -2,7 +2,7 @@
 
 namespace App\Reports\Sheets\Tracks\Reports\Classes;
 
-use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
+use App\Reports\Library\Classes\Domain\Service\DeviceTrackService;
 use App\Reports\Library\Classes\Service\IService;
 use App\Reports\Library\Classes\Report\IReport;
 

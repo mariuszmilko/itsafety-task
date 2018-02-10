@@ -3,7 +3,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 
-use App\Reports\Sheets\Tracks\Service\DeviceTrackService;
+use App\Reports\Library\Classes\Domain\Service\DeviceTrackService;
 use App\Reports\Sheets\Tracks\Reports\Classes\{ReportDateRange, ReportDay};
 
 // Manualy bez DI
