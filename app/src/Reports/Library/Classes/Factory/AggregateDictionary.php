@@ -3,7 +3,6 @@
 namespace App\Reports\Library\Classes\Factory;
 
 use App\Reports\Library\Classes\Factory\Generic\IDictionary;
-
 use stdClass;
 
 
