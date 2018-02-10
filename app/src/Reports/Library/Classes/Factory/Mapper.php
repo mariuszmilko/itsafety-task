@@ -4,12 +4,12 @@ namespace App\Reports\Library\Classes\Factory;
 
 use stdClass;
 use App\Reports\Library\Classes\Helpers\Mappers\Mapper as MapperHelper;
-use App\Reports\Library\Classes\Factory\Generic\IDictionary;
+use App\Reports\Library\Classes\Factory\Generic\{IDictionary, IFactoryData};
 
 
 
 
-final class Mapper
+final class Mapper implements IFactoryData
 {
    private $oMap;
    private $filterDictionary;

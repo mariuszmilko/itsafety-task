@@ -52,10 +52,9 @@ class DeviceTrackService implements IService
 
         $repository = new DeviceRepository($this->conn);
         $xRecords = $repository->xFindDeviceTracksByDate($deviceId, $datefrom, $dateTo);
-
-        $parameters = [];
        
-        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack(), new FactoryMapper($oa, $filterDictionary, $aggDictionary));
+        $factoryMapper = new FactoryMapper($oa, $filterDictionary, $aggDictionary);
+        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), $factoryMapper);
         $device = new DeviceModel($deviceId, $xRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks();
@@ -82,9 +81,8 @@ class DeviceTrackService implements IService
         $repository = new DeviceRepository($this->conn);
         $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
 
-        $parameters = [];
-        
-        $trackGen = new TrackGenerator(new FactoryPoint($oa, $filterDictionary, $aggDictionary), new FactoryTrack(), new FactoryMapper($oa, $filterDictionary, $aggDictionary));
+        $factoryMapper = new FactoryMapper($oa, $filterDictionary, $aggDictionary);
+        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), $factoryMapper);
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
         $device->generateTracks(); 

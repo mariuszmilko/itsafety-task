@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
-use App\Reports\Library\Classes\Factory\{Point as FactoryPoint, Track as FactoryTrack, Mapper as FactoryMapper};
+use App\Reports\Library\Classes\Factory\Generic\{IFactoryPoint, IFactoryData};
 use Generator;
 
 
@@ -22,9 +22,9 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    
    public function __construct(
-        FactoryPoint $factoryPoint, 
-        FactoryTrack $factoryTrack, 
-        FactoryMapper $factoryMapper
+        IFactoryData $factoryPoint, 
+        IFactoryPoint $factoryTrack, 
+        IFactoryData $factoryMapper
    )
    {
       $this->factoryPoint = $factoryPoint;
@@ -40,7 +40,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
       if ($this->isCompleteTrack($end)) {
           $this->track->updateOnEnd($this->current);
           $this->addTrack();
-          $this->track = $this->factoryTrack->factory($this->current, $this->factoryMapper);
+          $this->track = $this->factoryTrack->factory($this->current);
           $this->track->processPoint($this->current);
       }    
    }
@@ -90,7 +90,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function beginTrack()
    {
       if ($this->isFirstTrack()) {
-        $this->track = $this->factoryTrack->factory($this->current, $this->factoryMapper);
+        $this->track = $this->factoryTrack->factory($this->current);
         return true;
       }
       return false;
@@ -126,7 +126,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function process(Generator $xData, $buffer = null)
    {       
         $data = $xData->current();         
-        $this->setCurrentPoint($this->factoryPoint->factory($data, $this->factoryMapper));   
+        $this->setCurrentPoint($this->factoryPoint->factory($data));   
         $this->beginTrack();
         (!$this->isEndTrack()) ? 
             $this->track->processPoint($this->current) : 
