@@ -55,12 +55,13 @@ class Point implements IPointProcess, IPointUpdate
     */
     public function processing(array &$parameters) //$context  ->get callable
     {   
-       foreach ($parameters as $key => $parameter)
+       foreach ($parameters as &$parameter)
        {
-          $p = current($parameter);
-          $p->calculate([ 'value' => $this->data[$p->getRowname()] ]);
+          foreach ($parameter as $p)
+          {
+            $p->calculate([ 'value' => $this->data[$p->getRowname()] ]);
+          }
        }
-      // return $this->parameters;
     }
 
     /**

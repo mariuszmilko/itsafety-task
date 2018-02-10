@@ -68,7 +68,7 @@ $pending = [
  ];
 
 $promise = \React\Promise\all($pending)->done(function($resolved){
-     print_r($resolved); 
+    print_r($resolved); 
     echo "not real: ".(memory_get_peak_usage(false)/1024/1024)." MiB\n";
     echo "real: ".(memory_get_peak_usage(true)/1024/1024)." MiB\n\n";
 });

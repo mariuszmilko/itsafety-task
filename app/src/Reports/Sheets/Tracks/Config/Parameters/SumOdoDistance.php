@@ -15,19 +15,18 @@ class SumOdoDistance extends AbstractParameter implements IParameterAgg, IParame
 
     public function calculate($parameters)
     {
-        if ($parameters['value'] > 0) {
-            if ($this->first == false) {
-                $this->start = $parameters['value'];
-                $this->first = true;
-            } else {
-                $this->end = $parameters['value'];
-            }
+
+        if ($this->first == false) {
+            $this->start = $parameters['value'];
+            $this->first = true;
+        } else {
+            $this->end = $parameters['value'];
         }
     }
 
     public function getCalculatedValue()
     {  
-        return $this->end - $this->first;
+        return $this->end - $this->start;
     }
 
     public function __toString()
