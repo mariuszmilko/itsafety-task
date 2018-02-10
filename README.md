@@ -10,10 +10,21 @@ TODO:
 4. Testy PoC algorytmu    //zrobione
 5. Testy PoC środowiska  //zrobione
 6. Uzupełnienie i aktualizacja nazw, typowania, php_doc //TODO: w trakcie
-7. Aktualizacja dokumentacji (UML)  
+7. Aktualizacja dokumentacji (UML)  //zrobione
 8. Templates   //zrobione versja raw
 
 Wyniki zagregowane, dzienne i z zakresu (dwa raporty): wyniki.raw
+
+Opis uzycia:
+Katalog Sheets jest dla uzytkownika (programisty), tutaj definiowane są raporty (Tracks dla typów tracks)
+- mapa (typy tras, pola do agregacji)
+- parameters - definicje agregatów  i typów tras (runtime)
+- reports -  klasa raportu - podłączenie serwisów, parametrów i szablonów
+
+zmienione:
+-  service -  podłaczenie danych ( przenisione do domeny)
+
+
 
 Czas zakończenia: Wersja DEMO :)
 ![img](https://github.com/mariuszmilko/itsafety-task/blob/master/itsafety.png)
