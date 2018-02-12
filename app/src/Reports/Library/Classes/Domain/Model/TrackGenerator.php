@@ -90,7 +90,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function beginTrack()
+   public function beginTrack(callable $response = null)
    {
       if ($this->isFirstTrack()) {
         $this->track = $this->factoryTrack->factory($this->current);
@@ -101,7 +101,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function setCurrentPoint(IPoint $point) 
+   public function setCurrentPoint(IPoint $point, callable $response = null) 
    {
       $this->current = $point;
       return $this;
@@ -110,7 +110,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function setPreviousPoint() 
+   public function setPreviousPoint(callable $response = null) 
    {
       $this->previous = $this->current; 
       return $this;
@@ -119,7 +119,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   private function rewind()
+   private function rewind(callable $response = null)
    {
       $this->current = $this->previous;
       return $this;
@@ -128,7 +128,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function stream(Generator $xData, $buffer = null)
+   public function stream(Generator $xData, callable $response = null)
    {       
         $this->stream = $xData;
         return $this;
@@ -137,7 +137,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function isEndStream()
+   public function isEndStream(callable $response = null)
    {
         if (!$this->stream->valid()) {
             $this->completeTrack(true);
@@ -149,7 +149,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    
 
 
-   public function beginProcess()
+   public function beginProcess(callable $response = null)
    {
          $data = $this->stream->current();         
          $this->setCurrentPoint($this->factoryPoint->factory($data));   
@@ -160,7 +160,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function nextOrComplete()
+   public function nextOrComplete(callable $response = null)
    {
         (!$this->isEndTrack()) ? 
         $this->track->processPoint($this->current) : 
