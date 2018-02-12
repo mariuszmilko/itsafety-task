@@ -14,10 +14,11 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private $previous;
    private $track;
    private $tracks = [];
+   private $stream;
    private $factoryPoint;
    private $factoryTrack; 
    private $factoryMapper; 
-   private $lastPointFromBuffer;
+
    const MINLEGTH = 2; //to env  track config or validator
 
    
@@ -43,6 +44,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
           $this->track = $this->factoryTrack->factory($this->current);
           $this->track->processPoint($this->current);
       }    
+      return $this;
    }
 
 
@@ -51,6 +53,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function addTrack()
    {
        $this->tracks[] = $this->track;
+       return $this;
    }
 
 
@@ -91,25 +94,26 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    {
       if ($this->isFirstTrack()) {
         $this->track = $this->factoryTrack->factory($this->current);
-        return true;
       }
-      return false;
+      return $this;
    }
 
 
 
 
-   private function setCurrentPoint(IPoint $point) 
+   public function setCurrentPoint(IPoint $point) 
    {
       $this->current = $point;
+      return $this;
    }
 
 
 
 
-   private function setPreviousPoint() 
+   public function setPreviousPoint() 
    {
       $this->previous = $this->current; 
+      return $this;
    }
 
 
@@ -118,24 +122,52 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private function rewind()
    {
       $this->current = $this->previous;
+      return $this;
    }
 
 
 
 
-   public function process(Generator $xData, $buffer = null)
+   public function stream(Generator $xData, $buffer = null)
    {       
-        $data = $xData->current();         
-        $this->setCurrentPoint($this->factoryPoint->factory($data));   
-        $this->beginTrack();
-        (!$this->isEndTrack()) ? 
-            $this->track->processPoint($this->current) : 
-            $this->completeTrack(false); 
-        $this->setPreviousPoint();
-        $xData->next();
-        if (!$xData->valid()) {
+        $this->stream = $xData;
+        return $this;
+   }
+
+
+
+
+   public function isEndStream()
+   {
+        if (!$this->stream->valid()) {
             $this->completeTrack(true);
         }
+
+        return $this;
+   }
+
+   
+
+
+   public function beginProcess()
+   {
+         $data = $this->stream->current();         
+         $this->setCurrentPoint($this->factoryPoint->factory($data));   
+
+        return $this;
+   }
+
+
+
+
+   public function nextOrComplete()
+   {
+        (!$this->isEndTrack()) ? 
+        $this->track->processPoint($this->current) : 
+        $this->completeTrack(false); 
+        $this->stream->next();
+
+        return $this;
    }
 
 
