@@ -4,9 +4,10 @@ Opis podstawowych klas domeny:
 
 - track  - trasa agreguje parametry wstrzyknięte przez mapper dane, przekazuje do przetworzenia do Point
 - point -  pomiar, przetwarza dane na podstawie wstrzykniętych parametrów trasy
-- trackgenerator  - zarzadza elementami trasy, poczetek, koniec, pomiar, dane
+- trackgenerator  - zarzadza elementami trasy, poczetek, koniec, pomiar, dane, agregacje
 - device - informacje o device, uruchamia proces generowania tras
 - mapper - zarzadza elementami konfiguracji - parametry, typy tras, delimetery, wartości
+- parameteraggregator - agreguje dane ze wszystkich aktywnych parametrow tras, z całego przetwaranego zakresu
 
 -repozytoria - warstwa dostepu do dancyh (db+generatory)
 -servisy - fasada usługi
@@ -20,7 +21,8 @@ Interfejsy, abstrakcje - wymiana implementacji bez zmiany kodu, w miejscu zastos
 Opis uzycia:
 Katalog Sheets jest dla uzytkownika (programisty), tutaj definiowane są raporty (raporty Tracks dla typów tracks)
 - mapa (typy tras, pola do agregacji)
-- parameters - definicje agregatów  i typów tras (runtime)
+- parameters - definicje agregatów danych  i typów tras (runtime)
+- aggregates - definicja agragecji dla agregatów parametrów
 - reports -  klasa raportu - podłączenie serwisów, parametrów i szablonów
 
 zmienione:
