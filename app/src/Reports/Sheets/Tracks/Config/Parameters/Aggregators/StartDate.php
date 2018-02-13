@@ -40,6 +40,6 @@ class StartDate implements  IMultiAggregator
 
     public function  __toString()
     {
-        return "Parametr: ".(string)$this->getName()."\r\nKoniec dla zakresu: ".$this->getCalculatedValue();
+        return 'Data Początkowa: '.$this->getCalculatedValue();
     }
 }

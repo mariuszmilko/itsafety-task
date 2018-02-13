@@ -28,7 +28,7 @@ Raport Track  dla Device: {{ deviceId }}   dzień: {{ day }}
 Podsumowania:
 
 {% for parameter  in summary %}
-{{parameter.getCalculatedValue()}}
-{{dump(parameter)}}
+
+{{parameter}}
 
 {% endfor %}

@@ -39,6 +39,6 @@ class EndDate implements  IMultiAggregator
 
     public function  __toString()
     {
-        return "Parametr: ".$this->getName()."\r\nPoczątek dla zakresu: ".$this->getCalculatedValue();
+        return 'Data Końcowa: '.$this->getCalculatedValue();
     }
 }
