@@ -13,6 +13,7 @@ class Device implements \IteratorAggregate
    protected  $tracks;
    protected  $xData;
    protected  $trackGen;
+   protected  $summaryTracks;
 
 
 
@@ -35,33 +36,27 @@ class Device implements \IteratorAggregate
             ->beginTrack()
             ->nextOrComplete()
             ->setPreviousPoint()
-            ->isEndStream();
+            ->next()
+            ->isEndStream()
+            ->aggregate();
       }
+      $this->trackGen->multiAggregator(function ($mAgg) {
+          $this->summaryTracks = $mAgg;
+      });
    }
 
 
 
 
-
-   public function generateTracks()
+   public function getSummary()
    {
-      $this->tracks = $this->trackGen->getTracks();
+       return $this->summaryTracks;
    }
-
-
-
-
-
-   public function getTracks()
-   {
-       return $this->tracks;
-   }
-
 
 
 
 
    public function getIterator() {
-	  return new \ArrayIterator($this->tracks);
+	  return $this->trackGen->getIterator();
    }
 }

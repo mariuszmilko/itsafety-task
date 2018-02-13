@@ -48,12 +48,14 @@ class ReportDay  implements IReport
 
       $deviceId = $this->parameters['deviceId'];
       $day = $this->parameters['day'];
+      $summary = $device->getSummary();
 
       return $this->template->render(
         'day.report', 
         array('deviceId' => $deviceId,
             'day' => $day,
-            'device' => $device)
+            'device' => $device,
+            'summary' => $summary)
       );    
    }
 }

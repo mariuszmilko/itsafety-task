@@ -3,7 +3,7 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
-use App\Reports\Library\Classes\Factory\Generic\{IFactoryPoint, IFactoryData};
+use App\Reports\Library\Classes\Factory\Generic\{IFactoryPoint, IFactoryData, IFactoryAggregator};
 use Generator;
 
 
@@ -17,7 +17,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private $stream;
    private $factoryPoint;
    private $factoryTrack; 
-   private $factoryMapper; 
+   private $parameterAggregator; 
 
    const MINLEGTH = 2; //to env  track config or validator
 
@@ -25,18 +25,18 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function __construct(
         IFactoryData $factoryPoint, 
         IFactoryPoint $factoryTrack, 
-        IFactoryData $factoryMapper
+        IFactoryAggregator $factoryAggregator
    )
    {
       $this->factoryPoint = $factoryPoint;
       $this->factoryTrack = $factoryTrack;
-      $this->factoryMapper = $factoryMapper;
+      $this->parameterAggregator = $factoryAggregator->factory();
    }
      
 
 
 
-   public function completeTrack(bool $end)
+   public function completeTrack(bool $end, callable $response = null)
    {
       if ($this->isCompleteTrack($end)) {
           $this->track->updateOnEnd($this->current);
@@ -44,21 +44,49 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
           $this->track = $this->factoryTrack->factory($this->current);
           $this->track->processPoint($this->current);
       }    
+
       return $this;
    }
 
 
 
 
-   public function addTrack()
+   public function aggregate(callable $response = null)
    {
-       $this->tracks[] = $this->track;
+       if (count($this->tracks) > 0 ) {
+         $last = $this->tracks[count($this->tracks)-1];
+         $this->parameterAggregator->extractParameters($last);
+         !is_callable($response) ?: $response($last);
+       }
+
+       return $this;
+   }
+
+   
+
+
+   public function multiAggregator(callable $response = null)
+   {
+       !is_callable($response) ?: $response($this->parameterAggregator);
        return $this;
    }
 
 
+
+
+   public function addTrack(callable $response = null)
+   {
+       $this->tracks[] = $this->track;
+
+       return $this;
+   }
+
+
+
+
    public function isCompleteTrack(bool $end)
    {   //track validator
+
        return ($end && $this->isMinLength() || $this->isEndTrack() && $this->isMinLength());
    }
 
@@ -67,6 +95,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function isEndTrack()
    { //track validator
+
        return (isset($this->previous) && $this->current->delimiter() != $this->previous->delimiter());
    }
 
@@ -75,6 +104,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function isFirstTrack()
    { //track validator
+
        return (!isset($this->previous));
    }
 
@@ -95,6 +125,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
       if ($this->isFirstTrack()) {
         $this->track = $this->factoryTrack->factory($this->current);
       }
+
       return $this;
    }
 
@@ -104,6 +135,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function setCurrentPoint(IPoint $point, callable $response = null) 
    {
       $this->current = $point;
+
       return $this;
    }
 
@@ -113,6 +145,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function setPreviousPoint(callable $response = null) 
    {
       $this->previous = $this->current; 
+
       return $this;
    }
 
@@ -122,6 +155,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    private function rewind(callable $response = null)
    {
       $this->current = $this->previous;
+
       return $this;
    }
 
@@ -131,6 +165,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function stream(Generator $xData, callable $response = null)
    {       
         $this->stream = $xData;
+
         return $this;
    }
 
@@ -162,30 +197,19 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function nextOrComplete(callable $response = null)
    {
-        (!$this->isEndTrack()) ? 
-        $this->track->processPoint($this->current) : 
-        $this->completeTrack(false); 
-        $this->stream->next();
-
+        (!$this->isEndTrack()) ? $this->track->processPoint($this->current) : $this->completeTrack(false); 
+    
         return $this;
    }
 
 
 
 
-  public function pipe (\Closure $next)
-  {
-
-       $next($result);
-      return $this;
-  }
-
-
-
-
-   public function getTracks()
+   public function next()
    {
-       return $this->tracks;
+      $this->stream->next();
+
+      return $this;
    }
 
 
@@ -193,6 +217,15 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function getIterator() 
    {
-       return new ArrayIterator($this->$tracks);
+       return new \ArrayIterator($this->tracks);
    }
 }
+
+//   public function pipe (\Closure $next)
+//   {
+
+//        $next($result);
+//       return $this;
+//   }
+
+

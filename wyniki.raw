@@ -5202,6 +5202,42 @@ Wartość:
 Raport Track  dla Device: 36580   od: 2018-01-19   do: 2018-01-25
 
 
+Podsumowania:
+
+
+2018-01-19 00:04:12
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\StartDate)#55 (2) {
+  ["startDate":protected]=>
+  string(19) "2018-01-19 00:04:12"
+  ["first":protected]=>
+  bool(true)
+}
+
+
+
+2018-01-25 23:56:41
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\EndDate)#56 (2) {
+  ["endDate":protected]=>
+  string(19) "2018-01-25 23:56:41"
+  ["last":protected]=>
+  bool(false)
+}
+
+
+
+31.895085185176
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\AvgSpeed)#57 (3) {
+  ["sum":protected]=>
+  float(54923.336688874)
+  ["maxCount":protected]=>
+  int(0)
+  ["index":protected]=>
+  int(1722)
+}
+
+
+
+
     [1] => Raport Track  dla Device: 36580   dzień: 2018-01-25
 
 ========================================================================================================== 
@@ -6683,7 +6719,40 @@ Wartość:
 
 Raport Track  dla Device: 36580   dzień: 2018-01-25
 
+
+Podsumowania:
+
+2018-01-25 00:03:49
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\StartDate)#38 (2) {
+  ["startDate":protected]=>
+  string(19) "2018-01-25 00:03:49"
+  ["first":protected]=>
+  bool(true)
+}
+
+
+2018-01-25 23:56:41
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\EndDate)#32 (2) {
+  ["endDate":protected]=>
+  string(19) "2018-01-25 23:56:41"
+  ["last":protected]=>
+  bool(false)
+}
+
+
+37.570661521901
+object(App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\AvgSpeed)#36 (3) {
+  ["sum":protected]=>
+  float(5335.0339361099)
+  ["maxCount":protected]=>
+  int(0)
+  ["index":protected]=>
+  int(142)
+}
+
+
+
 )
-not real: 4.6228408813477 MiB
+not real: 4.650146484375 MiB
 real: 6 MiB
 

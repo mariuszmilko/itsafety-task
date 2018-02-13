@@ -20,3 +20,13 @@ Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
 
 Raport Track  dla Device: {{ deviceId }}   od: {{ dateFrom }}   do: {{ dateTo }}
 
+
+Podsumowania:
+
+{%  for key, parameter in summary %}
+
+{{parameter.getCalculatedValue()}}
+{{dump(parameter)}}
+
+{% endfor %}
+

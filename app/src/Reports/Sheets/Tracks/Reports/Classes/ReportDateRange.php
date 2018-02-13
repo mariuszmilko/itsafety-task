@@ -50,14 +50,16 @@ class ReportDateRange  implements IReport
       $deviceId = $this->parameters['deviceId'];
       $dateFrom = $this->parameters['dateFrom'];
       $dateTo = $this->parameters['dateTo'];
+      $summary = $device->getSummary();
 
-
+     
       return $this->template->render(
         'daterange.report', 
         array('deviceId' => $deviceId,  
              'dateFrom' => $dateFrom,
              'dateTo' =>  $dateTo,
-             'device' => $device)
+             'device' => $device,
+             'summary' => $summary)
       );      
    }
 }

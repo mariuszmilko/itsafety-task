@@ -2,6 +2,12 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
+use App\Reports\Sheets\Tracks\Config\Parameters\Aggregators\{
+    AvgSpeed as AvgSpeedMulti,
+    StartDate as StartDateMulti,
+    EndDate as EndDateMulti
+};
+
 return ['filters' =>
             ['TrackFilter' => [
                 'name' => 'TrackFilterType', 
@@ -55,7 +61,8 @@ return ['filters' =>
                 'class' => StartDate::class,    
                 'lastAware' => false,
                 'chainOnUpdate' => '',
-                'chainOnProcess' => ''],
+                'chainOnProcess' => '',
+                'summary' => StartDateMulti::class],
              'end_date' => [
                 'name' => 'EndDate', 
                 'rowName' => 'end_date', 
@@ -64,7 +71,8 @@ return ['filters' =>
                 'class' => EndDate::class,    
                 'lastAware' => true,
                 'chainOnUpdate' => '',
-                'chainOnProcess' => ''],
+                'chainOnProcess' => '',
+                'summary' => EndDateMulti::class],
              'record_calc_distance' => [
                 'name' => 'sumDistance', 
                 'rowName' => 'record_calc_distance', 
@@ -154,6 +162,7 @@ return ['filters' =>
                 'class' => AvgSpeed::class,    
                 'lastAware' => false,
                 'chainOnUpdate' => '',
-                'chainOnProcess' => '']            
+                'chainOnProcess' => '',
+                'summary' => AvgSpeedMulti::class]            
               ]
 ];

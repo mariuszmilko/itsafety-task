@@ -3,10 +3,11 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
 
 
 
-class Track implements \IteratorAggregate
+class Track implements IType, \IteratorAggregate
 {
 
 

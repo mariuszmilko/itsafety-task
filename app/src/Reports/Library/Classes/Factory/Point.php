@@ -15,7 +15,7 @@ final class Point implements IFactoryData
 
    private $factoryMapper;
 
-   public function __construct(FactoryMapper $fm)
+   public function __construct(IFactoryData $fm)
    {
         $this->factoryMapper = $fm;
    }
