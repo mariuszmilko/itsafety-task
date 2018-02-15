@@ -10,9 +10,17 @@ class Device implements \IteratorAggregate
 {
 
    protected  $deviceId;
+
+
    protected  $tracks;
+
+
    protected  $xData;
+
+
    protected  $trackGen;
+
+   
    protected  $summaryTracks;
 
 
@@ -50,7 +58,7 @@ class Device implements \IteratorAggregate
         $this->trackGen->multiAggregator(function ($mAgg) {
             $this->summaryTracks = $mAgg;
         });
-        
+
        return $this->summaryTracks;
    }
 
@@ -58,6 +66,7 @@ class Device implements \IteratorAggregate
 
 
    public function getIterator() {
+
 	  return $this->trackGen->getIterator();
    }
 }

@@ -15,6 +15,7 @@ use App\Reports\Library\Classes\Factory\{
     Mapper as FactoryMapper,
     Aggregator as FactoryAggregator
 };
+use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
 use App\Reports\Library\Classes\Service\IService;
 
 
@@ -67,7 +68,7 @@ class DeviceTrackService implements IService
         $xRecords = $repository->xFindDeviceTracksByDate($deviceId, $datefrom, $dateTo);
        
         $factoryMapper = new FactoryMapper($oa, $filterDictionary, $aggDictionary);
-        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), new FactoryAggregator($factoryMapper, $magDictionary));
+        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), new FactoryAggregator($factoryMapper, $magDictionary), new TrackValidator());
         $device = new DeviceModel($deviceId, $xRecords, $trackGen);
         $device->processTracks();
 
@@ -85,7 +86,7 @@ class DeviceTrackService implements IService
         $filterDictionary = new FilterDictionary($oa->filters);
         $aggDictionary = new AggregateDictionary($oa->aggregates);
         $magDictionary = new MultiAggDictionary($oa->aggregates);
-        
+
         $filters = $oa->filters;
         $aggregates = $oa->aggregates;
         
@@ -96,7 +97,7 @@ class DeviceTrackService implements IService
         $xDayRecords = $repository->xFindDeviceByDay($deviceId, $day);
 
         $factoryMapper = new FactoryMapper($oa, $filterDictionary, $aggDictionary);
-        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), new FactoryAggregator($factoryMapper, $magDictionary));
+        $trackGen = new TrackGenerator(new FactoryPoint($factoryMapper), new FactoryTrack($factoryMapper), new FactoryAggregator($factoryMapper, $magDictionary), new TrackValidator());
         $device = new DeviceModel($deviceId, $xDayRecords, $trackGen);
         $device->processTracks();
 
