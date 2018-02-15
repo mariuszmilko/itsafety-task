@@ -9,7 +9,11 @@ use App\Reports\Library\Classes\Factory\Generic\{IDictionary};
 
 class ParametrAggregator implements \IteratorAggregate
 {
+
+
    protected $parameters = [];
+
+   
    protected $multiAggDictionary; 
 
 
@@ -42,6 +46,7 @@ class ParametrAggregator implements \IteratorAggregate
 
 
    public function getIterator() {
-    return new \ArrayIterator($this->parameters);
+
+     return new \ArrayIterator($this->parameters);
   }
 }

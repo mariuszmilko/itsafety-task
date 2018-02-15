@@ -77,6 +77,9 @@ class Point implements IPointProcess, IPointUpdate
         return true;
     }
 
+
+
+    
     public function getData()
     {
         return $this->data;

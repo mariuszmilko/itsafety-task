@@ -34,15 +34,12 @@ class Device implements \IteratorAggregate
          $this->trackGen->stream($this->xData)
             ->beginProcess() 
             ->beginTrack()
-            ->nextOrComplete()
+            ->processing()
             ->setPreviousPoint()
             ->next()
             ->isEndStream()
             ->aggregate();
       }
-      $this->trackGen->multiAggregator(function ($mAgg) {
-          $this->summaryTracks = $mAgg;
-      });
    }
 
 
@@ -50,6 +47,10 @@ class Device implements \IteratorAggregate
 
    public function getSummary()
    {
+        $this->trackGen->multiAggregator(function ($mAgg) {
+            $this->summaryTracks = $mAgg;
+        });
+        
        return $this->summaryTracks;
    }
 

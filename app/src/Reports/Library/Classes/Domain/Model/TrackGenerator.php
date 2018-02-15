@@ -195,7 +195,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function nextOrComplete(callable $response = null)
+   public function processing(callable $response = null)
    {
         (!$this->isEndTrack()) ? $this->track->processPoint($this->current) : $this->completeTrack(false); 
     

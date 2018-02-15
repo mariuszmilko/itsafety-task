@@ -41,6 +41,6 @@ class AvgSpeed implements  IMultiAggregator
 
     public function __toString()
     {
-        return 'Średnia: '.$this->getCalculatedValue();
+        return 'Średnia prędkość: '.$this->getCalculatedValue();
     }
 }
