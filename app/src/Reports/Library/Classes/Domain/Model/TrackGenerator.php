@@ -61,8 +61,8 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function completeTrack(bool $end, callable $response = null)
    {
       if ($this->trackValidator->isCompleteTrack($end, $this->current, $this->previous)) {
-          $this->track->updateOnEnd($this->current);
-          $this->addTrack();
+          !($this->track->updateOnEnd($this->current)
+            ->isValidLength($this->trackValidator)) ?: $this->addTrack();
           $this->track = $this->factoryTrack->factory($this->current);
           $this->track->processPoint($this->current);
       }    

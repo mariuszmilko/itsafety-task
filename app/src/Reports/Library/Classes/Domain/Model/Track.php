@@ -4,6 +4,8 @@ namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
 use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
+use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
+
 
 
 
@@ -12,6 +14,9 @@ class Track implements IType, \IteratorAggregate
 
 
    protected $parameters = [];
+
+
+   protected $length = 0;
 
 
 
@@ -35,17 +40,10 @@ class Track implements IType, \IteratorAggregate
 
 
 
-   public function getParameters() 
-   {
-       return $this->parameters;
-   }
-
-
-
-
    public function processPoint(IPointProcess $point)
    {
         $point->processing($this->parameters);  //callable test fail
+        $this->length++;
    }
 
 
@@ -54,6 +52,16 @@ class Track implements IType, \IteratorAggregate
    public function updateOnEnd(IPointUpdate $point)
    {
        $point->getDateAggData($this->parameters['end']); //dla ułatwienia później słownik
+
+       return $this;
+   }
+
+
+
+
+   public function isValidLength(TrackValidator $tValid)
+   {
+       return $tValid->isMinLength($this->length);
    }
 
 

@@ -9,7 +9,7 @@ use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPoint, IPointProces
 class TrackValidator
 {
 
-
+    const NOTRACK = 1;
 
 
     public function isCompleteTrack(bool $end, IPoint $current, IPoint $previous = null)
@@ -39,9 +39,8 @@ class TrackValidator
  
  
  
-    public function isMinLength()
+    public function isMinLength($length = 0)
     {
- 
-        return true;
+        return !($length == self::NOTRACK);
     }
 }
