@@ -13,7 +13,7 @@ class ParametrAggregator implements \IteratorAggregate
 
    protected $parameters = [];
 
-   
+
    protected $multiAggDictionary; 
 
 

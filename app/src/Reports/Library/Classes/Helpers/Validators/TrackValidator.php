@@ -2,20 +2,24 @@
 namespace App\Reports\Library\Classes\Helpers\Validators;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPoint, IPointProcess};
+use App\Reports\Library\Classes\Helpers\Generic\IValidLength;
 
 
 
 
-class TrackValidator
+class TrackValidator implements IValidLength
 {
+
 
     const NOTRACK = 1;
 
 
+    
+
     public function isCompleteTrack(bool $end, IPoint $current, IPoint $previous = null)
     { 
  
-        return ($end && $this->isMinLength() || $this->isEndTrack($previous, $current) && $this->isMinLength());
+        return ($end && $this->isValidLength() || $this->isEndTrack($previous, $current) && $this->isValidLength());
     }
  
  
@@ -39,7 +43,7 @@ class TrackValidator
  
  
  
-    public function isMinLength($length = 0)
+    public function isValidLength($length = 0)
     {
         return !($length == self::NOTRACK);
     }

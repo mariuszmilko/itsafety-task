@@ -5,6 +5,7 @@ namespace App\Reports\Library\Classes\Domain\Model;
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
 use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
+use App\Reports\Library\Classes\Helpers\Generic\IValidLength;
 
 
 
@@ -59,9 +60,9 @@ class Track implements IType, \IteratorAggregate
 
 
 
-   public function isValidLength(TrackValidator $tValid)
+   public function isValidLength(IValidLength $tValid)
    {
-       return $tValid->isMinLength($this->length);
+       return $tValid->isValidLength($this->length);
    }
 
 
