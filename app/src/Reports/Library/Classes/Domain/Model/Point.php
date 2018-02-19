@@ -25,7 +25,7 @@ class Point implements IPointProcess, IPointUpdate
     *
     * @constructor
     */
-    public function __construct(array $data, $delimiter)
+    public function __construct(array $data, int $delimiter)
     {
         $this->data = $data;
         $this->delimiter = $delimiter;
@@ -79,9 +79,10 @@ class Point implements IPointProcess, IPointUpdate
 
 
 
-    
+
     public function getData()
     {
+        
         return $this->data;
     }
 }

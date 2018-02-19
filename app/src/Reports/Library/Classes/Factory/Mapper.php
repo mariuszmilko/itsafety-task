@@ -22,7 +22,7 @@ final class Mapper implements IFactoryData
       $this->aggDictionary = $aggDictionary;
    }
 
-    public function factory($data)
+    public function factory(array $data)
     {
         return new MapperModel($data, $this->oMap, $this->filterDictionary, $this->aggDictionary);
     }

@@ -43,10 +43,10 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    
    public function __construct(
-        IFactoryData $factoryPoint, 
-        IFactoryPoint $factoryTrack, 
-        IFactoryAggregator $factoryAggregator,
-        TrackValidator $trackValidator
+      IFactoryData $factoryPoint, 
+      IFactoryPoint $factoryTrack, 
+      IFactoryAggregator $factoryAggregator,
+      TrackValidator $trackValidator
    )
    {
       $this->factoryPoint = $factoryPoint;
@@ -90,6 +90,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function multiAggregator(callable $response = null)
    {
        !is_callable($response) ?: $response($this->parameterAggregator);
+
        return $this;
    }
 
@@ -138,7 +139,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
 
 
-   public function stream(Generator $xData, callable $response = null)
+   public function stream(\Generator $xData, callable $response = null)
    {       
       $this->stream = $xData;
 
@@ -205,6 +206,7 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
 
    public function getIterator() 
    {
+
        return new \ArrayIterator($this->tracks);
    }
 }

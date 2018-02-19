@@ -5,5 +5,5 @@ use stdClass;
 
 interface IFactoryData
 {
-    public function factory($data);
+    public function factory(array $data);
 }

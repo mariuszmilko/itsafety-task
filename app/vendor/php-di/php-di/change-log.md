@@ -1,46 +1,5 @@
 # Change log
 
-## 6.0
-
-This is the complete change log. You can also read the [migration guide](doc/migration/6.0.md) for upgrading.
-
-Improvements:
-
-- [#494](https://github.com/PHP-DI/PHP-DI/pull/494) The container can now be compiled for optimum performances in production
-- [#294](https://github.com/PHP-DI/PHP-DI/issues/294), [#349](https://github.com/PHP-DI/PHP-DI/issues/349), [#449](https://github.com/PHP-DI/PHP-DI/pull/449): `DI\object()` has been replaced by more specific and less ambiguous helpers:
-    - `DI\create()` creates an object, overrides autowiring and previous definitions
-    - `DI\autowire()` autowires an object and allows to override specific constructor and method parameters
-- The container can now be built without parameters: `new Container()`
-- Definitions can be nested:
-    - [#490](https://github.com/PHP-DI/PHP-DI/issues/490) Definitions can be nested in arrays (by [@yuloh](https://github.com/yuloh))
-    - [#501](https://github.com/PHP-DI/PHP-DI/issues/501) & [#540](https://github.com/PHP-DI/PHP-DI/issues/540) Autowire definitions can be nested in other definitions
-    - [#487](https://github.com/PHP-DI/PHP-DI/issues/487) & [#540](https://github.com/PHP-DI/PHP-DI/issues/540) Closures are now handled as factories when they are nested in other definitions
-- [#242](https://github.com/PHP-DI/PHP-DI/issues/242) Error in case a definition is not indexed by a string
-- [#505](https://github.com/PHP-DI/PHP-DI/pull/505) Debug container entries
-- [#564](https://github.com/PHP-DI/PHP-DI/pull/564) Caching was made almost entirely obsolete by the container compilation, however there is still a caching system entirely rebuilt over APCu for covering the last cases that compilation could not address (see [php-di.org/doc/performances.html](http://php-di.org/doc/performances.html))
-
-Fixes:
-
-- [#499](https://github.com/PHP-DI/PHP-DI/issues/499) & [#488](https://github.com/PHP-DI/PHP-DI/issues/488) Standardize resolution of nested definitions everywhere.
-    In PHP-DI 5, definitions could be nested in some places (e.g. use a get() in an object definition, etc.). However it did not behave everywhere the same, for example it didn't work for sub-definitions in arrays.
-    Now in PHP-DI 6 all nested definitions will all be recognized and resolved correctly everywhere. Since #494 (compiled container) performance will not be affected so we can implement a more robust behavior.
-- [#343](https://github.com/PHP-DI/PHP-DI/issues/343) Autowiring and Annotations do not work for `object()` inside arrays: it now works with the new `create()` and `autowire()` helpers
-
-BC breaks:
-
-- PHP 7 or greater is required and HHVM is no longer supported
-- `DI\object()` has been removed, use `DI\create()` or `DI\autowire()` instead
-- [#409](https://github.com/PHP-DI/PHP-DI/issues/409): Scopes are removed, read more in the [scopes](doc/scopes.md) documentation.
-- Caching was replaced by compiling the container: `ContainerBuilder::setDefinitionCache()` was removed, use `ContainerBuilder::enableCompilation()` instead.
-- [#463](https://github.com/PHP-DI/PHP-DI/issues/463) & [#485](https://github.com/PHP-DI/PHP-DI/issues/485): Container-interop support was removed, PSR-11 is used instead (by [@juliangut](https://github.com/juliangut))
-- The deprecated `DI\link()` helper was removed, used `DI\get()` instead
-- [#484](https://github.com/PHP-DI/PHP-DI/pull/484) The deprecated `\DI\Debug` class has been removed. Definitions can be cast to string directly
-- The exception `DI\Definition\Exception\DefinitionException` was renamed to `DI\Definition\Exception\InvalidDefinition`
-- The exception `DI\Definition\Exception\AnnotationException` was renamed to `DI\Definition\Exception\InvalidAnnotation`
-- [#516](https://github.com/PHP-DI/PHP-DI/issues/516) `DI\InvokerInterface` was removed in favor of `Invoker\InvokerInterface`.
-
-Be also aware that internal classes or interfaces may have changed.
-
 ## 5.4.6
 
 - Fix [#554](https://github.com/PHP-DI/PHP-DI/issues/554): `Container::make()` fails when combined with `decorate()`.

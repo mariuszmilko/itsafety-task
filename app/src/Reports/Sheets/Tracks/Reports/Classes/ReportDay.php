@@ -19,20 +19,16 @@ class ReportDay  implements IReport
    protected $template;
 
 
-   protected $map;
-
-
    protected $parameters = [];
 
 
 
 
-   public function __construct(IService $service, $template, $map, $parameters = [])
+   public function __construct(IService $service, \Twig_Environment $template,  array $parameters = [])
    {
       $this->service = $service;
       $this->parameters = $parameters;
       $this->template = $template;
-      $this->map = $map;
    }
 
 
@@ -42,8 +38,7 @@ class ReportDay  implements IReport
    {
       $device = $this->service->getDataByDay(
        $this->parameters['deviceId'], 
-       $this->parameters['day'], 
-       $this->map
+       $this->parameters['day']
       );
 
       $deviceId = $this->parameters['deviceId'];

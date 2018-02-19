@@ -25,9 +25,9 @@ class AggregateDictionary implements IDictionary
 
   public function fillDictionary(stdClass $data)
   {
-       foreach ($data  as $key => $agg) {
+     foreach ($data  as $key => $agg) {
            $this->aggregatesDictionary[$agg->class] = $agg->class;
-       }
+     }
   }
 
 
@@ -35,6 +35,7 @@ class AggregateDictionary implements IDictionary
 
   public function get(string $key)
   {
+
       return new $this->aggregatesDictionary[$key];
   }
 

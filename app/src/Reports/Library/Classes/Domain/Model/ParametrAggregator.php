@@ -34,10 +34,12 @@ class ParametrAggregator implements \IteratorAggregate
           foreach ($index as $parameter)
           {
              $mag = $this->multiAggDictionary->get($parameter->getName()); 
-             if (isset($mag)) {
-                $mag->calculate($parameter);
-                $this->parameters[$parameter->getName()] = $mag;
+             if (isset($this->parameters[$parameter->getName()])) {
+                $mag = $this->parameters[$parameter->getName()];
+             } else {
+                !(isset($mag)) ?: $this->parameters[$parameter->getName()] = $mag;
              }
+             !(isset($mag)) ?: $mag->calculate($parameter);
           }
        }
    }
@@ -45,8 +47,9 @@ class ParametrAggregator implements \IteratorAggregate
 
 
 
-   public function getIterator() {
+   public function getIterator() 
+   {
 
      return new \ArrayIterator($this->parameters);
-  }
+   }
 }

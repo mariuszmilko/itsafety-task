@@ -39,7 +39,7 @@ class Device implements IDeviceRepository
         $stmt->bindParam(':dateFrom', $dateFrom, \PDO::PARAM_STR, 19);
         $stmt->bindParam(':dateTo', $dateTo, \PDO::PARAM_STR, 19);
         $stmt->execute();
-         
+
         while ($record = $stmt->fetch(\PDO::FETCH_ASSOC)){        
             yield $record;//$this->mapToObject($record);  
         }
@@ -61,7 +61,7 @@ class Device implements IDeviceRepository
         $stmt->bindParam(':device', $deviceId, \PDO::PARAM_INT);
         $stmt->bindParam(':day', $day, \PDO::PARAM_STR, 12);
         $stmt->execute();
-         
+
         while($record = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             yield $record;//$this->mapToObject($record);     
         }

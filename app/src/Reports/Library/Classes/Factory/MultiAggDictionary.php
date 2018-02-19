@@ -16,20 +16,19 @@ class MultiAggDictionary implements IDictionary
 
 
 
-  public function __construct(stdClass $filters)
-  {
-     $this->fillDictionary($filters);
+  public function __construct(stdClass $aggs)
+  {  
+     $this->fillDictionary($aggs);
   }
 
 
 
 
   public function fillDictionary(stdClass $data)
-  {
-    foreach ($data  as $key => $agg) {
-        if (isset($agg->summary))
-        {
-          $this->multiAggDictionary[$agg->name] = new $agg->summary;
+  { 
+     foreach ($data  as $key => $agg) {
+        if (isset($agg->summary)) {
+          $this->multiAggDictionary[$agg->name] = $agg->summary;
         }  
      }
   }
@@ -39,7 +38,8 @@ class MultiAggDictionary implements IDictionary
 
   public function get(string $key)
   {
-      return isset($this->multiAggDictionary[$key]) ? $this->multiAggDictionary[$key] : null;
+
+      return isset($this->multiAggDictionary[$key]) ? new $this->multiAggDictionary[$key] : null;
   }
 
 }

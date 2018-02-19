@@ -9,7 +9,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          syntaxCheck="true"
-         beStrictAboutTestsThatDoNotTestAnything="false"
+         forceCoversAnnotation="true"
          bootstrap="./vendor/autoload.php">
 
     <testsuites>
@@ -24,9 +24,6 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
-            <exclude>
-                <file>src/Compiler/Template.php</file>
-            </exclude>
         </whitelist>
     </filter>
 

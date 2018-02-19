@@ -19,20 +19,16 @@ class ReportDateRange  implements IReport
    protected $template;
 
 
-   protected $map;
-
-
    protected $parameters = [];
 
 
 
 
-   public function __construct(IService $service, $template, $map, $parameters = [])
+   public function __construct(IService $service, \Twig_Environment $template, array $parameters = [])
    {
       $this->service = $service;
       $this->parameters = $parameters;
       $this->template = $template;
-      $this->map = $map;
    }
 
 
@@ -43,8 +39,7 @@ class ReportDateRange  implements IReport
       $device = $this->service->getDataByDate(
         $this->parameters['deviceId'], 
         $this->parameters['dateFrom'], 
-        $this->parameters['dateTo'], 
-        $this->map
+        $this->parameters['dateTo']
       );
 
       $deviceId = $this->parameters['deviceId'];

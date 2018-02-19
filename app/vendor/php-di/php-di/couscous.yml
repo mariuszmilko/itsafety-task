@@ -82,6 +82,9 @@ menu:
                 performances:
                     text: Performances
                     url: doc/performances.html
+                scopes:
+                    text: Scopes
+                    url: doc/scopes.html
                 lazy-injection:
                     text: Lazy injection
                     url: doc/lazy-injection.html
@@ -103,9 +106,6 @@ menu:
                 v5:
                     text: From PHP-DI 4.x to 5.0
                     url: doc/migration/5.0.html
-                v6:
-                    text: From PHP-DI 5.x to 6.0
-                    url: doc/migration/6.0.html
         internals:
             section: Internals
             items:

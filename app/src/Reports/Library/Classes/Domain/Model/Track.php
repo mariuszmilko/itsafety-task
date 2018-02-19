@@ -22,7 +22,7 @@ class Track implements IType, \IteratorAggregate
 
 
 
-   public function __construct($parameters)
+   public function __construct(array $parameters)
    {
        $this->parameters = $parameters;
    }
@@ -62,13 +62,16 @@ class Track implements IType, \IteratorAggregate
 
    public function isValidLength(IValidLength $tValid)
    {
+
        return $tValid->isValidLength($this->length);
    }
 
 
 
 
-   public function getIterator() {
+   public function getIterator() 
+   {
+
        return new \ArrayIterator($this->parameters);
    }
 }

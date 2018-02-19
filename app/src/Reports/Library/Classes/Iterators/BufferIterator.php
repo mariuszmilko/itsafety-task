@@ -4,6 +4,7 @@ namespace App\Reports\Library\Classes\Iterators;
 
 use Iterator;
 use SplFixedArray;
+use SeekableIterator;
 
 /**
  * BufferIterator  based on Benjamin Zikarsky 

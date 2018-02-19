@@ -2,9 +2,9 @@
 
 namespace Invoker;
 
+use Interop\Container\ContainerInterface;
+use Interop\Container\Exception\NotFoundException;
 use Invoker\Exception\NotCallableException;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Resolves a callable from a container.
@@ -73,10 +73,7 @@ class CallableResolver
         if (is_string($callable)) {
             try {
                 return $this->container->get($callable);
-            } catch (NotFoundExceptionInterface $e) {
-                if ($this->container->has($callable)) {
-                    throw $e;
-                }
+            } catch (NotFoundException $e) {
                 throw NotCallableException::fromInvalidCallable($callable, true);
             }
         }
@@ -88,10 +85,7 @@ class CallableResolver
                 // Replace the container entry name by the actual object
                 $callable[0] = $this->container->get($callable[0]);
                 return $callable;
-            } catch (NotFoundExceptionInterface $e) {
-                if ($this->container->has($callable[0])) {
-                    throw $e;
-                }
+            } catch (NotFoundException $e) {
                 if ($isStaticCallToNonStaticMethod) {
                     throw new NotCallableException(sprintf(
                         'Cannot call %s::%s() because %s() is not a static method and "%s" is not a container entry',

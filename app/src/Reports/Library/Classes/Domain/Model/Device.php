@@ -3,10 +3,11 @@
 namespace App\Reports\Library\Classes\Domain\Model;
 
 use Generator;
+use App\Reports\Library\Classes\Domain\Model\Generic\Device\IDevice;
 
 
 
-class Device implements \IteratorAggregate
+class Device implements IDevice, \IteratorAggregate
 {
 
    protected  $deviceId;
@@ -20,7 +21,7 @@ class Device implements \IteratorAggregate
 
    protected  $trackGen;
 
-   
+
    protected  $summaryTracks;
 
 

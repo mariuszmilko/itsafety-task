@@ -5,6 +5,9 @@ namespace PHPSTORM_META {
         \Psr\Container\ContainerInterface::get('') => [
             "" == "@",
         ],
+        \Interop\Container\ContainerInterface::get('') => [
+            "" == "@",
+        ],
         \DI\Container::get('') => [
             "" == "@",
         ],

@@ -1,0 +1,38 @@
+# config/services.yaml
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\Reports\:
+        resource: './src/Reports/*'
+        exclude: './src/Reports/Sheets/Tracks/Config/Schema'
+
+
+    application.main:
+        class:    App\Reports\Application
+        public:   true
+    
+    application.factory.device:
+        class: 'App\Reports\Library\Classes\Factory\Generic\IFactoryDevice'
+        alias: 'App\Reports\Library\Classes\Factory\Device'
+        factory:  'App\Reports\Library\Classes\Factory\Device:factory'
+        arguments: ['@application.domain.model.trackgenerator']
+    
+
+   application.domain.repository.device:
+        class: 'App\Reports\Library\Classes\Repository\Device\IDeviceReposiory'
+        alias: 'App\Reports\Library\Classes\Domain\Repository\Device'
+        arguments: ['\PDO']
+
+    application.domain.model.trackgenerator:
+        class:  'App\Reports\Library\Classes\Domain\Model\TrackGenerator'
+
+
+
+  

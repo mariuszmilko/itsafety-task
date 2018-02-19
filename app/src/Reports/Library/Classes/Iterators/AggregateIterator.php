@@ -147,10 +147,10 @@ class Test implements Iterator {
     }
 }
 
-$iterator = new Test();
-foreach ($iterator as $e){
-    var_dump('loop1 ' . $e);
-    foreach ($iterator as $e2){
-        var_dump('loop2 ' . $e2);
-    }
-}
+// $iterator = new Test();
+// foreach ($iterator as $e){
+//     var_dump('loop1 ' . $e);
+//     foreach ($iterator as $e2){
+//         var_dump('loop2 ' . $e2);
+//     }
+// }

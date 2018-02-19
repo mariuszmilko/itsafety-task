@@ -27,7 +27,7 @@ class FilterDictionary implements IDictionary
   public function fillDictionary(stdClass $data)
   {
        foreach ($data  as $key => $filter) {
-           $this->filtersDictionary[$filter->class] =  new $filter->class;
+           $this->filtersDictionary[$filter->class] = $filter->class;
        }
   }
 
@@ -36,7 +36,7 @@ class FilterDictionary implements IDictionary
 
   public function get(string $key)
   {
-      return $this->filtersDictionary[$key];
+      return new $this->filtersDictionary[$key];
   }
 
 }

@@ -21,7 +21,7 @@ final class Point implements IFactoryData
    }
 
 
-   public function factory($data)
+   public function factory(array $data)
    {
        $delimiter = '';
        $this->factoryMapper->factory($data)
