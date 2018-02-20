@@ -6,6 +6,7 @@ use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPoin
 use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
 use App\Reports\Library\Classes\Helpers\Generic\IValidLength;
+use App\Reports\Library\Classes\Helpers\Arrays\ArrayGenerator;
 
 
 
@@ -72,6 +73,6 @@ class Track implements IType, \IteratorAggregate
    public function getIterator() 
    {
 
-       return new \ArrayIterator($this->parameters);
+       return new ArrayGenerator($this->parameters);
    }
 }

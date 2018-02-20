@@ -4,6 +4,7 @@ namespace App\Reports\Library\Classes\Domain\Model;
 
 use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
 use App\Reports\Library\Classes\Factory\Generic\{IDictionary};
+use App\Reports\Library\Classes\Helpers\Arrays\ArrayGenerator;
 
 
 
@@ -50,6 +51,6 @@ class ParametrAggregator implements \IteratorAggregate
    public function getIterator() 
    {
 
-     return new \ArrayIterator($this->parameters);
+     return new ArrayGenerator($this->parameters);
    }
 }

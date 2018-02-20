@@ -5,6 +5,7 @@ namespace App\Reports\Library\Classes\Domain\Model;
 use App\Reports\Library\Classes\Domain\Model\Generic\Point\IPoint;
 use App\Reports\Library\Classes\Factory\Generic\{IFactoryPoint, IFactoryData, IFactoryAggregator};
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
+use App\Reports\Library\Classes\Helpers\Arrays\ArrayGenerator;
 use Generator;
 
 
@@ -207,6 +208,6 @@ final class TrackGenerator  implements \IteratorAggregate //implements IProcess
    public function getIterator() 
    {
 
-       return new \ArrayIterator($this->tracks);
+       return new ArrayGenerator($this->tracks);
    }
 }
