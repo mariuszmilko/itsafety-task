@@ -23,7 +23,6 @@ final class Point implements IFactoryData
 
    public function factory(array $data)
    {
-       $delimiter = '';
        $this->factoryMapper->factory($data)
             ->delimiter(function($d) use (&$delimiter){
               $delimiter = $d;

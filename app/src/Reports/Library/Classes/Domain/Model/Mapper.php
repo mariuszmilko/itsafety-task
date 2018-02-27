@@ -108,7 +108,7 @@ class Mapper  implements IMapper
 
 
 
-   public function extractParameters()
+   public function extractParameters(callable $response = null)
    {
         list($filters, $filterDictionary, $data, $aggregates, $parameters) 
             = $this->listDataToFilter();
@@ -117,6 +117,7 @@ class Mapper  implements IMapper
         $p = $this->extractAggregates($f);
 
         $this->parameters = $p;
+        !is_callable($response) ?: $response($p);
 
         return $this;
     }

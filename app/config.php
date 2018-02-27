@@ -15,6 +15,7 @@ use App\Reports\Library\Classes\Factory\{
     Mapper as FactoryMapper,
     Device as FactoryDevice,
     Track as FactoryTrack,
+    ParameterTrack as FactoryParameterTrack,
     Aggregator as FactoryAggregator,
     TrackGenerator as FactoryTrackGenerator};
 
@@ -113,9 +114,17 @@ return [
 
 
 
+
+    'FactoryParameterTrack' => function (ContainerInterface $c) {
+
+        return new FactoryParameterTrack();
+    },
+
+
+
     'FactoryTrack' => function (ContainerInterface $c) {
 
-        return new FactoryTrack($c->get('FactoryMapper'));
+        return new FactoryTrack($c->get('FactoryMapper'), $c->get('FactoryParameterTrack'));
     },
 
 

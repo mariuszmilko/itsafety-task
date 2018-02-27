@@ -2,7 +2,8 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPoint, IPointProcess, IPointUpdate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Parameter\{IProcessAndUpdate};
 use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
 use App\Reports\Library\Classes\Helpers\Generic\IValidLength;
@@ -15,7 +16,7 @@ class Track implements IType, \IteratorAggregate
 {
 
 
-   protected $parameters = [];
+   protected $parameterTrack;
 
 
    protected $length = 0;
@@ -23,9 +24,9 @@ class Track implements IType, \IteratorAggregate
 
 
 
-   public function __construct(array $parameters)
+   public function __construct(IProcessAndUpdate $parameter)
    {
-       $this->parameters = $parameters;
+       $this->parameterTrack = $parameter;
    }
    
 
@@ -33,27 +34,27 @@ class Track implements IType, \IteratorAggregate
 
    public function getParameter(string $name) 
    {
-       if (!isset($this->parameters[$name])) 
+       if (!isset($this->parameterTrack)) 
           throw new Exception('Błędna nazwa parametru');
         
-       return $this->parameters[$name];
+       return $this->parameterTrack->getParameter($name);
    }
 
 
 
 
-   public function processPoint(IPointProcess $point)
+   public function processPoint(IPoint $point)
    {
-        $point->processing($this->parameters);  //callable test fail
+        $this->parameterTrack->processing($point); 
         $this->length++;
    }
 
 
 
 
-   public function updateOnEnd(IPointUpdate $point)
+   public function updateOnEnd(IPoint $point)
    {
-       $point->getDateAggData($this->parameters['end']); //dla ułatwienia później słownik
+       $this->parameterTrack->getDateAggData($point);
 
        return $this;
    }
@@ -73,6 +74,6 @@ class Track implements IType, \IteratorAggregate
    public function getIterator() 
    {
 
-       return new ArrayGenerator($this->parameters);
+       return $this->parameterTrack;
    }
 }

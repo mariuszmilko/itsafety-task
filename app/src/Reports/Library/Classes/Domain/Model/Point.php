@@ -4,12 +4,12 @@ namespace App\Reports\Library\Classes\Domain\Model;
 
 use stdClass;
 use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterFilter};
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointData};
 
 /**
 *  Elementary part of track
 */
-class Point implements IPointProcess, IPointUpdate
+class Point implements IPointProcess, IPointData
 { 
     /** @var int Should contain a description if available */
     protected $delimiter;
@@ -47,39 +47,26 @@ class Point implements IPointProcess, IPointUpdate
         return $this->delimiter;
     }
     /**
-     * This method sets a description.
+    * This method sets a description.
     *
-    * @param array $description A text with a maximum of 80 characters.
+    * @param string $description A text with a maximum of 80 characters.
     *
-    * @return Point
+    * @throws Exception
+    * @return string
     */
-    public function processing(array &$parameters) //$context  ->get callable
-    {   
-       foreach ($parameters as &$parameter)
-       {
-          foreach ($parameter as $p)
-          {
-            $p->calculate([ 'value' => $this->data[$p->getRowname()] ]);
-          }
-       }
+    public function getField(string $field)
+    {
+        
+        return $this->data[$field];
     }
     /**
-     * This method sets a description.
+    * This method sets a description.
     *
-    * @param array $description A text with a maximum of 80 characters.
+    * @param string $description A text with a maximum of 80 characters.
     *
-    * @return bool
+    * @throws Exception
+    * @return string
     */
-    public function getDateAggData(array &$parameters) //TO TrackGenerator ?? unikniecie polaczenie z track ?
-    { 
-        $p = current($parameters);
-        $p->calculate(['value' => $this->data[$p->getRowname()]]); //dla ułatwienia później słownik
-        return true;
-    }
-
-
-
-
     public function getData()
     {
         

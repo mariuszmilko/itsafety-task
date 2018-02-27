@@ -9,7 +9,8 @@
         "illuminate/pipeline": "5.6.0",
         "league/pipeline": "0.3.0",
         "twig/twig": "~2.4.4",
-        "respect/validation": "~1.1.15"
+        "respect/validation": "~1.1.15",
+        "amphp/amp": "~2.0.6"
     },
     "autoload": {
         "psr-4": {

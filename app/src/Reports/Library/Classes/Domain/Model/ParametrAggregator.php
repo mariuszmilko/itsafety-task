@@ -28,7 +28,7 @@ class ParametrAggregator implements \IteratorAggregate
 
 
 
-   public function extractParameters(IType $track)
+   public function extractParameters(\IteratorAggregate $track)
    {
        foreach ($track as $index)
        {
