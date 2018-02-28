@@ -7,6 +7,7 @@ use App\Reports\Library\Classes\Repository\Device\IDeviceRepository;
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
 use App\Reports\Library\Classes\Domain\Service\DeviceTrackService;
 use App\Reports\Sheets\Tracks\Reports\Classes\{ReportDateRange, ReportDay};
+use App\Reports\Library\Classes\Helpers\Reports\Cache as ReportCache;
 use App\Reports\Library\Classes\Factory\{
     FilterDictionary, 
     AggregateDictionary, 
@@ -178,23 +179,24 @@ return [
 
     'ReportDateRange' => function (ContainerInterface $c)  {
 
-        return new ReportDateRange(
+        return new ReportCache(new ReportDateRange(
             $c->get('DeviceTrackService'), 
             $c->get('Twig_Environment'),
             ['deviceId' => 27184,'dateFrom' => '2018-01-19', 'dateTo' => '2018-01-25']
-        );
+        ), false);
     },
 
 
 
     'ReportDay' => function (ContainerInterface $c)  {
 
-        return new ReportDay(
+        return new ReportCache(new ReportDay(
             $c->get('DeviceTrackService'), 
             $c->get('Twig_Environment'),
             ['deviceId' => 36580,'day' => '2018-01-25']
-        );
+        ), false);
     },
+
 
 
 
@@ -204,7 +206,7 @@ return [
         $loader = new Twig_Loader_Filesystem($path.'/app/src/Reports/Sheets/Tracks/Reports/Documents');
         $template = new Twig_Environment($loader, array(
             'cache' => $path.'/app/Cache',
-            'debug' => true,
+            'debug' => false,
         ));
         $template->addExtension(new Twig_Extension_Debug());
         
