@@ -4,6 +4,7 @@ namespace App\Reports\Library\Classes\Factory;
 
 use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 
+use App\Reports\Library\Parameters\Generic\IParameter;
 use stdClass;
 
 
@@ -45,9 +46,9 @@ class FilterDictionary implements IDictionary
 
     /**
      * @param string $key
-     * @return stdClass
+     * @return IParameter
      */
-    public function get(string $key): \stdClass
+    public function get(string $key): ?IParameter
     {
         return new $this->filtersDictionary[$key];
     }

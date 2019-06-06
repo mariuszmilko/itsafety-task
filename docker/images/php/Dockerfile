@@ -232,24 +232,21 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 
 ADD php.ini /usr/local/etc/php
 
-RUN \
-    echo "===> add webupd8 repository..."  && \
-    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list  && \
-    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list  && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886  && \
-    apt-get update
-
-
-RUN echo "===> install Java"  && \
-    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections  && \
-    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections  && \
-    DEBIAN_FRONTEND=noninteractive  apt-get install -y --force-yes oracle-java8-installer oracle-java8-set-default
-
-
-RUN echo "===> clean up..."  && \
-    rm -rf /var/cache/oracle-jdk8-installer  && \
-    apt-get clean  && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update
+#RUN add-apt-repository ppa:linuxuprising/java
+#
+#RUN echo "deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main" | tee /etc/apt/sources.list.d/linuxuprising-java.list && \
+#    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 73C3DB2A && \
+#    apt-get update && \
+#    apt-get install oracle-java11-installer
+#
+#RUN apt-get install oracle-java11-set-default
+#
+#
+#RUN echo "===> clean up..."  && \
+#    rm -rf /var/cache/oracle-jdk11-installer  && \
+#    apt-get clean  && \
+#    rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9000
 CMD ["php-fpm"]

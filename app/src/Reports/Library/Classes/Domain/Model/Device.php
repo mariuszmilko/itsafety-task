@@ -2,6 +2,7 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
+use App\Reports\Library\Parameters\Generic\IParameterAgg;
 use Generator;
 use App\Reports\Library\Classes\Domain\Model\Generic\Device\IDevice;
 
@@ -70,7 +71,7 @@ class Device implements IDevice, \IteratorAggregate
     /**
      * @return array
      */
-    public function getSummary(): array
+    public function getSummary(): \IteratorAggregate
     {
         $this->trackGen->multiAggregator(function($mAgg) {
             $this->summaryTracks = $mAgg;

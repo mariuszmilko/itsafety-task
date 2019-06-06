@@ -6,7 +6,7 @@ namespace App\Reports\Library\Classes\Factory;
 use App\Reports\Library\Classes\Domain\Model\TrackGenerator as TrackGeneratorModel;
 use App\Reports\Library\Classes\Factory\Generic\
 {
-    IFactoryAggregator, IFactoryData, IFactoryPoint, IDictionary
+    IFactoryAggregator, IFactoryData, IFactoryPoint, IFactoryTrack
 };
 use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
 
@@ -38,11 +38,11 @@ final class TrackGenerator implements IFactoryAggregator
     /**
      * TrackGenerator constructor.
      * @param IFactoryData $factoryPoint
-     * @param IFactoryPoint $factoryTrack
+     * @param IFactoryTrack $factoryTrack
      * @param IFactoryAggregator $factoryAggregator
      * @param TrackValidator $trackValidator
      */
-    public function __construct(IFactoryData $factoryPoint, IFactoryPoint $factoryTrack, IFactoryAggregator $factoryAggregator, TrackValidator $trackValidator)
+    public function __construct(IFactoryData $factoryPoint, IFactoryTrack $factoryTrack, IFactoryAggregator $factoryAggregator, TrackValidator $trackValidator)
     {
         $this->factoryPoint      = $factoryPoint;
         $this->factoryTrack      = $factoryTrack;

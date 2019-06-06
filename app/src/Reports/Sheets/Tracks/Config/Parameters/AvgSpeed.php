@@ -43,7 +43,7 @@ class AvgSpeed extends AbstractParameter implements IParameterAgg
      */
     public function getCalculatedValue(): Value
     {
-        return !($this->index > 0 && $this->sum > 0) ?: new ValueFloat($this->sum / $this->index);
+        return ($this->index > 0 && $this->sum > 0) ? new ValueFloat($this->sum / $this->index) : new ValueFloat(0);
     }
 
     /**

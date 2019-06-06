@@ -65,7 +65,7 @@ class Point implements IPointProcess, IPointData
      *
      * @return string
      */
-    public function getField(string $field): string
+    public function getField(string $field): ?string
     {
         return $this->data[$field];
     }
@@ -76,9 +76,9 @@ class Point implements IPointProcess, IPointData
      *
      * @param string $description A text with a maximum of 80 characters.
      *
-     * @return string
+     * @return array
      */
-    public function getData(): string
+    public function getData(): array
     {
         return $this->data;
     }

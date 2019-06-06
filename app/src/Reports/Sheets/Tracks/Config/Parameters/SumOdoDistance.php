@@ -4,7 +4,7 @@ namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
 use App\Reports\Library\Parameters\Generic\
 {
-    IParameterAgg, IParameterChain, Parameter as AbstractParameter
+    IParameter, IParameterAgg, IParameterChain, Parameter as AbstractParameter
 };
 use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
 use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueInt;
@@ -74,7 +74,7 @@ class SumOdoDistance extends AbstractParameter implements IParameterAgg, IParame
     /**
      * @param $nextParam
      */
-    public function setSuccessor($nextParam): void
+    public function setSuccessor(IParameter $nextParam): void
     {
         print_r('sum_distance');
         exit('chainOnEnd');

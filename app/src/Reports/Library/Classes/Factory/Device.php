@@ -4,7 +4,7 @@ namespace App\Reports\Library\Classes\Factory;
 
 use App\Reports\Library\Classes\Domain\Model\
 {
-    Device as DeviceModel
+    Device as DeviceModel, Generic\Device\IDevice
 };
 use App\Reports\Library\Classes\Factory\Generic\
 {
@@ -36,9 +36,9 @@ final class Device implements IFactoryDevice
     /**
      * @param int $deviceId
      * @param \Generator $gen
-     * @return DeviceModel
+     * @return IDevice
      */
-    public function factory(int $deviceId, \Generator $gen): DeviceModel
+    public function factory(int $deviceId, \Generator $gen): IDevice
     {
         return new DeviceModel($deviceId, $gen, $this->factoryTrackGenerator->factory());
     }

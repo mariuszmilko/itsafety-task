@@ -35,7 +35,7 @@ class AvgSpeed implements IMultiAggregator
      */
     public function calculate(IParameterAgg $parameter): void
     {
-        $this->sum   += $parameter->getCalculatedValue();
+        $this->sum   += ($parameter->getCalculatedValue())();
         $this->index += 1;
     }
 

@@ -10,9 +10,9 @@ class ArrayToObject
 {
     /**
      * @param $array
-     * @return null|\stdClass
+     * @return null|mixed
      */
-    function arrayToObject($array): ?\stdClass
+    function arrayToObject($array)
     {
         if(!is_array($array))
         {

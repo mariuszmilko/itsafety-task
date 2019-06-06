@@ -20,7 +20,7 @@ class ArrayGenerator implements \IteratorAggregate
      * ArrayGenerator constructor.
      * @param array $array
      */
-    public function __construct(array $array)
+    public function __construct($array)
     {
         $this->array = $array;
     }
