@@ -1,3 +1,9 @@
+P.S.
+
+@HUBERT   "Having" not "Haeving"... taka drobna różnica w wymowie... i zamiast o  warunku dla grupy  pomyslałem o super pluginie, który potrafi żonglować terabajtami danych w ms..  ;)
+
+..do tego zadania rekrutacyjnego dorzuciłem docblock, typy zwracane, extra jeszcze jeden wzorzec Value Object...
+
 # itsafety-task
 
 Opis podstawowych klas domeny:
