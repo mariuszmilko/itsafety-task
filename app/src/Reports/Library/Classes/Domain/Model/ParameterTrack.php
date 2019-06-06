@@ -2,78 +2,97 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointData};
-use App\Reports\Library\Classes\Factory\Generic\{IDictionary};
+use App\Reports\Library\Classes\Domain\Model\Generic\Track\
+{
+    IType
+};
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\
+{
+    IPointData
+};
+use App\Reports\Library\Classes\Factory\Generic\
+{
+    IDictionary
+};
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayGenerator;
-use App\Reports\Library\Classes\Domain\Model\Generic\Parameter\{
-    IParameterTrack, 
-    IParameterTrackUpdate, 
-    IProcessAndUpdate
+use App\Reports\Library\Classes\Domain\Model\Generic\Parameter\
+{
+    IParameterTrack, IParameterTrackUpdate, IProcessAndUpdate
 };
 
 
-
+/**
+ * Class ParameterTrack
+ * @package App\Reports\Library\Classes\Domain\Model
+ */
 class ParameterTrack implements IProcessAndUpdate, \IteratorAggregate
 {
+    /**
+     * @var array
+     */
+    protected $parameters = [];
 
 
-  protected $parameters = []; 
-
-
-
-
-  public function __construct(array $parameters)
-  {
-     $this->parameters = $parameters;
-  }
-
-
-
-
-  public function getEndLastAware()
-  {
-     return current($this->parameters['end']);
-  }
-
-
-
-
-  public function getDateAggData(IPointData $point)
-  {
-      $p = $this->getEndLastAware();
-      $data = $point->getField($p->getRowname());
-      $p->calculate(['value' => $data]); 
-  }
-
-
-
-
-  public function getParameter(string $name)
-  {
-      return $this->parameters[$name];
-  } 
-
-
-
-
-   public function processing(IPointData $point) //$context  ->get callable
-   {          
-       foreach ($this->parameters as &$parameter)
-       {
-         foreach ($parameter as &$p)
-         {
-            $p->calculate([ 'value' => $point->getField($p->getRowname()) ]);
-         }
-       }
+    /**
+     * ParameterTrack constructor.
+     * @param array $parameters
+     */
+    public function __construct(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
 
-
-
-    public function getIterator() 
+    /**
+     * @return mixed
+     */
+    public function getEndLastAware()
     {
+        return current($this->parameters['end']);
+    }
 
+
+    /**
+     * @param IPointData $point
+     */
+    public function getDateAggData(IPointData $point)
+    {
+        $p    = $this->getEndLastAware();
+        $data = $point->getField($p->getRowname());
+        $p->calculate(['value' => $data]);
+    }
+
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getParameter(string $name)
+    {
+        return $this->parameters[$name];
+    }
+
+
+    /**
+     * @param IPointData $point
+     */
+    public function processing(IPointData $point): void
+    {
+        foreach($this->parameters as &$parameter)
+        {
+            foreach($parameter as &$p)
+            {
+                $p->calculate(['value' => $point->getField($p->getRowname())]);
+            }
+        }
+    }
+
+
+    /**
+     * @return \IteratorAggregate
+     */
+    public function getIterator(): \IteratorAggregate
+    {
         return new ArrayGenerator($this->parameters);
     }
 }

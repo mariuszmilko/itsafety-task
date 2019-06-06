@@ -2,16 +2,10 @@
 
 namespace App\Reports\Library\Parameters\Generic;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameter};
-
-
-
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
 
 interface IMultiAggregator extends IParameter
 {
-
-
-
     public function calculate(IParameterAgg $parameter);
-    public function getCalculatedValue();
+    public function getCalculatedValue(): Value;
 }

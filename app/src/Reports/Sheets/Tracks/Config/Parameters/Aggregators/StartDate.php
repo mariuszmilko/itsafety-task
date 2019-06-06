@@ -2,44 +2,57 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters\Aggregators;
 
-use App\Reports\Library\Parameters\Generic\{IMultiAggregator, IParameterAgg};
-
-
-
-
-class StartDate implements  IMultiAggregator
+use App\Reports\Library\Parameters\Generic\
 {
+    IMultiAggregator, IParameterAgg
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueDate;
 
 
-    protected  $startDate;
+/**
+ * Class StartDate
+ * @package App\Reports\Sheets\Tracks\Config\Parameters\Aggregators
+ */
+class StartDate implements IMultiAggregator
+{
+    /**
+     * @var ValueDate
+     */
+    protected $startDate;
+    /**
+     * @var bool
+     */
+    protected $first = false;
 
 
-    protected  $first = false;
-
-
-
-
-    public function calculate(IParameterAgg $parameter)
+    /**
+     * @param IParameterAgg $parameter
+     */
+    public function calculate(IParameterAgg $parameter): void
     {
-        if ($this->first == false) {
+        if($this->first == false)
+        {
             $this->startDate = $parameter->getCalculatedValue();
-            $this->first = true;
+            $this->first     = true;
         }
     }
 
 
-
-
-    public function getCalculatedValue()
-    {  
-        return $this->startDate;
+    /**
+     * @return mixed
+     */
+    public function getCalculatedValue(): Value
+    {
+        return new ValueDate($this->startDate);
     }
 
 
-
-
-    public function  __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return 'Data Początkowa: '.$this->getCalculatedValue();
+        return 'Data Początkowa: ' . $this->getCalculatedValue();
     }
 }

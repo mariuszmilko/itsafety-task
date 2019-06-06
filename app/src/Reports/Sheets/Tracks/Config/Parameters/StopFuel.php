@@ -2,38 +2,66 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain, Parameter as AbstractParameter};
+use App\Reports\Library\Parameters\Generic\
+{
+    IParameter, IParameterAgg, IParameterChain, Parameter as AbstractParameter
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueInt;
 
 
-
-
+/**
+ * Class StopFuel
+ * @package App\Reports\Sheets\Tracks\Config\Parameters
+ */
 class StopFuel extends AbstractParameter implements IParameterAgg, IParameterChain
 {
-   protected $value;
-   protected $first = false;
+    /**
+     * @var  int
+     */
+    protected $value;
+    /**
+     * @var bool
+     */
+    protected $first = false;
 
-    public function calculate($parameters)
+    /**
+     * @param array $parameters
+     */
+    public function calculate(array $parameters): void
     {
-         $this->value = $parameters['value'];
+        $this->value = $parameters['value'];
     }
 
-    public function getCalculatedValue()
-    {  
-        return $this->value;
-    }
-
-    public function  __toString()
+    /**
+     * @return Value
+     */
+    public function getCalculatedValue(): Value
     {
-        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+        return new ValueInt($this->value);
     }
 
-    public function handleOperation($value)
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return "Parametr: " . $this->getName() . "\r\nWartość: " . $this->getCalculatedValue();
+    }
+
+    /**
+     * @param Value $value
+     */
+    public function handleOperation(Value $value): void
     {
         print_r('stop_fuel');
-         exit('chainOnEnd');
-    } 
-    
-    public function setSuccessor($nextParam)
+        exit('chainOnEnd');
+    }
+
+    /**
+     * @param $nextParam
+     */
+    public function setSuccessor(IParameter $nextParam): void
     {
         print_r('stop_fuel');
         exit('chainOnEnd');

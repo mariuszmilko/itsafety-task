@@ -7,39 +7,46 @@ use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 use stdClass;
 
 
+/**
+ * Class MultiAggDictionary
+ * @package App\Reports\Library\Classes\Factory
+ */
 class MultiAggDictionary implements IDictionary
 {
+    /**
+     * @var array
+     */
+    protected $multiAggDictionary = [];
 
+    /**
+     * MultiAggDictionary constructor.
+     * @param stdClass $aggs
+     */
+    public function __construct(stdClass $aggs)
+    {
+        $this->fillDictionary($aggs);
+    }
 
-   protected $multiAggDictionary = [];  
+    /**
+     * @param stdClass $data
+     */
+    public function fillDictionary(stdClass $data): void
+    {
+        foreach($data as $key => $agg)
+        {
+            if(isset($agg->summary))
+            {
+                $this->multiAggDictionary[$agg->name] = $agg->summary;
+            }
+        }
+    }
 
-
-
-
-  public function __construct(stdClass $aggs)
-  {  
-     $this->fillDictionary($aggs);
-  }
-
-
-
-
-  public function fillDictionary(stdClass $data)
-  { 
-     foreach ($data  as $key => $agg) {
-        if (isset($agg->summary)) {
-          $this->multiAggDictionary[$agg->name] = $agg->summary;
-        }  
-     }
-  }
-
-
-
-
-  public function get(string $key)
-  {
-
-      return isset($this->multiAggDictionary[$key]) ? new $this->multiAggDictionary[$key] : null;
-  }
-
+    /**
+     * @param string $key
+     * @return null
+     */
+    public function get(string $key): ?\stdClass
+    {
+        return isset($this->multiAggDictionary[$key]) ? new $this->multiAggDictionary[$key] : null;
+    }
 }

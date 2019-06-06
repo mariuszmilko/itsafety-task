@@ -2,31 +2,53 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
+use App\Reports\Library\Parameters\Generic\
+{
+    IParameterAgg, Parameter as AbstractParameter
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueDate;
 
 
-
-
+/**
+ * Class EndDate
+ * @package App\Reports\Sheets\Tracks\Config\Parameters
+ */
 class EndDate extends AbstractParameter implements IParameterAgg
 {
-    protected  $endDate;
-    protected  $last = false;
+    /**
+     * @var string
+     */
+    protected $endDate;
+    /**
+     * @var bool
+     */
+    protected $last = false;
 
-    public function calculate($parameters)
+    /**
+     * @param array $parameters
+     */
+    public function calculate(array $parameters): void
     {
-        if ($this->last == false) {
+        if($this->last == false)
+        {
             $this->endDate = $parameters['value'];
         }
     }
 
-    public function getCalculatedValue()
-    {  
-        return $this->endDate;
-    }
-
-    public function  __toString()
+    /**
+     * @return Value
+     */
+    public function getCalculatedValue(): Value
     {
-        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+        return new ValueDate($this->endDate);
     }
 
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return "Parametr: " . $this->getName() . "\r\nWartość: " . $this->getCalculatedValue();
+    }
 }

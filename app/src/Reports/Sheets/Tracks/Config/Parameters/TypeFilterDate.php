@@ -5,16 +5,14 @@ namespace App\Reports\Sheets\Tracks\Config\Parameters;
 use  App\Reports\Library\Parameters\Generic\IParameterFilter;
 
 
-
-
 class TypeFilterDate implements IParameterFilter
 {
-   protected $value = null;
-
-    public function filter($parameters)
+    /**
+     * @param array $parameters
+     * @return bool
+     */
+    public function filter(array $parameters): bool
     {
-        //isdate format
         return true;
     }
-    
 }

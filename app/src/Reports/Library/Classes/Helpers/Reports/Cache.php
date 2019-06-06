@@ -2,40 +2,46 @@
 
 namespace App\Reports\Library\Classes\Helpers\Reports;
 
-
 use App\Reports\Library\Classes\Report\IReport;
 
-
-
-
-class Cache  implements IReport
+/**
+ * Class Cache
+ * @package App\Reports\Library\Classes\Helpers\Reports
+ */
+class Cache implements IReport
 {
+    /**
+     * @var IReport
+     */
+    protected $report;
+    /**
+     * @var
+     */
+    protected $result;
+    /**
+     * @var bool
+     */
+    protected $debug;
 
 
-   protected $report;
+    /**
+     * Cache constructor.
+     * @param IReport $report
+     * @param bool $debug
+     */
+    public function __construct(IReport $report, $debug = false)
+    {
+        $this->report = $report;
+        $this->debug  = $debug;
+    }
 
+    /**
+     * @return string
+     */
+    public function generate(): string
+    {
+        $this->result = $this->result ?: $this->report->generate();
 
-   protected $result;
-
-
-   protected $debug;
-
-
-   
-
-   public function __construct(IReport $report, $debug = false)
-   {
-      $this->report = $report;
-      $this->debug = $debug;
-   }
-
-
-
-
-   public function generate()
-   {
-      $this->result = $this->result ?:$this->report->generate();
-
-      return $this->result;
-   }
+        return $this->result;
+    }
 }

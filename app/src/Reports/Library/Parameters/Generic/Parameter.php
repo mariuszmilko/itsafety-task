@@ -3,30 +3,58 @@
 namespace App\Reports\Library\Parameters\Generic;
 
 
+/**
+ * Class Parameter
+ * @package App\Reports\Library\Parameters\Generic
+ */
 abstract class Parameter
 {
-   protected $rowname;
-   protected $name;
+    /**
+     * @var
+     */
+    protected $rowname;
+    /**
+     * @var
+     */
+    protected $name;
 
 
-   public function setRowname($rowname)
-   {
-      $this->rowname = $rowname;
-   }
+    /**
+     * @param string $rowname
+     * @return Parameter
+     */
+    public function setRowname(string $rowname): Parameter
+    {
+        $this->rowname = $rowname;
 
-   public function getRowname()
-   {
-      return $this->rowname;
-   }
+        return $this;
+    }
 
-   public function setName($name)
-   {
-      $this->name = $name;
-   }
+    /**
+     * @return string
+     */
+    public function getRowname(): string
+    {
+        return $this->rowname;
+    }
 
-   public function getName()
-   {
-       return $this->name;
-   }
+    /**
+     * @param string $name
+     * @return Parameter
+     */
+    public function setName(string $name):  Parameter
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
 }

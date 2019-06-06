@@ -6,37 +6,43 @@ use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 use stdClass;
 
 
+/**
+ * Class AggregateDictionary
+ * @package App\Reports\Library\Classes\Factory
+ */
 class AggregateDictionary implements IDictionary
 {
+    /**
+     * @var array
+     */
+    protected $aggregatesDictionary = [];
 
+    /**
+     * AggregateDictionary constructor.
+     * @param stdClass $aggs
+     */
+    public function __construct(stdClass $aggs)
+    {
+        $this->fillDictionary($aggs);
+    }
 
-   protected $aggregatesDictionary = [];  
+    /**
+     * @param stdClass $data
+     */
+    public function fillDictionary(stdClass $data)
+    {
+        foreach($data as $key => $agg)
+        {
+            $this->aggregatesDictionary[$agg->class] = $agg->class;
+        }
+    }
 
-
-
-
-  public function __construct(stdClass $aggs)
-  {
-     $this->fillDictionary($aggs);
-  }
-
-
-
-
-  public function fillDictionary(stdClass $data)
-  {
-     foreach ($data  as $key => $agg) {
-           $this->aggregatesDictionary[$agg->class] = $agg->class;
-     }
-  }
-
-
-
-
-  public function get(string $key)
-  {
-
-      return new $this->aggregatesDictionary[$key];
-  }
-
+    /**
+     * @param string $key
+     * @return stdClass
+     */
+    public function get(string $key): \stdClass
+    {
+        return new $this->aggregatesDictionary[$key];
+    }
 }

@@ -2,27 +2,46 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
+use App\Reports\Library\Parameters\Generic\
+{
+    IParameterAgg, Parameter as AbstractParameter
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueInt;
 
 
-
-
+/**
+ * Class MaxSpeed
+ * @package App\Reports\Sheets\Tracks\Config\Parameters
+ */
 class MaxSpeed extends AbstractParameter implements IParameterAgg
 {
-   protected $max = 0;
+    /**
+     * @var int
+     */
+    protected $max = 0;
 
-    public function calculate($parameters)
+    /**
+     * @param array $parameters
+     */
+    public function calculate(array $parameters): void
     {
-        $this->max = $this->max < $parameters['value'] ? $parameters['value'] : $this->max; 
+        $this->max = $this->max < $parameters['value'] ? $parameters['value'] : $this->max;
     }
 
-    public function getCalculatedValue()
-    {  
-        return $this->max;
+    /**
+     * @return Value
+     */
+    public function getCalculatedValue(): Value
+    {
+        return new ValueInt($this->max);
     }
 
-    public function  __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+        return "Parametr: " . $this->getName() . "\r\nWartość: " . $this->getCalculatedValue();
     }
 }

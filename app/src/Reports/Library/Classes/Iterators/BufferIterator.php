@@ -7,9 +7,9 @@ use SplFixedArray;
 use SeekableIterator;
 
 /**
- * BufferIterator  based on Benjamin Zikarsky 
+ * BufferIterator  based on Benjamin Zikarsky
  *
- * 
+ *
  */
 class BufferIterator implements SeekableIterator
 {
@@ -40,7 +40,7 @@ class BufferIterator implements SeekableIterator
      * The actual array of elements (internal representation of the buffer)
      *
      * @var SplFixedArray
-     */ 
+     */
     private $buffer;
 
     /**
@@ -56,15 +56,15 @@ class BufferIterator implements SeekableIterator
      * Creates the iterator with the buffers current internal state
      *
      * @param SplFixedArray $buffer The internal state of the buffer
-     * @param int           $startPosition is position of the first value in $buffer
-     * @param int           $size is the number of elements in the buffer
+     * @param int $startPosition is position of the first value in $buffer
+     * @param int $size is the number of elements in the buffer
      */
     public function __construct(SplFixedArray $buffer, $startPosition, $size)
     {
-        $this->offset = $startPosition;
-        $this->buffer = $buffer;
+        $this->offset      = $startPosition;
+        $this->buffer      = $buffer;
         $this->maxPosition = $size;
-        $this->bufferSize = $buffer->getSize();
+        $this->bufferSize  = $buffer->getSize();
     }
 
     /**
@@ -123,12 +123,14 @@ class BufferIterator implements SeekableIterator
      * SeekableIterator::seek implementation
      * @param int  seek exist position
      */
-    public function seek($position) {
-        if (!isset($this->array[$position])) {
+    public function seek($position)
+    {
+        if(!isset($this->array[$position]))
+        {
             throw new OutOfBoundsException("invalid seek position ($position)");
         }
-  
+
         $this->position = $position;
-      }
+    }
 }
 

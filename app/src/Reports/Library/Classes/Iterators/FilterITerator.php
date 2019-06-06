@@ -32,7 +32,7 @@ class FilterIterator implements SeekableIterator
      * The actual array of elements (internal representation of the buffer)
      *
      * @var SplFixedArray
-     */ 
+     */
     private $buffer;
     /**
      * The size of the fixed array
@@ -42,20 +42,22 @@ class FilterIterator implements SeekableIterator
      * @var int
      */
     private $bufferSize;
+
     /**
      * Creates the iterator with the buffers current internal state
      *
      * @param SplFixedArray $buffer The internal state of the buffer
-     * @param int           $startPosition is position of the first value in $buffer
-     * @param int           $size is the number of elements in the buffer
+     * @param int $startPosition is position of the first value in $buffer
+     * @param int $size is the number of elements in the buffer
      */
-    public function __construct($filters, $aggregates,  $startPosition, $size)
+    public function __construct($filters, $aggregates, $startPosition, $size)
     {
-        $this->offset = $startPosition;
-        $this->buffer = $buffer;
+        $this->offset      = $startPosition;
+        //$this->buffer      = $buffer;
         $this->maxPosition = $size;
-       // $this->bufferSize = $buffer->getSize();
+        // $this->bufferSize = $buffer->getSize();
     }
+
     /**
      * Iterator::next implementation
      */
@@ -63,6 +65,7 @@ class FilterIterator implements SeekableIterator
     {
         $this->position++;
     }
+
     /**
      * Iterator::current implementation
      *
@@ -75,6 +78,7 @@ class FilterIterator implements SeekableIterator
         $realPosition = ($this->offset + $this->position) % $this->bufferSize;
         return $this->buffer[$realPosition];
     }
+
     /**
      * Iterator::key implementation
      *
@@ -86,6 +90,7 @@ class FilterIterator implements SeekableIterator
     {
         return $this->position;
     }
+
     /**
      * Iterator::valid implementation
      *
@@ -95,6 +100,7 @@ class FilterIterator implements SeekableIterator
     {
         return $this->position < $this->maxPosition;
     }
+
     /**
      * Iterator::rewind implementation
      */
@@ -107,11 +113,13 @@ class FilterIterator implements SeekableIterator
      * SeekableIterator::seek implementation
      * @param int  seek exist position
      */
-    public function seek($position) {
-        if (!isset($this->array[$position])) {
+    public function seek($position)
+    {
+        if(!isset($this->array[$position]))
+        {
             throw new OutOfBoundsException("Błędna pozycja ($position)");
         }
-  
+
         $this->position = $position;
-      }
+    }
 }
