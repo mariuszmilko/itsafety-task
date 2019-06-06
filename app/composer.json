@@ -1,20 +1,20 @@
 {
-    "require": {
-        "php-di/php-di" : "^5.4.6",
-        "guzzlehttp/guzzle": "~5.3",
-        "react/stream":"^0.7.7",
-        "react/promise-stream": "^1.1.1",
-        "react/child-process":"^0.5.2",
-        "squizlabs/php_codesniffer": "*",
-        "illuminate/pipeline": "5.6.0",
-        "league/pipeline": "0.3.0",
-        "twig/twig": "~2.4.4",
-        "respect/validation": "~1.1.15",
-        "amphp/amp": "~2.0.6"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
+  "require": {
+    "php-di/php-di": "^5.4.6",
+    "guzzlehttp/guzzle": "~5.3",
+    "react/stream": "^0.7.7",
+    "react/promise-stream": "^1.1.1",
+    "react/child-process": "^0.5.2",
+    "squizlabs/php_codesniffer": "*",
+    "illuminate/pipeline": "5.6.0",
+    "league/pipeline": "0.3.0",
+    "twig/twig": "~2.4.4",
+    "respect/validation": "~1.1.15",
+    "amphp/amp": "~2.0.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
     }
+  }
 }
