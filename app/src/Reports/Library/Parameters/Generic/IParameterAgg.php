@@ -2,16 +2,10 @@
 
 namespace App\Reports\Library\Parameters\Generic;
 
-use App\Reports\Library\Parameters\Generic\IParameter;
-
-
-
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
 
 interface IParameterAgg extends IParameter
 {
-
-
-
-    public function calculate($parameters);
-    public function getCalculatedValue();
+    public function calculate(array $parameters): void;
+    public function getCalculatedValue(): Value;
 }

@@ -32,7 +32,7 @@ class AggregateIterator implements SeekableIterator
      * The actual array of elements (internal representation of the buffer)
      *
      * @var SplFixedArray
-     */ 
+     */
     private $buffer;
     /**
      * The size of the fixed array
@@ -42,20 +42,22 @@ class AggregateIterator implements SeekableIterator
      * @var int
      */
     private $bufferSize;
+
     /**
      * Creates the iterator with the buffers current internal state
      *
      * @param SplFixedArray $buffer The internal state of the buffer
-     * @param int           $startPosition is position of the first value in $buffer
-     * @param int           $size is the number of elements in the buffer
+     * @param int $startPosition is position of the first value in $buffer
+     * @param int $size is the number of elements in the buffer
      */
-    public function __construct($aggregates,  $startPosition, $size)
+    public function __construct($aggregates, $startPosition, $size)
     {
-        $this->offset = $startPosition;
-        $this->aggregates = $aggregates;
+        $this->offset      = $startPosition;
+        $this->aggregates  = $aggregates;
         $this->maxPosition = $size;
-     //   $this->bufferSize = $buffer->getSize();
+        //   $this->bufferSize = $buffer->getSize();
     }
+
     /**
      * Iterator::next implementation
      */
@@ -63,6 +65,7 @@ class AggregateIterator implements SeekableIterator
     {
         $this->position++;
     }
+
     /**
      * Iterator::current implementation
      *
@@ -75,6 +78,7 @@ class AggregateIterator implements SeekableIterator
         $realPosition = ($this->offset + $this->position) % $this->bufferSize;
         return $this->buffer[$realPosition];
     }
+
     /**
      * Iterator::key implementation
      *
@@ -86,6 +90,7 @@ class AggregateIterator implements SeekableIterator
     {
         return $this->position;
     }
+
     /**
      * Iterator::valid implementation
      *
@@ -95,6 +100,7 @@ class AggregateIterator implements SeekableIterator
     {
         return $this->position < $this->maxPosition;
     }
+
     /**
      * Iterator::rewind implementation
      */
@@ -107,50 +113,13 @@ class AggregateIterator implements SeekableIterator
      * SeekableIterator::seek implementation
      * @param int  seek exist position
      */
-    public function seek($position) {
-        if (!isset($this->array[$position])) {
+    public function seek($position)
+    {
+        if(!isset($this->array[$position]))
+        {
             throw new OutOfBoundsException("Błędna pozycja ($position)");
         }
-  
+
         $this->position = $position;
-      }
-}
-
-
-class Test implements Iterator {
-    private $loopstack = [];
-
-    private $array = array("A", "B", "C",);
-
-    function rewind() {
-        $this->loopstack[] = 0;
-    }
-
-    function current() {
-        return $this->array[end($this->loopstack)];
-    }
-
-    function key() {
-        return end($this->loopstack);
-    }
-
-    function next() {
-        array_push($this->loopstack, array_pop($this->loopstack) + 1);
-    }
-
-    function valid() {
-        $valid = isset($this->array[end($this->loopstack)]);
-        if (!$valid) {
-            array_pop($this->loopstack);
-        }
-        return $valid;
     }
 }
-
-// $iterator = new Test();
-// foreach ($iterator as $e){
-//     var_dump('loop1 ' . $e);
-//     foreach ($iterator as $e2){
-//         var_dump('loop2 ' . $e2);
-//     }
-// }

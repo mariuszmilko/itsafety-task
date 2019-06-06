@@ -2,43 +2,56 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters\Aggregators;
 
-use App\Reports\Library\Parameters\Generic\{IMultiAggregator, IParameterAgg};
-
-
-
-
-class EndDate implements  IMultiAggregator
+use App\Reports\Library\Parameters\Generic\
 {
+    IMultiAggregator, IParameterAgg
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueDate;
 
 
-    protected  $endDate;
+/**
+ * Class EndDate
+ * @package App\Reports\Sheets\Tracks\Config\Parameters\Aggregators
+ */
+class EndDate implements IMultiAggregator
+{
+    /**
+     * @var ValueDate
+     */
+    protected $endDate;
+    /**
+     * @var bool
+     */
+    protected $last = false;
 
 
-    protected  $last = false;
-
-
-
-
-    public function calculate(IParameterAgg $parameter)
+    /**
+     * @param IParameterAgg $parameter
+     */
+    public function calculate(IParameterAgg $parameter): void
     {
-        if ($this->last == false) {
+        if($this->last == false)
+        {
             $this->endDate = $parameter->getCalculatedValue();
         }
     }
 
 
-
-
-    public function getCalculatedValue()
-    {  
-        return $this->endDate;
+    /**
+     * @return mixed
+     */
+    public function getCalculatedValue(): Value
+    {
+        return new ValueDate($this->endDate);
     }
 
 
-
-
-    public function  __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return 'Data Końcowa: '.$this->getCalculatedValue();
+        return 'Data Końcowa: ' . $this->getCalculatedValue();
     }
 }

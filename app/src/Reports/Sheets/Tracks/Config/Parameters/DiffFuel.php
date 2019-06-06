@@ -2,32 +2,62 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, Parameter as AbstractParameter};
+use App\Reports\Library\Parameters\Generic\
+{
+    IParameterAgg, Parameter as AbstractParameter
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\ValueInt;
 
 
+/**
+ * Class DiffFuel
+ * @package App\Reports\Sheets\Tracks\Config\Parameters
+ */
 class DiffFuel extends AbstractParameter implements IParameterAgg
 {
-   protected $first = 0;
-   protected $lastValue = 0;
-   protected $firstValue;
+    /**
+     * @var int
+     */
+    protected $first     = 0;
+    /**
+     * @var int
+     */
+    protected $lastValue = 0;
+    /**
+     * @var int
+     */
+    protected $firstValue;
 
-    public function calculate($parameters)
+    /**
+     * @param array $parameters
+     */
+    public function calculate(array $parameters): void
     {
-        if ($this->first == false) {
+        if($this->first == false)
+        {
             $this->firstValue = $parameters['value'];
-            $this->first = true;
-        } else {
+            $this->first      = true;
+        }
+        else
+        {
             $this->lastValue = $parameters['value'];;
         }
     }
 
-    public function getCalculatedValue()
-    {  
-        return $this->firstValue - $this->lastValue;
+    /**
+     * @return Value
+     */
+    public function getCalculatedValue(): Value
+    {
+        return new ValueInt($this->firstValue - $this->lastValue);
     }
 
-    public function  __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
-        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+        return "Parametr: " . $this->getName() . "\r\nWartość: " . $this->getCalculatedValue();
     }
 }

@@ -2,40 +2,70 @@
 
 namespace App\Reports\Sheets\Tracks\Config\Parameters;
 
-use App\Reports\Library\Parameters\Generic\{IParameterAgg, IParameterChain, Parameter as AbstractParameter};
+use App\Reports\Library\Parameters\Generic\
+{
+    IParameter, IParameterAgg, IParameterChain, Parameter as AbstractParameter
+};
+use App\Reports\Sheets\Tracks\Config\Parameters\Values\Generic\Value;
 
 
-
-
+/**
+ * Class SumDistance
+ * @package App\Reports\Sheets\Tracks\Config\Parameters
+ */
 class SumDistance extends AbstractParameter implements IParameterAgg, IParameterChain
 {
-   protected $sum = 0;
-   protected $maxCount = 0;
-   protected $index = 0;
+    /**
+     * @var int
+     */
+    protected $sum      = 0;
+    /**
+     * @var int
+     */
+    protected $maxCount = 0;
+    /**
+     * @var int
+     */
+    protected $index    = 0;
 
-    public function calculate($parameters)
+    /**
+     * @param array $parameters
+     */
+    public function calculate(array $parameters): void
     {
-        $this->sum += $parameters['value'];
+        $this->sum   += $parameters['value'];
         $this->index += 1;
     }
 
-    public function getCalculatedValue()
-    {  
-        return $this->sum;
-    }
-
-    public function  __toString()
+    /**
+     * @return Value
+     */
+    public function getCalculatedValue(): Value
     {
-        return "Parametr: ".$this->getName()."\r\nWartość: ".$this->getCalculatedValue();
+        return new ValueInt($this->sum);
     }
 
-    public function handleOperation($value)
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return "Parametr: " . $this->getName() . "\r\nWartość: " . $this->getCalculatedValue();
+    }
+
+    /**
+     * @param Value $value
+     */
+    public function handleOperation(Value $value): void
     {
         print_r('sum_distance');
         exit('chainOnEnd');
-    } 
-    
-    public function setSuccessor($nextParam)
+    }
+
+    /**
+     * @param $nextParam
+     */
+    public function setSuccessor(IParameter $nextParam): void
     {
         print_r('sum_distance');
         exit('chainOnEnd');

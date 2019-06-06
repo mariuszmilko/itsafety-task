@@ -3,7 +3,4 @@
 namespace App\Reports\Library\Classes\Repository;
 
 
-interface IRepository
-{
-
-}
+interface IRepository{}

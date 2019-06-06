@@ -2,77 +2,100 @@
 
 namespace App\Reports\Library\Classes\Domain\Model;
 
-use App\Reports\Library\Classes\Domain\Model\Generic\Point\{IPointProcess, IPointUpdate};
-use App\Reports\Library\Classes\Domain\Model\Generic\Track\{IType};
-use App\Reports\Library\Classes\Helpers\Validators\TrackValidator;
+use App\Reports\Library\Classes\Domain\Model\Generic\Point\
+{
+    IPoint, IPointProcess, IPointUpdate
+};
+use App\Reports\Library\Classes\Domain\Model\Generic\Parameter\
+{
+    IProcessAndUpdate
+};
+use App\Reports\Library\Classes\Domain\Model\Generic\Track\
+{
+    IType
+};
 use App\Reports\Library\Classes\Helpers\Generic\IValidLength;
 use App\Reports\Library\Classes\Helpers\Arrays\ArrayGenerator;
 
 
-
-
+/**
+ * Class Track
+ * @package App\Reports\Library\Classes\Domain\Model
+ */
 class Track implements IType, \IteratorAggregate
 {
+    /**
+     * @var IProcessAndUpdate
+     */
+    protected $parameterTrack;
+    /**
+     * @var int
+     */
+    protected $length = 0;
 
 
-   protected $parameters = [];
+    /**
+     * Track constructor.
+     * @param IProcessAndUpdate $parameter
+     */
+    public function __construct(IProcessAndUpdate $parameter)
+    {
+        $this->parameterTrack = $parameter;
+    }
 
 
-   protected $length = 0;
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getParameter(string $name)
+    {
+        if(!isset($this->parameterTrack))
+        {
+            throw new Exception('Błędna nazwa parametru');
+        }
+
+        return $this->parameterTrack->getParameter($name);
+    }
 
 
-
-
-   public function __construct(array $parameters)
-   {
-       $this->parameters = $parameters;
-   }
-   
-
-
-
-   public function getParameter(string $name) 
-   {
-       if (!isset($this->parameters[$name])) 
-          throw new Exception('Błędna nazwa parametru');
-        
-       return $this->parameters[$name];
-   }
-
-
-
-
-   public function processPoint(IPointProcess $point)
-   {
-        $point->processing($this->parameters);  //callable test fail
+    /**
+     * @param IPoint $point
+     */
+    public function processPoint(IPoint $point)
+    {
+        $this->parameterTrack->processing($point);
         $this->length++;
-   }
+    }
 
 
+    /**
+     * @param IPoint $point
+     * @return Track
+     */
+    public function updateOnEnd(IPoint $point): Track
+    {
+        $this->parameterTrack->getDateAggData($point);
+
+        return $this;
+    }
 
 
-   public function updateOnEnd(IPointUpdate $point)
-   {
-       $point->getDateAggData($this->parameters['end']); //dla ułatwienia później słownik
-
-       return $this;
-   }
-
-
-
-
-   public function isValidLength(IValidLength $tValid)
-   {
-
-       return $tValid->isValidLength($this->length);
-   }
+    /**
+     * @param IValidLength $tValid
+     * @return bool
+     */
+    public function isValidLength(IValidLength $tValid): bool
+    {
+        return $tValid->isValidLength($this->length);
+    }
 
 
-
-
-   public function getIterator() 
-   {
-
-       return new ArrayGenerator($this->parameters);
-   }
+    /**
+     * @return \IteratorAggregate
+     */
+    public function getIterator(): \IteratorAggregate
+    {
+        return new ArrayGenerator($this->parameterTrack);
+    }
 }

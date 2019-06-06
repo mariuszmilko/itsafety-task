@@ -7,36 +7,49 @@ use App\Reports\Library\Classes\Factory\Generic\IDictionary;
 use stdClass;
 
 
+/**
+ * Class FilterDictionary
+ * @package App\Reports\Library\Classes\Factory
+ */
 class FilterDictionary implements IDictionary
 {
 
 
-   protected $filtersDictionary = [];  
+    /**
+     * @var array
+     */
+    protected $filtersDictionary = [];
 
 
+    /**
+     * FilterDictionary constructor.
+     * @param stdClass $filters
+     */
+    public function __construct(stdClass $filters)
+    {
+        $this->fillDictionary($filters);
+    }
 
 
-  public function __construct(stdClass $filters)
-  {
-     $this->fillDictionary($filters);
-  }
+    /**
+     * @param stdClass $data
+     */
+    public function fillDictionary(stdClass $data): void
+    {
+        foreach($data as $key => $filter)
+        {
+            $this->filtersDictionary[$filter->class] = $filter->class;
+        }
+    }
 
 
-
-
-  public function fillDictionary(stdClass $data)
-  {
-       foreach ($data  as $key => $filter) {
-           $this->filtersDictionary[$filter->class] = $filter->class;
-       }
-  }
-
-
-
-
-  public function get(string $key)
-  {
-      return new $this->filtersDictionary[$key];
-  }
+    /**
+     * @param string $key
+     * @return stdClass
+     */
+    public function get(string $key): \stdClass
+    {
+        return new $this->filtersDictionary[$key];
+    }
 
 }

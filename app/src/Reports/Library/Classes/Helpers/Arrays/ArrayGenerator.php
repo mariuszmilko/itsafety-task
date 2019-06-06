@@ -3,23 +3,35 @@
 namespace App\Reports\Library\Classes\Helpers\Arrays;
 
 
-class ArrayGenerator implements \IteratorAggregate {
+/**
+ * Class ArrayGenerator
+ * @package App\Reports\Library\Classes\Helpers\Arrays
+ */
+class ArrayGenerator implements \IteratorAggregate
+{
 
-
+    /**
+     * @var array
+     */
     protected $array;
 
 
-
-
-    public function __construct(array $array) {
+    /**
+     * ArrayGenerator constructor.
+     * @param array $array
+     */
+    public function __construct(array $array)
+    {
         $this->array = $array;
     }
 
-
-
-
-    public function getIterator() {
-        foreach ($this->array as $key => $value) {
+    /**
+     * @return \Generator
+     */
+    public function getIterator(): \Generator
+    {
+        foreach($this->array as $key => $value)
+        {
             yield $key => $value;
         }
     }

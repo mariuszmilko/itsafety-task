@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Reports\Library\Classes\Helpers\Buffers;
 
 use Countable;
@@ -21,14 +22,14 @@ use App\Reports\Library\Classes\Iterators\BufferIterator;
  */
 class Buffer implements Countable, IteratorAggregate
 {
-    
+
     /**
      * Internal representation of the buffer as a fixed-size array
      *
      * @var SplFixedArray
      */
     protected $buffer;
-    
+
     /**
      * Maximum number of elements the buffer can hold
      *
@@ -47,38 +48,43 @@ class Buffer implements Countable, IteratorAggregate
      * @var int
      */
     protected $position = 0;
+
     /**
      * Constructs a buffer with given $maxSize
      *
-     * @param  int                      $maxSize Maximum capacity for this buffer
+     * @param  int $maxSize Maximum capacity for this buffer
      * @throws InvalidArgumentException The exception is thrown in case $maxSize < 1
      */
     public function __construct($maxSize)
     {
         $maxSize = intval($maxSize);
-        if ($maxSize < 1) {
+        if($maxSize < 1)
+        {
             throw new InvalidArgumentException("maxSize has to be greather than 0");
         }
-        $this->buffer = new SplFixedArray($maxSize);
+        $this->buffer  = new SplFixedArray($maxSize);
         $this->maxSize = $maxSize;
     }
+
     /**
      * Adds an element to the buffer
      *
-     * @param  mixed             $element to push into the buffer
+     * @param  mixed $element to push into the buffer
      * @return boolean           Always true
      * @throws OverflowException The exception is thrown in case the buffer is full
      */
     public function add($element)
     {
-        if ($this->isFull()) {
+        if($this->isFull())
+        {
             throw new OverflowException("Buffer is full");
         }
         $this->buffer[$this->position] = $element;
-        $this->position = ($this->position + 1) % $this->maxSize;
+        $this->position                = ($this->position + 1) % $this->maxSize;
         $this->size++;
         return true;
     }
+
     /**
      * Gets the least recently added element
      *
@@ -87,11 +93,13 @@ class Buffer implements Countable, IteratorAggregate
      */
     public function get()
     {
-        if ($this->isEmpty()) {
+        if($this->isEmpty())
+        {
             throw new UnderflowException("Buffer is empty");
         }
         return $this->buffer[$this->getLeastRecentPosition()];
     }
+
     /**
      * Removes and returns the least recently added element
      *
@@ -100,7 +108,8 @@ class Buffer implements Countable, IteratorAggregate
      */
     public function remove()
     {
-        if ($this->isEmpty()) {
+        if($this->isEmpty())
+        {
             throw new UnderflowException("Buffer is empty");
         }
         $leastRecentPosition = $this->getLeastRecentPosition();
@@ -109,15 +118,17 @@ class Buffer implements Countable, IteratorAggregate
         $this->size--;
         return $leastRecentElement;
     }
+
     /**
      * Clears the buffer of all elements
      */
     public function clear()
     {
-        $this->size = 0;
+        $this->size     = 0;
         $this->position = 0;
-        $this->buffer = new SplFixedArray($this->maxSize);
+        $this->buffer   = new SplFixedArray($this->maxSize);
     }
+
     /**
      * Returns the current number of elements in the buffer
      *
@@ -127,6 +138,7 @@ class Buffer implements Countable, IteratorAggregate
     {
         return $this->size;
     }
+
     /**
      * Returns whether the buffer is full
      *
@@ -136,6 +148,7 @@ class Buffer implements Countable, IteratorAggregate
     {
         return $this->size == $this->maxSize;
     }
+
     /**
      * Returns whether the buffer is empty
      *
@@ -145,6 +158,7 @@ class Buffer implements Countable, IteratorAggregate
     {
         return $this->size == 0;
     }
+
     /**
      * Returns an iterator over the elements in the buffer.
      *
@@ -154,12 +168,9 @@ class Buffer implements Countable, IteratorAggregate
      */
     public function getIterator()
     {
-        return new BufferIterator(
-            $this->buffer,
-            $this->getLeastRecentPosition(),
-            $this->size
-        );
+        return new BufferIterator($this->buffer, $this->getLeastRecentPosition(), $this->size);
     }
+
     /**
      * Returns the position of the least recently added element in the buffer
      *
