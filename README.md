@@ -1,6 +1,6 @@
 P.S.
 
-@HUBERT   "Having" not "Haeving"... taka drobna różnica w wymowie... i zamiast o  warunku dla grupy mamy super plugin, który potrafi żonglować terabajtami danych w ms..  ;)
+@HUBERT   "Having" not "Haeving"... taka drobna różnica w wymowie... i zamiast warunku dla grupy mamy super plugin, który potrafi żonglować terabajtami danych w ms..  ;)
 
 ..do tego zadania rekrutacyjnego z przed roku, dorzuciłem docblock, typy zwracane, extra jeszcze jeden wzorzec Value Object do parametrów...
 
