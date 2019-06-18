@@ -49,7 +49,7 @@ class ReportDay implements IReport
      */
     public function generate(): string
     {
-        $device = $this->service->getDataByDay($this->parameters['deviceId'], $this->parameters['day']);
+        $device   = $this->service->getDataByDay($this->parameters['deviceId'], $this->parameters['day']);
         $deviceId = $this->parameters['deviceId'];
         $day      = $this->parameters['day'];
         $summary  = $device->getSummary();
